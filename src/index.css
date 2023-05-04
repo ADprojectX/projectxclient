@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  text-align: center;
+}
+
+h1,
+h2 {
+  margin-top: 0;
+}
+
+.home button {
+  margin: 0 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+input,
+button {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+}
+
+#abc{
+  color:black;
+}
