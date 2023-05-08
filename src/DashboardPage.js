@@ -15,6 +15,7 @@ function DashboardPage() {
   const [selectedValue, setSelectedValue] = React.useState(0);
   const [topic, setTopic] = React.useState('');
   const [csrfToken, setCsrfToken] = React.useState('')
+  const [responseData, setResponseData] = React.useState(null);
   
 
   React.useEffect(()=>{
@@ -30,7 +31,8 @@ function DashboardPage() {
   }, []);
 
   const handleLogoutClick = () => {
-    axios.post(`${API_BASE_URL}/logout/`, {withCredentials:true})
+    let data = {token : Cookies.get('jwt')}
+    axios.post(`${API_BASE_URL}/logout/`, data, {withCredentials:true})
       .then((response) => {
         Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true});
         Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true});
@@ -60,8 +62,8 @@ function DashboardPage() {
     let data = {topic:topic, voice:selectedValue}
     axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
       .then((response) => {
-        console.log(response);
         console.log('Project Submitted');
+        setResponseData(response.data);
       })
       .catch((error) => {
         setErrorMessage('project not submitted');
@@ -85,6 +87,13 @@ function DashboardPage() {
         <button type="submit">Submit</button>
         {errorMessage && <p className="error">{errorMessage}</p>}
       </form>
+      {responseData && (
+      <div>
+        <h3>Response Data</h3>
+        <p>{JSON.stringify(responseData.reqid)}</p>
+        <p>{JSON.stringify(responseData.script)}</p>
+      </div>
+    )}
     </div>
   );
 }

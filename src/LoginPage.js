@@ -32,6 +32,7 @@ export default function LoginPage() {
       .catch((error) => {
         setErrorMessage('Invalid username or password');
         console.log(error);
+        navigate('/login');
       });
   };
 
