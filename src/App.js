@@ -15,35 +15,45 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            {/* <PrivateRoute element={<DashboardPage/>}/> */}
-            <Route exact path='/dashboard' element={<PrivateRoute/>} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </Router>
     );
 }
 
-function PrivateRoute({ children, ...rest }) {
-  const isAuthenticated = localStorage.getItem('isAuthenticated');
-  //check if I as a user am able to manipulate the isAuthenticated
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuthenticated ? (
-          children
-        ) : (
-          <Navigate
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+const ProtectedRoute = ({children }) => {
+  const user = localStorage.getItem('isAuthenticated');
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+// const PrivateRoute = ({ element: Component, ...rest }) => {
+//   const isAuthenticated = localStorage.getItem('isAuthenticated');
+//   return (
+//     <Route
+//       {...rest}
+//       element={<Component />}
+//       render={() =>
+//         isAuthenticated ? (
+//           <Component />
+//         ) : (
+//           <Navigate to="/login" replace />
+//         )
+//       }
+//     />
+//   );
+// }
+
 
 function HomePage() {
   const handleLoginClick = () => {

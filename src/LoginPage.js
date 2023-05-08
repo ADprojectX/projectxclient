@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+
 const API_BASE_URL = 'http://localhost:8000/api';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const history = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
-  const user = 'adayani'
-  const pwd = 'some'
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -20,14 +19,15 @@ export default function LoginPage() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+  // axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { username, password };
-    axios.post(`${API_BASE_URL}/login/`, data)
+    axios.post(`${API_BASE_URL}/login_user/`, data, {withCredentials:true})
       .then((response) => {
         localStorage.setItem('isAuthenticated', true);
-        // history.replace('/dashboard');
+        console.log('successful');
+        navigate('/dashboard');
       })
       .catch((error) => {
         setErrorMessage('Invalid username or password');

@@ -1,0 +1,1 @@
+DELETE FROM accounts_user WHERE username NOT IN ('adayani', 'adayani1');
