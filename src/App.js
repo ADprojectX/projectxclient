@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
 import DashboardPage from './DashboardPage';
+import VideoEditor from './videoplayer';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/video" element={<VideoEditor />} />
           </Routes>
         </div>
       </Router>
@@ -64,11 +66,16 @@ function HomePage() {
     window.location.href = '/signup';
   };
 
+  const handleVideoClick = () => {
+    window.location.href = '/video';
+  };
+
   return (
     <div className="home">
       <h2>Home</h2>
       <button onClick={handleLoginClick}>Login</button>
       <button onClick={handleSignupClick}>Sign Up</button>
+      <button onClick={handleVideoClick}>Video Player</button>
     </div>
   );
 }
