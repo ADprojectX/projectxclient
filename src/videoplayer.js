@@ -1,40 +1,70 @@
-import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
+import React, { useState, useRef, useEffect } from 'react';
+import Select from 'react-select';
+import ReactPlayer from "react-player";
+import { Container }  from "@mui/material";
+import { AppBar } from "@mui/material";
+import { Toolbar } from '@mui/material';
+import { Typography } from "@mui/material";
 
-function VideoEditor() {
-  const [videoScenes, setVideoScenes] = useState([]);
-  const [audioScenes, setAudioScenes] = useState([]);
+const VideoPlayer = ({ videoSrc, audioSrc }) => {
+  return (
+    <div>
+      <Container maxWidth="md" height="md">
+        <ReactPlayer 
+          url={videoSrc} 
+          playing={true} 
+          controls={true} 
+        />
+        <audio id='audio' src={audioSrc} autoPlay />
+      </Container>
+    </div>
+  );
+};
 
-  const videoContext = require.context('./output', false, /\.mp4$/);
-  const videoFiles = videoContext.keys().map(key => videoContext(key).default);
+const SceneSelector = ({ scenes }) => {
+  const [currentScene, setCurrentScene] = useState(scenes[0]);
 
-  // Use a library like FFmpeg.js to split the video and audio into scenes
-  // and set the scenes state variables with the resulting arrays
-
-  const handleAddScene = () => {
-    // Use a library like FFmpeg.js to create a new scene from the video and audio
-    // files and add it to the scenes arrays
+  const handleSceneSelect = (selectedOption) => {
+    const scene = scenes.find((s) => s.name === selectedOption.value);
+    setCurrentScene(scene);
   };
 
-  const handleDeleteScene = (index) => {
-    // Use a library like FFmpeg.js to remove the scene at the specified index
-    // from the video and audio files and update the scenes arrays
-  };
+  const sceneOptions = scenes.map((scene) => ({
+    value: scene.name,
+    label: scene.name,
+  }));
 
   return (
     <div>
-      <ReactPlayer url={videoFiles} playing />
-      <div>
-        {videoScenes.map((scene, index) => (
-          <div key={index}>
-            <ReactPlayer url={scene} />
-            <button onClick={() => handleDeleteScene(index)}>Delete Scene</button>
-          </div>
-        ))}
-        <button onClick={handleAddScene}>Add Scene</button>
-      </div>
+      <AppBar position="fixed">
+        <Toolbar>
+            <Typography variant="h6"> ProjectX Video Player</Typography>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+      <VideoPlayer videoSrc={currentScene.video} audioSrc={currentScene.audio} />
+      <Select
+        defaultValue={sceneOptions[0]}
+        onChange={handleSceneSelect}
+        options={sceneOptions}
+      />
     </div>
   );
-}
+};
 
-export default VideoEditor;
+// This component will be the main component
+const App = () => {
+  // Assuming your videos and audios are in public directory
+  const scenes = [
+    { name: 'Scene0', video: '/output/video0.mp4', audio: '/audio/voice#scene#0.mp3' },
+    { name: 'Scene1', video: '/output/video1.mp4', audio: '/audio/voice#scene#1.mp3' },
+    { name: 'Scene2', video: '/output/video2.mp4', audio: '/audio/voice#scene#2.mp3' },
+    { name: 'Scene3', video: '/output/video3.mp4', audio: '/audio/voice#scene#3.mp3' },
+    { name: 'Scene4', video: '/output/video4.mp4', audio: '/audio/voice#scene#4.mp3' },
+    // Add more scenes here...
+  ];
+
+  return <SceneSelector scenes={scenes} />;
+};
+
+export default App;
