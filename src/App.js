@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
 import DashboardPage from './DashboardPage';
-import VideoEditor from './videoplayer';
+import VideoDashBoard from './VideoPlayer';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/video" element={<VideoEditor />} />
+            <Route path="/video" element={<VideoDashBoard />} />
           </Routes>
         </div>
       </Router>
