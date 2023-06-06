@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { Container, AppBar, Toolbar, Typography, Slider } from '@mui/material';
 
-const VideoPlayer = ({ videoSrc, audioSrc }) => {
+const VPlayer = ({ videoSrc, audioSrc }) => {
   return (
     <div>
       <Container maxWidth="md" height="md">
@@ -29,7 +29,7 @@ const SceneSelector = ({ scenes }) => {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <VideoPlayer videoSrc={currentScene.video} audioSrc={currentScene.audio} />
+      <VPlayer videoSrc={currentScene.video} audioSrc={currentScene.audio} />
       <Slider
         defaultValue={0}
         onChange={handleSceneSelect}
@@ -42,7 +42,7 @@ const SceneSelector = ({ scenes }) => {
   );
 };
 
-const App = () => {
+const VideoPlayer = () => {
   const scenes = [
     { name: 'Scene0', video: '/output/video0.mp4', audio: '/audio/voice#scene#0.mp3' },
     { name: 'Scene1', video: '/output/video1.mp4', audio: '/audio/voice#scene#1.mp3' },
@@ -55,7 +55,7 @@ const App = () => {
   return <SceneSelector scenes={scenes} />;
 };
 
-export default App;
+export default VideoPlayer;
 
 // const SceneSelector = ({ scenes }) => {
 //   const [currentScene, setCurrentScene] = useState(scenes[0]);
