@@ -1,132 +1,120 @@
-import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
-import { Container, AppBar, Toolbar, Typography, Slider } from '@mui/material';
+import React, { useState, useRef, useEffect } from 'react';
+import ReactPlayer from "react-player";
+import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 
-const VideoPlayer = ({ videoSrc, audioSrc, currentTime }) => {
-  const [seeking, setSeeking] = useState(false);
+const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress }) => {
+  const playerRef = useRef();
 
-  const handleProgress = (progress) => {
-    if (!seeking) {
-      currentTime(progress.playedSeconds);
+  const seekTo = (seconds) => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(seconds, 'seconds');
     }
   };
 
-  const handleSeek = (event, newValue) => {
-    currentTime(newValue);
-    setSeeking(true);
-  };
-
-  const handleSeekEnd = () => {
-    setSeeking(false);
-  };
+  useEffect(() => {
+    seekTo(0);
+  }, [videoSrc]);
 
   return (
     <div>
       <Container maxWidth="md" height="md">
-        <ReactPlayer
-          url={videoSrc}
-          playing={true}
-          controls={true}
+        <ReactPlayer 
+          ref={playerRef}
+          url={videoSrc} 
+          playing={true} 
+          controls={true} 
+          onEnded={handleSceneEnd}
           onProgress={handleProgress}
-          progressInterval={1000}
-          onSeek={handleSeek}
-          onSeekEnd={handleSeekEnd}
-          currentTime={currentTime}
         />
-        <audio id="audio" src={audioSrc} autoPlay />
+        <audio id='audio' src={audioSrc} autoPlay />
       </Container>
     </div>
   );
 };
 
 const SceneSelector = ({ scenes }) => {
-  const [currentTime, setCurrentTime] = useState(0);
+  const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
+  const [currentProgress, setCurrentProgress] = useState(0);
+  const [sceneStartTimes, setSceneStartTimes] = useState([]);
+  const [totalDuration, setTotalDuration] = useState(0);
 
-  const handleTimeChange = (event, newValue) => {
-    setCurrentTime(newValue);
+  useEffect(() => {
+    let tempTotalDuration = 0;
+    let tempStartTimes = [];
+    scenes.forEach(scene => {
+      tempStartTimes.push(tempTotalDuration);
+      tempTotalDuration += scene.duration;
+    });
+    setTotalDuration(tempTotalDuration);
+    setSceneStartTimes(tempStartTimes);
+  }, [scenes]);
+
+  const handleSliderChange = (event, newValue) => {
+    setCurrentProgress(newValue);
+    const newSceneIndex = sceneStartTimes.findIndex((start, i) => newValue >= start && (!sceneStartTimes[i+1] || newValue < sceneStartTimes[i+1]));
+    setCurrentSceneIndex(newSceneIndex);
   };
 
-  const handleSceneSelect = (event, newValue) => {
-    setCurrentTime(newValue);
-  };
-
-  const getCurrentScene = () => {
-    for (let i = 0; i < scenes.length - 1; i++) {
-      const currentScene = scenes[i];
-      const nextScene = scenes[i + 1];
-      if (currentTime >= currentScene.time && currentTime < nextScene.time) {
-        return currentScene;
-      }
+  const handleSceneEnd = () => {
+    const nextSceneIndex = currentSceneIndex + 1;
+    if (nextSceneIndex < scenes.length) {
+      setCurrentSceneIndex(nextSceneIndex);
+    } else {
+      setCurrentSceneIndex(0);
+      setCurrentProgress(0);
     }
-    return scenes[scenes.length - 1];
   };
 
-  const currentScene = getCurrentScene();
+  const handleProgress = ({ playedSeconds }) => {
+    setCurrentProgress(sceneStartTimes[currentSceneIndex] + playedSeconds);
+  };
+
+  const sliderMarks = scenes.map((scene, i) => ({
+    value: sceneStartTimes[i],
+    label: scene.name,
+  }));
 
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6">ProjectX Video Player</Typography>
+          <Typography variant="h6"> ProjectX Video Player</Typography>
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <VideoPlayer videoSrc={currentScene.video} audioSrc={currentScene.audio} currentTime={setCurrentTime} />
+      <VPlayer 
+        videoSrc={scenes[currentSceneIndex].video} 
+        audioSrc={scenes[currentSceneIndex].audio} 
+        handleSceneEnd={handleSceneEnd}
+        handleProgress={handleProgress}
+      />
       <Slider
-        value={currentTime}
-        onChange={handleTimeChange}
-        onChangeCommitted={handleSceneSelect}
+        value={currentProgress}
+        step={1}
         min={0}
-        max={scenes[scenes.length - 1].time}
-        marks={scenes.map((scene) => ({ value: scene.time, label: scene.name }))}
+        max={totalDuration}
+        onChange={handleSliderChange}
         valueLabelDisplay="auto"
+        marks={sliderMarks}
       />
     </div>
   );
 };
 
+
+// This component will be the main component
 const App = () => {
+  // Assuming your videos and audios are in public directory
   const scenes = [
-    { name: 'Scene0', video: '/output/video0.mp4', audio: '/audio/voice#scene#0.mp3', time: 0 },
-    { name: 'Scene1', video: '/output/video1.mp4', audio: '/audio/voice#scene#1.mp3', time: 10 },
-    { name: 'Scene2', video: '/output/video2.mp4', audio: '/audio/voice#scene#2.mp3', time: 20 },
-    { name: 'Scene3', video: '/output/video3.mp4', audio: '/audio/voice#scene#3.mp3', time: 30 },
-    { name: 'Scene4', video: '/output/video4.mp4', audio: '/audio/voice#scene#4.mp3', time: 40 },
+    { name: 'Scene0', video: '/output/video0.mp4', audio: '/audio/voice#scene#0.mp3',  duration: 10 },
+    { name: 'Scene1', video: '/output/video1.mp4', audio: '/audio/voice#scene#1.mp3',  duration: 8 },
+    { name: 'Scene2', video: '/output/video2.mp4', audio: '/audio/voice#scene#2.mp3',  duration: 12 },
+    { name: 'Scene3', video: '/output/video3.mp4', audio: '/audio/voice#scene#3.mp3',  duration: 7 },
+    { name: 'Scene4', video: '/output/video4.mp4', audio: '/audio/voice#scene#4.mp3',   duration: 13},
     // Add more scenes here...
   ];
+
   return <SceneSelector scenes={scenes} />;
 };
 
 export default App;
-
-// const SceneSelector = ({ scenes }) => {
-//   const [currentScene, setCurrentScene] = useState(scenes[0]);
-//   const handleSceneSelect = (selectedOption) => {
-//     // setTemp(selectedOption)
-//     const scene = scenes.find((s) => s.name === selectedOption.value);
-//     setCurrentScene(scene);
-//   };
-
-//   const sceneOptions = scenes.map((scene) => ({
-//     value: scene.name,
-//     label: scene.name,
-//   }));
-
-//   return (
-//     <div>
-//       <AppBar position="fixed">
-//         <Toolbar>
-//             <Typography variant="h6"> ProjectX Video Player</Typography>
-//         </Toolbar>
-//       </AppBar>
-//       <Toolbar />
-//       <VideoPlayer videoSrc={currentScene.video} audioSrc={currentScene.audio} />
-//       <h1>{currentScene.name}</h1>
-//       <Select
-//         defaultValue={sceneOptions[0]}
-//         onChange={handleSceneSelect}
-//         options={sceneOptions}
-//       />
-//     </div>
-//   );
-// };
