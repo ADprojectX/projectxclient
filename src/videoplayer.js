@@ -2,28 +2,26 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
 import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 
-const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress }) => {
-  const playerRef = useRef();
-
-  const seekTo = (seconds) => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(seconds, 'seconds');
-    }
-  };
+const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
+  const reactPlayerRef = useRef();
 
   useEffect(() => {
-    seekTo(0);
-  }, [videoSrc]);
+    if (seekTo > 0) {
+      setTimeout(() => {
+        reactPlayerRef.current.seekTo(seekTo);
+      }, 200); // Delay seekTo to allow video to load
+    }
+  }, [videoSrc, seekTo]);
 
   return (
     <div>
       <Container maxWidth="md" height="md">
         <ReactPlayer 
-          ref={playerRef}
+          ref={reactPlayerRef}
           url={videoSrc} 
           playing={true} 
           controls={true} 
-          onEnded={handleSceneEnd}
+          onEnded={handleSceneEnd} 
           onProgress={handleProgress}
         />
         <audio id='audio' src={audioSrc} autoPlay />
@@ -37,6 +35,7 @@ const SceneSelector = ({ scenes }) => {
   const [currentProgress, setCurrentProgress] = useState(0);
   const [sceneStartTimes, setSceneStartTimes] = useState([]);
   const [totalDuration, setTotalDuration] = useState(0);
+  const [seekTo, setSeekTo] = useState(0);
 
   useEffect(() => {
     let tempTotalDuration = 0;
@@ -52,7 +51,10 @@ const SceneSelector = ({ scenes }) => {
   const handleSliderChange = (event, newValue) => {
     setCurrentProgress(newValue);
     const newSceneIndex = sceneStartTimes.findIndex((start, i) => newValue >= start && (!sceneStartTimes[i+1] || newValue < sceneStartTimes[i+1]));
-    setCurrentSceneIndex(newSceneIndex);
+    if (newSceneIndex !== currentSceneIndex) {
+      setCurrentSceneIndex(newSceneIndex);
+    }
+    setSeekTo(newValue - sceneStartTimes[newSceneIndex]);
   };
 
   const handleSceneEnd = () => {
@@ -67,6 +69,7 @@ const SceneSelector = ({ scenes }) => {
 
   const handleProgress = ({ playedSeconds }) => {
     setCurrentProgress(sceneStartTimes[currentSceneIndex] + playedSeconds);
+    setSeekTo(0); // reset the seekTo value after seeking
   };
 
   const sliderMarks = scenes.map((scene, i) => ({
@@ -87,6 +90,7 @@ const SceneSelector = ({ scenes }) => {
         audioSrc={scenes[currentSceneIndex].audio} 
         handleSceneEnd={handleSceneEnd}
         handleProgress={handleProgress}
+        seekTo={seekTo}
       />
       <Slider
         value={currentProgress}
