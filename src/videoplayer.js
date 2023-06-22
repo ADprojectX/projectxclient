@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
 import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
+import axios from 'axios';
+import JSZip from 'jszip';
+
+const REQ_BASE_URL = 'http://localhost:8000/req';
 
 const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
   const reactPlayerRef = useRef();
@@ -18,13 +22,13 @@ const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo })
       <Container maxWidth="md" height="md">
         <ReactPlayer 
           ref={reactPlayerRef}
-          url={videoSrc} 
+          url={videoSrc}
           playing={true} 
           controls={true} 
           onEnded={handleSceneEnd} 
           onProgress={handleProgress}
         />
-        <audio id='audio' src={audioSrc} autoPlay />
+        {/* <audio id='audio' src={audioSrc} autoPlay /> */}
       </Container>
     </div>
   );
@@ -77,11 +81,15 @@ const SceneSelector = ({ scenes }) => {
     label: scene.name,
   }));
 
+  if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6"> ProjectX Video Player</Typography>
+          <Typography variant="h6">ProjectX Video Player</Typography>
         </Toolbar>
       </AppBar>
       <Toolbar />
@@ -108,17 +116,52 @@ const SceneSelector = ({ scenes }) => {
 
 // This component will be the main component
 const App = () => {
-  // Assuming your videos and audios are in public directory
-  const scenes = [
-    { name: 'Scene0', video: '/output/video0.mp4', audio: '/audio/voice#scene#0.mp3',  duration: 10 },
-    { name: 'Scene1', video: '/output/video1.mp4', audio: '/audio/voice#scene#1.mp3',  duration: 8 },
-    { name: 'Scene2', video: '/output/video2.mp4', audio: '/audio/voice#scene#2.mp3',  duration: 12 },
-    { name: 'Scene3', video: '/output/video3.mp4', audio: '/audio/voice#scene#3.mp3',  duration: 7 },
-    { name: 'Scene4', video: '/output/video4.mp4', audio: '/audio/voice#scene#4.mp3',   duration: 13},
-    // Add more scenes here...
-  ];
+  const [videoFiles, setVideoFiles] = useState([]);
 
-  return <SceneSelector scenes={scenes} />;
+  useEffect(() => {
+    axios.get(`${REQ_BASE_URL}/video-files/`, { responseType: 'arraybuffer' })
+      .then((response) => {
+        const zip = new JSZip();
+        return zip.loadAsync(response.data);
+      })
+      .then((zip) => {
+        const filePromises = Object.keys(zip.files).map((fileName) => {
+          const file = zip.files[fileName];
+          return file.async('blob').then((blob) => {
+            return { name: fileName, url: URL.createObjectURL(blob) };
+          });
+        });
+        return Promise.all(filePromises);
+      })
+      .then((videos) => {
+        const videoPromises = videos.map((video) => {
+          return new Promise((resolve) => {
+            const videoElement = document.createElement('video');
+            videoElement.src = video.url;
+            videoElement.addEventListener('loadedmetadata', () => {
+              const duration = videoElement.duration;
+              resolve({ ...video, duration });
+            });
+          });
+        });
+        return Promise.all(videoPromises);
+      })
+      .then((videosWithDuration) => {
+        setVideoFiles(
+          videosWithDuration.map((video, index) => ({
+            name: `Scene${index}`,
+            video: video.url,
+            audio: '', // Provide audio URL if available
+            duration: video.duration
+          }))
+        );
+      })
+      .catch((error) => {
+        console.error('Failed to retrieve video files:', error);
+      });
+  }, []);
+  
+  return <SceneSelector scenes={videoFiles} />;
 };
 
 export default App;
