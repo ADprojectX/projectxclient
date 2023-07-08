@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
 import DashboardPage from './DashboardPage';
-import VideoEditor from './videoplayer';
+import VideoPlayer from './VideoPlayer';
+// import VideoList from './VideoList';
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/video" element={<VideoEditor />} />
+            <Route path="/video" element={<VideoPlayer />} />
+            {/* <Route path="/videolist" element={<VideoList />} /> */}
           </Routes>
         </div>
       </Router>
@@ -53,9 +55,8 @@ const ProtectedRoute = ({children }) => {
 //         )
 //       }
 //     />
-//   );
-// }
-
+//   )
+// };
 
 function HomePage() {
   const handleLoginClick = () => {
@@ -69,6 +70,9 @@ function HomePage() {
   const handleVideoClick = () => {
     window.location.href = '/video';
   };
+  const handleVideoListClick = () => {
+    window.location.href = '/videolist';
+  };
 
   return (
     <div className="home">
@@ -76,6 +80,7 @@ function HomePage() {
       <button onClick={handleLoginClick}>Login</button>
       <button onClick={handleSignupClick}>Sign Up</button>
       <button onClick={handleVideoClick}>Video Player</button>
+      {/* <button onClick={handleVideoListClick}>Video List</button> */}
     </div>
   );
 }
