@@ -1,10 +1,40 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
-import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
+// import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
+import { Container, AppBar, Toolbar, Typography }  from "@mui/material";
+import Slider, { SliderInput } from "@mui/material/Slider"
 import axios from 'axios';
 import JSZip from 'jszip';
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
+
+const VideoDurationGetter = ({ videos, onDurationsReady }) => {
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [videoDurations, setVideoDurations] = useState([]);
+  
+  const handleDuration = (duration) => {
+    setVideoDurations([...videoDurations, duration]);
+    setCurrentVideoIndex(currentVideoIndex + 1);
+  };
+  
+  useEffect(() => {
+    if (currentVideoIndex >= videos.length) {
+      onDurationsReady(videoDurations);
+    }
+  }, [currentVideoIndex, videoDurations, videos.length, onDurationsReady]);
+  
+  if (currentVideoIndex < videos.length) {
+    return (
+      <ReactPlayer
+        url={videos[currentVideoIndex]}
+        onDuration={handleDuration}
+        style={{ display: "none" }} // Hide the video player
+      />
+    );
+  }
+  
+  return null;
+};
 
 const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
   const reactPlayerRef = useRef();
@@ -114,7 +144,6 @@ const SceneSelector = ({ scenes }) => {
 };
 
 
-// This component will be the main component
 const App = () => {
   const [videoFiles, setVideoFiles] = useState([]);
 

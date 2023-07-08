@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 // import {Cookies, useCookies } from 'react-cookie';
@@ -26,6 +26,7 @@ function DashboardPage() {
       })
       .catch((error) => {
         setErrorMessage('unauthorized');
+        navigate('/login');
         console.log(error);
       });
   }, []);
@@ -45,31 +46,40 @@ function DashboardPage() {
       });
   };
 
-  const handleSelectChange = (event) => {
-    setSelectedValue(event.target.value);
+  const handleTitleClick = () => {
+    navigate('/title');
   };
 
-  const handleTopicChange = (e) => {
-    setTopic(e.target.value);
+  const handleScriptClick = () => {
+    navigate('/script');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let headers = {
-      'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json'
-    };
-    let data = {topic:topic, voice:selectedValue}
-    axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
-      .then((response) => {
-        console.log('Project Submitted');
-        setResponseData(response.data);
-      })
-      .catch((error) => {
-        setErrorMessage('project not submitted');
-        console.log(error);
-      });
-  };
+
+  // const handleSelectChange = (event) => {
+  //   setSelectedValue(event.target.value);
+  // };
+
+  // const handleTopicChange = (e) => {
+  //   setTopic(e.target.value);
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   let headers = {
+  //     'X-CSRFToken': csrfToken,
+  //     'Content-Type': 'application/json'
+  //   };
+  //   let data = {topic:topic, voice:selectedValue}
+  //   axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
+  //     .then((response) => {
+  //       console.log('Project Submitted');
+  //       setResponseData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setErrorMessage('project not submitted');
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className="dashboard">
@@ -77,7 +87,27 @@ function DashboardPage() {
       <h1>Hello, {userName}</h1>
       <p>Welcome to your dashboard</p>
       <button onClick={handleLogoutClick}>Logout</button>
-      <form onSubmit={handleSubmit}>
+
+      <div>
+        <button onClick={handleTitleClick}>Title</button>
+        <button onClick={handleScriptClick}>Script</button>
+      </div>
+
+      {/* <form onSubmit={handleSubmit}>
+
+        <select value={selectedValue} onChange={handleSelectChange}>
+          {[...Array(10)].map((_, index) => (
+            <option key={index} value={index}>{index}</option>
+          ))}
+        </select>
+        
+        <input type="text" placeholder="voice" value={topic} onChange={handleTopicChange} />
+        <button type="submit">Submit</button>
+        {errorMessage && <p className="error">{errorMessage}</p>}
+      </form> */}
+
+
+      {/* <form onSubmit={handleSubmit}>
         <select value={selectedValue} onChange={handleSelectChange}>
           {[...Array(10)].map((_, index) => (
             <option key={index} value={index}>{index}</option>
@@ -86,7 +116,7 @@ function DashboardPage() {
         <input type="text" placeholder="voice" value={topic} onChange={handleTopicChange} />
         <button type="submit">Submit</button>
         {errorMessage && <p className="error">{errorMessage}</p>}
-      </form>
+      </form> */}
       {responseData && (
       <div>
         <h3>Response Data</h3>
