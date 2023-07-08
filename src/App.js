@@ -2,11 +2,18 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import { Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import SignupPage from './SignupPage';
-import DashboardPage from './DashboardPage';
-import VideoPlayer from './VideoPlayer';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import DashboardPage from './pages/DashboardPage';
+// import VideoPlayer from './VideoPlayer';
 // import VideoList from './VideoList';
+import VideoPlayer from './pages/videoplayer';
+import TitlePage from './pages/TitlePage';
+import ScriptPage from './pages/ScriptPage';
+import VoicePage from './pages/VoicePage';
+import LoadingPage from './pages/LoadingPage';
+
+
 
 function App() {
   return (
@@ -26,6 +33,12 @@ function App() {
               }
             />
             <Route path="/video" element={<VideoPlayer />} />
+            <Route path="/title" element={<TitlePage />} />
+            <Route path="/script" element={<ScriptPage />} />
+            <Route path="/voice" element={<VoicePage />} />
+            <Route path="/script" element={<ScriptPage />} />
+            <Route path="/Loading" element={<LoadingPage />} />
+
             {/* <Route path="/videolist" element={<VideoList />} /> */}
           </Routes>
         </div>
