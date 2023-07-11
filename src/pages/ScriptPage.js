@@ -2,11 +2,17 @@ import React, {useState} from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import sampleData from './sampleData.json'
+import Card from '../components/Card';
+import ScriptEditingPage from './css/ScriptPage.css'
 
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
 function ScriptPage() {
+    const jsonData = Object.values(sampleData); 
+    const [scenes, setScenes] = useState(jsonData);
+
     const navigate = useNavigate();
     const { fromTitlePage } = useParams(); // Check if user came from the TitlePage
     // const { reqid } = useParams();
@@ -16,6 +22,7 @@ function ScriptPage() {
     const [script, setScript] = useState('');
     const location = useLocation();
     let reqid = location.state && location.state.reqid
+
     React.useEffect(() => {
         axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
         .then((response) => {
@@ -71,24 +78,59 @@ function ScriptPage() {
       setScript(e.target.value);
     };
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (script.trim() === '') {
-          setErrorMessage('Script cannot be empty');
-          return;
-        }
-      // Perform the desired action with the script
-      console.log('Script:', script);
-  
-      // TODO: SEND THIS SCRIPT TO THE BACKEND---------------------
-  
-      // Reset the setScript field
-      setScript('');
-  
-      navigate('/voice');
-  
+    
+    const updateCard = (index, newScene) => {
+      const newScenes = [...scenes];
+      newScenes[index] = newScene;
+      setScenes(newScenes);
     };
+  
+    const deleteCard = (index) => {
+      const newScenes = [...scenes];
+      newScenes.splice(index, 1);
+      setScenes(newScenes);
+    };
+  
+    const addCard = (index) => {
+      const newScenes = [...scenes];
+      newScenes.splice(index + 1, 0, ['', '']);
+      setScenes(newScenes);
+    }
+    const handleSubmit = async () => {
 
+      // TODO : JSON can be taken from Scene UseState
+  
+      // Here you could send the updated scenes state to your backend
+      // Example with fetch:
+      // const response = await fetch('https://your-api-endpoint', {
+      //   method: 'POST', // or 'PUT'
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(scenes),
+      // });
+
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // } else {
+      //   // do something with the response if needed
+      // }
+      // e.preventDefault();
+      // if (script.trim() === '') {
+      //     setErrorMessage('Script cannot be empty');
+      //     return;
+      //   }
+      // // Perform the desired action with the script
+      // console.log('Script:', script);
+  
+      // // TODO: SEND THIS SCRIPT TO THE BACKEND---------------------
+  
+      // // Reset the setScript field
+      // setScript('');
+  
+      // navigate('/voice');
+      };
+    
     return(
         <div className="script-page">
         <h2>Script Page</h2>
@@ -96,7 +138,21 @@ function ScriptPage() {
         <p>Welcome to the Script Page</p>
         <button onClick={handleLogoutClick}>Logout</button>
         <p></p>
-        {fromTitlePage === 'generated' && script ? (
+        <div className="scriptContainer">
+          {scenes.map((scene, index) => (
+            <Card
+              key={index}
+              scene={scene}
+              index={index}
+              updateCard={updateCard}
+              deleteCard={deleteCard}
+              addCard={addCard}
+            />
+          ))}
+          <button className="submit" onClick={handleSubmit}>Submit</button>
+        </div>
+        
+        {/* {fromTitlePage === 'generated' && script ? (
           <form onSubmit={handleSubmit}>
             <textarea
               value={script}
@@ -114,7 +170,7 @@ function ScriptPage() {
             />
             <button onClick={handleSubmit}>Submit</button>
           </div>
-        )}
+        )} */}
         {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
     );
