@@ -4,14 +4,18 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const API_BASE_URL = 'http://localhost:8000/api';
+const REQ_BASE_URL = 'http://localhost:8000/req';
 
 function TitlePage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState('');
   const [userName, setUserName] = React.useState(null);
   const [title, setTitle] = useState('');
+  const [csrfToken, setCsrfToken] = React.useState('')
+  const [topic, setTopic] = React.useState('');
 
   React.useEffect(() => {
+    setCsrfToken(Cookies.get('csrftoken'))
     axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
       .then((response) => {
         setUserName(response.data.username);
@@ -50,13 +54,28 @@ function TitlePage() {
       }
     // Perform the desired action with the title
     console.log('Title:', title);
-
+    let headers = {
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json'
+    };
+    let data = {topic:topic}
+    axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
+      .then((response) => {
+        // console.log(response.data.script);
+        console.log(response.data)
+        console.log('Project Submitted');
+        // navigate('/script', { state: { script: response.data.script } });
+        navigate('/script', {state:{reqid:response.data.reqid}});
+      })
+      .catch((error) => {
+        setErrorMessage('project not submitted');
+        console.log(error);
+      });
     // TODO: SEND THIS TITLE TO THE BACKEND---------------------
 
     // Reset the title field
-    setTitle('');
+    setTitle(title);
 
-    navigate('/script');
 
   };
 
