@@ -43,7 +43,6 @@ function ScriptPage() {
         .then((response) => {
           let scriptFromBack = response.data.script
           const jsonData = Object.values(scriptFromBack); 
-          console.log(typeof scriptFromBack, 'x')
           setScenes(jsonData)
           // setScript(scriptFromBack)
           })
@@ -92,27 +91,32 @@ function ScriptPage() {
       setScenes(newScenes);
     }
     const handleSubmit = async () => {
-      console.log(scenes)
       // let SCENE = `SCENE${}`
+      console.log(scenes[0], 'y')
       let finalScene = {};
       let i = 0;
-      for (let scene in scenes) {
-        // const scene = scenes[i];
-        if (scene.trim() !== '') {
+      for (let scene of scenes) {
+        if (typeof scene[0] === 'string' && scene[0].trim() !== '') {
           const sceneNumber = i + 1;
           const key = `scene#${sceneNumber}`;
           finalScene[key] = scene;
+          i++;
         }
       }
-      axios.get(`${REQ_BASE_URL}/save-script/`, finalScene, { withCredentials: true })
-      .then((response) => {
-        // Handle the response from the backend
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the request
-        console.log(error);
-      });
+            
+      console.log('x',finalScene)
+      const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
+
+      axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}`, { withCredentials: true })
+        .then(response => {
+          // Handle the response
+          console.log(response.data);
+          navigate('/voice')
+        })
+        .catch(error => {
+          // Handle the error
+          console.error(error);
+        });
 
       
       // TODO : JSON can be taken from Scene UseState

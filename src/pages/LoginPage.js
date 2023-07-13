@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import LoginCssPage from './css/LoginPage.css'
 
 
 const API_BASE_URL = 'http://localhost:8000/api';
@@ -38,16 +39,19 @@ export default function LoginPage() {
 
   return (
     <div className="login">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" value={username} onChange={handleUsernameChange} />
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        <button type="submit">Login</button>
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </form>
-      {location.state && location.state.from && (
-        <p>You need to login to access {location.state.from.pathname}</p>
-      )}
+      <div className='form-container'>
+        <form className="form" onSubmit={handleSubmit}>
+          <h2>Login</h2>
+
+          <input type="text" placeholder="Username" value={username} onChange={handleUsernameChange} />
+          <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+          <button type="submit">Login</button>
+          {errorMessage && <p className="error">{errorMessage}</p>}
+        </form>
+        {location.state && location.state.from && (
+          <p>You need to login to access {location.state.from.pathname}</p>
+        )}
+      </div>
     </div>
   )
 }
