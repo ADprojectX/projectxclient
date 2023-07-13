@@ -15,34 +15,6 @@ function TitlePage() {
   const [csrfToken, setCsrfToken] = React.useState('')
   const [topic, setTopic] = React.useState('');
 
-  // React.useEffect(() => {
-  //   setCsrfToken(Cookies.get('csrftoken'))
-  //   axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
-  //     .then((response) => {
-  //       setUserName(response.data.username);
-  //     })
-  //     .catch((error) => {
-  //       setErrorMessage('unauthorized');
-  //       navigate('/login');
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // const handleLogoutClick = () => {
-  //   let data = { token: Cookies.get('jwt') };
-  //   axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
-  //     .then((response) => {
-  //       Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
-  //       Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
-  //       console.log('logout_successful');
-  //       navigate('/login');
-  //     })
-  //     .catch((error) => {
-  //       setErrorMessage('cannot logout');
-  //       console.log(error);
-  //     });
-  // };
-
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -76,14 +48,11 @@ function TitlePage() {
 
     // Reset the title field
     setTitle(title);
-
-
   };
 
   return (
     <div className="title-page">
       <NavBar/>
-      <h1>Hello, {userName}</h1>
       <p>Welcome to the Title Page</p>
       {/* <button onClick={handleLogoutClick}>Logout</button> */}
       <form onSubmit={handleSubmit}>

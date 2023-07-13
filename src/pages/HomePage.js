@@ -1,3 +1,6 @@
+import HomeCssPage from './css/Home.css'
+
+
 function HomePage() {
     const handleLoginClick = () => {
       window.location.href = '/login';
@@ -17,9 +20,9 @@ function HomePage() {
     return (
       <div className="home">
         <h2>Home</h2>
-        <button onClick={handleLoginClick}>Login</button>
-        <button onClick={handleSignupClick}>Sign Up</button>
-        <button onClick={handleVideoClick}>Video Player</button>
+        <button onClick={handleLoginClick}>Get Started</button>
+        {/* <button onClick={handleSignupClick}>Sign Up</button>
+        <button onClick={handleVideoClick}>Video Player</button> */}
         {/* <button onClick={handleVideoListClick}>Video List</button> */}
       </div>
     );

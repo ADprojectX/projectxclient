@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoginCssPage from './css/LoginPage.css'
 import { userLogin } from '../auth/userLogin'
+import { Link } from 'react-router-dom';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
@@ -64,6 +65,7 @@ export default function LoginPage() {
           <button type="submit">Continue</button>
           {errorMessage && <p className="error">{errorMessage}</p>}
         </form>
+        <p>Do not have an account? <Link to="/signup" style={{ textDecoration: 'underline' }}>Sign Up</Link></p>
         {location.state && location.state.from && (
           <p>You need to login to access {location.state.from.pathname}</p>
         )}
