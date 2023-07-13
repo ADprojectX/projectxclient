@@ -45,7 +45,7 @@ export default function LoginPage() {
 
           <input type="text" placeholder="Username" value={username} onChange={handleUsernameChange} />
           <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-          <button type="submit">Login</button>
+          <button type="submit">Continue</button>
           {errorMessage && <p className="error">{errorMessage}</p>}
         </form>
         {location.state && location.state.from && (
