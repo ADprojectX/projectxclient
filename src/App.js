@@ -13,6 +13,7 @@ import ScriptPage from './pages/ScriptPage';
 import VoicePage from './pages/VoicePage';
 import LoadingPage from './pages/LoadingPage';
 import HomePage from './pages/HomePage';
+import PrivateRouteLayout from './layout/PrivateRouteLayout'
 // import SScriptPage from './pages/SScriptPage';
 
 
@@ -21,22 +22,18 @@ function App() {
   return (
       <Router>
         <div className="App">
-          <h1 id = 'abc'>Welcome to my App</h1>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
+            {/* Private Routes */}
+            <Route element={<PrivateRouteLayout/>}>
+              <Route path="/dashboard" element={<DashboardPage />}/>
+              <Route path="/title" element={<TitlePage />} />
+              <Route path="/script" element={<ScriptPage />} />
+            </Route>
             <Route path="/video" element={<VideoPlayer />} />
-            <Route path="/title" element={<TitlePage />} />
-            <Route path="/script" element={<ScriptPage />} />
             <Route path="/voice" element={<VoicePage />} />
             <Route path="/script" element={<ScriptPage />} />
             <Route path="/Loading" element={<LoadingPage />} />

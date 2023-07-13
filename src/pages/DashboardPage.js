@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import NavBar from '../components/NavBar';
 // import {Cookies, useCookies } from 'react-cookie';
 
 
@@ -18,33 +19,33 @@ function DashboardPage() {
   const [responseData, setResponseData] = React.useState(null);
   
 
-  React.useEffect(()=>{
-    setCsrfToken(Cookies.get('csrftoken'))
-    axios.get(`${API_BASE_URL}/dashboard/`, {withCredentials:true})
-      .then((response) => {
-        setUserName(response.data.username);
-      })
-      .catch((error) => {
-        setErrorMessage('unauthorized');
-        navigate('/login');
-        console.log(error);
-      });
-  }, []);
+  // React.useEffect(()=>{
+  //   setCsrfToken(Cookies.get('csrftoken'))
+  //   axios.get(`${API_BASE_URL}/dashboard/`, {withCredentials:true})
+  //     .then((response) => {
+  //       setUserName(response.data.username);
+  //     })
+  //     .catch((error) => {
+  //       setErrorMessage('unauthorized');
+  //       navigate('/login');
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  const handleLogoutClick = () => {
-    let data = {token : Cookies.get('jwt')}
-    axios.post(`${API_BASE_URL}/logout/`, data, {withCredentials:true})
-      .then((response) => {
-        Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true});
-        Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true});
-        console.log('logout_successful');
-        navigate('/login');
-      })
-      .catch((error) => {
-        setErrorMessage('cannot logout');
-        console.log(error);
-      });
-  };
+  // const handleLogoutClick = () => {
+  //   let data = {token : Cookies.get('jwt')}
+  //   axios.post(`${API_BASE_URL}/logout/`, data, {withCredentials:true})
+  //     .then((response) => {
+  //       Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true});
+  //       Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true});
+  //       console.log('logout_successful');
+  //       navigate('/login');
+  //     })
+  //     .catch((error) => {
+  //       setErrorMessage('cannot logout');
+  //       console.log(error);
+  //     });
+  // };
 
   const handleTitleClick = () => {
     navigate('/title');
@@ -83,10 +84,10 @@ function DashboardPage() {
 
   return (
     <div className="dashboard">
-      <h2>Dashboard</h2>
+      <NavBar/>
       <h1>Hello, {userName}</h1>
       <p>Welcome to your dashboard</p>
-      <button onClick={handleLogoutClick}>Logout</button>
+      {/* <button onClick={handleLogoutClick}>Logout</button> */}
 
       <div>
         <button onClick={handleTitleClick}>Title</button>
