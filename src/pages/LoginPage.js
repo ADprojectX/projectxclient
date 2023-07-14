@@ -45,10 +45,10 @@ export default function LoginPage() {
       .then((response) => {
         localStorage.setItem('isAuthenticated', true);
         console.log('successful');
-        navigate('/dashboard');
+        // navigate('/dashboard');
       })
       .catch((error) => {
-        setErrorMessage('Invalid username or password');
+        setErrorMessage('Invalid username or passwordddd');
         console.log(error);
         navigate('/login');
       });
@@ -57,7 +57,7 @@ export default function LoginPage() {
   return (
     <div className="login">
       <div className='form-container'>
-        <form className="form" onSubmit={handleLogin}>
+        <form className="form" onSubmit={handleSubmit}>
           <h2>Login</h2>
 
           <input type="text" placeholder="Email" value={email} onChange={handleUsernameChange} />

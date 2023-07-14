@@ -34,7 +34,7 @@ function SignupPage() {
       setErrorMessage('Passwords do not match');
       return;
     }
-    const data = { username: email, password };
+    const data = {email, password};
     axios.post(`${API_BASE_URL}/signup/`, data)
       .then((response) => {
         console.log('successful');
@@ -77,7 +77,7 @@ function SignupPage() {
       </form> */}
 
       <div className='form-container'>
-        <form className="form" onSubmit={handleSignUp}>
+        <form className="form" onSubmit={handleSubmit}>
           <h2>Sign Up</h2>
 
           <input type="text" placeholder="Email" value={email} onChange={handleUsernameChange} />

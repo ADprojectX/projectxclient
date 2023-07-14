@@ -4,8 +4,14 @@ import NavBarCss from './css/NavBar.css'
 import { onAuthStateChanged } from "firebase/auth";
 import {auth} from '../firebase/config'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
+const API_BASE_URL = 'http://localhost:8000/api';
+const REQ_BASE_URL = 'http://localhost:8000/req';
 
 const NavBar = () => {
+    //Firebase
     const {error, logout} = userLogout();
     const navigate = useNavigate()
     const [user, setUser] = useState({});
@@ -16,18 +22,56 @@ const NavBar = () => {
 
     const handleLogout = async () => {
         await logout()
-    
         if(!error){
           navigate("/login")
         }
-      }
+    }
+
+
+    //django
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const [userName, setUserName] = React.useState(null);
+    const [title, setTitle] = useState("");
+    const [csrfToken, setCsrfToken] = React.useState("")
+    const [topic, setTopic] = React.useState("");
+
+
+
+    React.useEffect(() => {
+      setCsrfToken(Cookies.get('csrftoken'))
+      axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
+        .then((response) => {
+          setUserName(response.data.username);
+        })
+        .catch((error) => {
+          setErrorMessage('unauthorized');
+          navigate('/login');
+          console.log(error);
+        });
+    }, []);
+
+    const handleLogoutClick = () => {
+      let data = { token: Cookies.get('jwt') };
+      axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
+        .then((response) => {
+          Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
+          Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
+          console.log('logout_successful');
+          navigate('/login');
+        })
+        .catch((error) => {
+          setErrorMessage('cannot logout');
+          console.log(error);
+        });
+    };
 
   return (
     <div className='navbar'>
         <h1>ProjectX</h1>
         <div className='nav-right'>
-          <p>Hello {user.email}</p>
-          <button onClick={handleLogout}>Logout</button>
+          <p>Hello {userName}</p> 
+          {/* change user.email to username for django and user.email for firebase */}
+          <button onClick={handleLogoutClick}>Logout</button>
         </div>
     </div>
   );
