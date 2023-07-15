@@ -4,9 +4,11 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const API_BASE_URL = 'http://localhost:8000/api';
+const REQ_BASE_URL = 'http://localhost:8000/req';
 
 function VoicePage() {
     const navigate = useNavigate();
+    const [voiceSamples, setVoiceSamples] = useState({});
     const { fromTitlePage } = useParams(); // Check if user came from the TitlePage
     const [errorMessage, setErrorMessage] = useState('');
     const [userName, setUserName] = useState(null);
@@ -14,16 +16,15 @@ function VoicePage() {
 
   
     React.useEffect(() => {
-        axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
+        axios.get(`${REQ_BASE_URL}/voice-samples/`, { withCredentials: true })
         .then((response) => {
-          setUserName(response.data.username);
+          // Set the voice samples data received from the server
+          setVoiceSamples(response.data);
         })
         .catch((error) => {
-          setErrorMessage('unauthorized');
-          navigate('/login');
-          console.log(error);
+          console.error(error);
         });
-    }, [fromTitlePage]);
+    }, []);
   
   
     const handleLogoutClick = () => {
@@ -42,18 +43,26 @@ function VoicePage() {
     };
 
     const handleSelectChange = (event) => {
-        setSelectedValue(event.target.value);
+      setSelectedValue(event.target.value);
     };
     
     const handleSubmit = (e) => {
+      console.log('submit')
         e.preventDefault();
+        axios.get(`${REQ_BASE_URL}/voice/`, selectedValue ,{ withCredentials: true })
+        .then((response) => {
+          // Set the voice samples data received from the server
+          console.log('voice sent');
+          navigate('/loading');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
         // Perform the desired action with the script
 
         // TODO: SEND THIS SCRIPT TO THE BACKEND---------------------
 
         // Reset the title field
-
-        navigate('/loading');
     };
 
     return(
@@ -62,20 +71,28 @@ function VoicePage() {
         <h1>Hello, {userName}</h1>
         <p>Welcome to the Voice Page</p>
         <button onClick={handleLogoutClick}>Logout</button>
-
         <form onSubmit={handleSubmit}>
-
             <select value={selectedValue} onChange={handleSelectChange}>
-            {[...Array(10)].map((_, index) => (
-                <option key={index} value={index}>{index}</option>
+            {Object.entries(voiceSamples).map(([audioName,_]) => (
+              <option key={audioName} value={audioName}>{audioName}</option>
             ))}
+            {/* {[...Array(10)].map((_, index) => (
+                <option key={index} value={index}>{index}</option>
+            ))} */}
             </select>
             
             {/* <input type="text" placeholder="voice" value={topic} onChange={handleTopicChange} /> */}
             <button type="submit">Submit</button>
             {errorMessage && <p className="error">{errorMessage}</p>}
         </form>
-
+        {Object.entries(voiceSamples).map(([audioName, audioData]) => (
+        <div key={audioName}>
+          <h3>{audioName}</h3>
+          <audio controls>
+            <source src={`data:audio/mp3;base64,${audioData}`} type="audio/mp3" />
+          </audio>
+        </div>
+      ))}
         {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
     );
