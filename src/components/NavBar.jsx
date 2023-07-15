@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {userLoggedIn} from '../auth/userLoggedIn';
 import {userLogout} from '../auth/userLogout'
 import NavBarCss from './css/NavBar.css'
 import { onAuthStateChanged } from "firebase/auth";
@@ -27,7 +28,6 @@ const NavBar = () => {
     //     }
     // }
 
-
     //django
     const [errorMessage, setErrorMessage] = React.useState("");
     const [userName, setUserName] = React.useState(null);
@@ -35,6 +35,13 @@ const NavBar = () => {
     const [csrfToken, setCsrfToken] = React.useState("")
     const [topic, setTopic] = React.useState("");
 
+    const getUserResponse = async () => {
+      // e.preventDefault();
+      // const res = await loggedIn();
+      const {error, response} = await userLoggedIn();
+      setUserName(response.data.email);
+    }
+    getUserResponse()
 
     const handleLogoutClick = () => {
       let data = { token: Cookies.get('jwt') };
