@@ -9,36 +9,39 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 
 const PrivateRouteLayout = () => {
     const [user, setUser] = useState(null);
-
-    const checkUser = () => {
-      axios
-        .post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true })
-        .then((response) => {
-          // Set the user data received from the server
-          console.log(response.data.email);
-          setUser(response.data.email); // Assuming the server response contains the user's email
-          return true;
-        })
-        .catch((error) => {
-          console.error(error);
-          return false;
-        });
-    };
+    const [loading, setLoading] = useState(true);
   
-    // onAuthStateChanged(auth, (currentUser) => {
-    //     setUser(currentUser);
-    // })
+    // // onAuthStateChanged(auth, (currentUser) => {
+    // //     setUser(currentUser);
+    // // })
     
-      // Call checkUser when the component mounts
-    checkUser();
-
-    if (user) {
-        return <Outlet />;
-    } else {
-        return <Navigate to="/login" />;
+    
+    useEffect(() => {
+      const checkUser = async () => {
+        try {
+          const response = await axios.post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true });
+          setUser(response.data.email);
+          setLoading(false);
+        } catch (error) {
+          console.error(error);
+          setLoading(false);
+        }
+      };
+      
+      checkUser();
+    }, []);
+    
+    if (loading) {
+      return <p>Loading...</p>; // Show a loading indicator while checking the user status
     }
-    };
 
+    if (!user) {
+      console.log('User not authenticated');
+      return <Navigate to="/login" />;
+    }else{
+      return <Outlet />;
+    }
+};
     
     export default PrivateRouteLayout;
     

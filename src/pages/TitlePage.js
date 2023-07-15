@@ -3,6 +3,7 @@ import { useNavigate, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import Cookies from 'js-cookie';
+// import SideBar from '../components/SideBar';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
@@ -10,7 +11,6 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 function TitlePage() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState('');
-  const [userName, setUserName] = React.useState(null);
   const [title, setTitle] = useState('');
   const [csrfToken, setCsrfToken] = React.useState('')
   const [topic, setTopic] = React.useState('');
@@ -53,6 +53,7 @@ function TitlePage() {
   return (
     <div className="title-page">
       <NavBar/>
+      {/* <SideBar/> */}
       <p>Welcome to the Title Page</p>
       {/* <button onClick={handleLogoutClick}>Logout</button> */}
       <form onSubmit={handleSubmit}>

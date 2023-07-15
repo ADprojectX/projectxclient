@@ -30,8 +30,8 @@ function App() {
             {/* Private Routes */}
             <Route element={<PrivateRouteLayout/>}>
               <Route path="/dashboard" element={<DashboardPage />}/>
-              <Route path="/title" element={<TitlePage />} />
               <Route path="/script" element={<ScriptPage />} />
+              <Route path="/title" element={<TitlePage />} />
             </Route>
             <Route path="/video" element={<VideoPlayer />} />
             <Route path="/voice" element={<VoicePage />} />

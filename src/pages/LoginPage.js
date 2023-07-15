@@ -44,7 +44,7 @@ export default function LoginPage() {
     axios.post(`${API_BASE_URL}/login_user/`, data, {withCredentials:true})
       .then((response) => {
         localStorage.setItem('isAuthenticated', true);
-        console.log('successful');
+        console.log('login successful');
         navigate('/dashboard');
       })
       .catch((error) => {

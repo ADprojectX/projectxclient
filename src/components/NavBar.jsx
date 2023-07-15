@@ -36,20 +36,6 @@ const NavBar = () => {
     const [topic, setTopic] = React.useState("");
 
 
-
-    React.useEffect(() => {
-      setCsrfToken(Cookies.get('csrftoken'))
-      axios.get(`${API_BASE_URL}/dashboard/`, { withCredentials: true })
-        .then((response) => {
-          setUserName(response.data.username);
-        })
-        .catch((error) => {
-          setErrorMessage('unauthorized');
-          navigate('/login');
-          console.log(error);
-        });
-    }, []);
-
     const handleLogoutClick = () => {
       let data = { token: Cookies.get('jwt') };
       axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
