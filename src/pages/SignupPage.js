@@ -80,7 +80,7 @@ function SignupPage() {
         <form className="form" onSubmit={handleSubmit}>
           <h2>Sign Up</h2>
 
-          <input type="text" placeholder="Email" value={email} onChange={handleUsernameChange} />
+          <input type="email" placeholder="Email" value={email} onChange={handleUsernameChange} />
           <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
           <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
 
