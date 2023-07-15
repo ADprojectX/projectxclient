@@ -12,20 +12,20 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 
 const NavBar = () => {
     //Firebase
-    const {error, logout} = userLogout();
+    // const {error, logout} = userLogout();
     const navigate = useNavigate()
-    const [user, setUser] = useState({});
+    // const [user, setUser] = useState({});
 
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    })
+    // onAuthStateChanged(auth, (currentUser) => {
+    //     setUser(currentUser);
+    // })
 
-    const handleLogout = async () => {
-        await logout()
-        if(!error){
-          navigate("/login")
-        }
-    }
+    // const handleLogout = async () => {
+    //     await logout()
+    //     if(!error){
+    //       navigate("/login")
+    //     }
+    // }
 
 
     //django

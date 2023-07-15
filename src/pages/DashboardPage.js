@@ -7,9 +7,7 @@ const API_BASE_URL = 'http://localhost:8000/api';
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
+  
   const handleTitleClick = () => {
     navigate('/title');
   };
@@ -18,30 +16,7 @@ function DashboardPage() {
     navigate('/script');
   };
 
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const response = await axios.post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true });
-        setUser(response.data.email);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
 
-    checkUser();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>; // Show a loading indicator while checking the user status
-  }
-
-  if (!user) {
-    console.log('User not authenticated');
-    navigate('/login');
-    return null; // Render nothing until the navigation completes
-  }
 
   return (
     <div className="dashboard">
