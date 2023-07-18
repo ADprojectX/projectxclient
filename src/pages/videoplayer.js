@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
-// import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
-import { Container, AppBar, Toolbar, Typography }  from "@mui/material";
-import Slider, { SliderInput } from "@mui/material/Slider"
+import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
+// import { Container, AppBar, Toolbar, Typography }  from "@mui/material";
+// import Slider, { SliderInput } from "@mui/material/Slider"
 import axios from 'axios';
 import JSZip from 'jszip';
 

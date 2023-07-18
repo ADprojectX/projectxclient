@@ -1,21 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-// import OutletContext from '../context/OutletContext';
-import axios from 'axios';
-import NavBar from '../components/NavBar';
+import React from 'react';
+import {DashboardPageCss} from './css/DashboardPage.css'
+import SideBar from '../components/SideBar';
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
 function DashboardPage() {
-  // const user  = useContext(OutletContext);
-  // try {
-  //   const [user, setUser] = useOutletContext();
-  // } catch (error) {
-  //   console.log("error")
-  //   console.log(error)
-  // }
-
-  const [user, setUser] = useOutletContext()
   const navigate = useNavigate();
   
   const handleTitleClick = () => {
@@ -28,10 +18,13 @@ function DashboardPage() {
 
   return (
     <div className="dashboard">
-      <p>Welcome to your dashboard</p>
-      <div>
-        <button onClick={handleTitleClick}>Title</button>
-        <button onClick={handleScriptClick}>Script</button>
+      <SideBar />
+      <div className="dashboard-content">
+        <p>Welcome to your dashboard</p>
+        <div>
+          <button onClick={handleTitleClick}>Title</button>
+          <button onClick={handleScriptClick}>Script</button>
+        </div>
       </div>
     </div>
   );
