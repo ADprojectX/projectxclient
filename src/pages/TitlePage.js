@@ -52,10 +52,8 @@ function TitlePage() {
 
   return (
     <div className="title-page">
-      <NavBar/>
       {/* <SideBar/> */}
       <p>Welcome to the Title Page</p>
-      {/* <button onClick={handleLogoutClick}>Logout</button> */}
       <form onSubmit={handleSubmit}>
         <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter Title" />
         <button type="submit">Submit</button>

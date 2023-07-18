@@ -1,9 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {userLoggedIn} from '../auth/userLoggedIn';
+import NavBar from '../components/NavBar'
 import axios from "axios";
-// import OutletContext from '../context/OutletContext'
-// import { OutletContext } from '../context/OutletContext';
 
 
 const API_BASE_URL = 'http://localhost:8000/api';
@@ -13,7 +12,6 @@ const API_BASE_URL = 'http://localhost:8000/api';
 const PrivateRouteLayout = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [name, setName] = useState('Aatish');
   
   
   const handleUserLoggedIn = async () => {
@@ -41,15 +39,12 @@ const PrivateRouteLayout = () => {
     console.log('User not authenticated');
     return <Navigate to="/login" />;
   }else{
-    // return <Outlet/>;
-    <p>User: {user}</p>
-    console.log('user')
-    return (
-      <Outlet context={[name, setName]} /> // Pass the user data as a prop to the child routes  
 
-    //   <OutletContext.Provider value={user}>
-    //   <Outlet />
-    // </OutletContext.Provider>
+    return (
+      <>
+        <NavBar user={user}/>
+        <Outlet context={[user, setUser]} />
+      </>
     );
   }
 };

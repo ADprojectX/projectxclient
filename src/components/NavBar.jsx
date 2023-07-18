@@ -16,11 +16,11 @@ const NavBar = ( { user } ) => {
   
   //django
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [userName, setUserName] = React.useState(null);
-  useEffect(() => {
-    console.log(user)
-    setUserName(user);
-  }, []);
+  // const [userName, setUserName] = React.useState(null);
+  // useEffect(() => {
+  //   console.log(user)
+  //   setUserName(user);
+  // }, []);
   // const getUserResponse = async () => {
   //   // e.preventDefault();
   //   // const res = await loggedIn();
@@ -40,7 +40,7 @@ const NavBar = ( { user } ) => {
     })
     .catch((error) => {
       setErrorMessage('cannot logout');
-      console.log(error);
+      console.log(errorMessage);
     });
   };
   
@@ -48,7 +48,7 @@ const NavBar = ( { user } ) => {
     <div className='navbar'>
         <h1>ProjectX</h1>
         <div className='nav-right'>
-          <p>Hello {userName}</p> 
+          <p>Hello {user}</p> 
           {/* change user.email to username for django and user.email for firebase */}
           <button onClick={handleLogoutClick}>Logout</button>
         </div>

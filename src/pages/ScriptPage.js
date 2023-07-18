@@ -37,6 +37,12 @@ function ScriptPage() {
     //       console.log(error);
     //     });
     // }, [0]);
+
+    React.useEffect(() => {
+      if(scenes == null || scenes.length() == 0){
+        fetchScriptFromBackend();
+      }
+    }, [0]);
   
     const fetchScriptFromBackend = () => {
         // Make a request to the backend to fetch the script based on the title
@@ -155,9 +161,7 @@ function ScriptPage() {
     
     return(
         <div className="script-page">
-        <NavBar/>
         <p>Welcome to the Script Page</p>
-        <button onClick={handleLogoutClick}>Logout</button>
         <p></p>
         <div className="scriptContainer">
           {scenes && scenes.map((scene, index) => (

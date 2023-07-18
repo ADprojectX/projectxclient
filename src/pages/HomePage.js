@@ -3,7 +3,7 @@ import {  useOutletContext } from "react-router-dom";
 
 
 function HomePage() {
-    // const { title } = useOutletContext();
+    // const { obj }= useOutletContext();
 
     const handleLoginClick = () => {
       window.location.href = '/login';
@@ -25,7 +25,7 @@ function HomePage() {
         <h2>Home</h2>
         <button onClick={handleLoginClick}>Get Started</button>
 
-        {/* <h2>{title}</h2> */}
+        {/* <h2>obj: {obj}</h2> */}
 
         {/* <button onClick={handleSignupClick}>Sign Up</button>
         <button onClick={handleVideoClick}>Video Player</button> */}

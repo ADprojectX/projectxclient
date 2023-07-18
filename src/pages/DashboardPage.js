@@ -15,7 +15,7 @@ function DashboardPage() {
   //   console.log(error)
   // }
 
-  const [name, setName] = useOutletContext()
+  const [user, setUser] = useOutletContext()
   const navigate = useNavigate();
   
   const handleTitleClick = () => {
@@ -26,12 +26,8 @@ function DashboardPage() {
     navigate('/script');
   };
 
-
-
   return (
     <div className="dashboard">
-    {/* <p>User: {user}</p> */}
-    <NavBar />
       <p>Welcome to your dashboard</p>
       <div>
         <button onClick={handleTitleClick}>Title</button>
