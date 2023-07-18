@@ -1,6 +1,8 @@
 
 import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import SideBar from '../components/SideBar';
+import './css/VoicePage.css'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -65,7 +67,9 @@ function VoicePage() {
     };
 
     return(
-        <div className="voice-page">
+      <div className="voice">
+      <SideBar />
+        <div className="voice-content">
         <p>Welcome to the Voice Page</p>
         <form onSubmit={handleSubmit}>
             <select value={selectedValue} onChange={handleSelectChange}>
@@ -88,6 +92,7 @@ function VoicePage() {
         )}
         
         {errorMessage && <p className="error">{errorMessage}</p>}
+        </div>
       </div>
     );
 }

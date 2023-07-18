@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import SideBar from '../components/SideBar';
+
 import NavBar from '../components/NavBar';
 // import sampleData from './sampleData.json'
 import Card from '../components/Card';
@@ -160,43 +162,46 @@ function ScriptPage() {
       };
     
     return(
-        <div className="script-page">
-        <p>Welcome to the Script Page</p>
-        <p></p>
-        <div className="scriptContainer">
-          {scenes && scenes.map((scene, index) => (
-            <Card
-              key={index}
-              scene={scene}
-              index={index}
-              updateCard={updateCard}
-              deleteCard={deleteCard}
-              addCard={addCard}
-            />
-          ))}
-          <button className="submit" onClick={handleSubmit}>Submit</button>
+      <div className="script">
+        <SideBar />
+          <div className="script-content">
+            <p>Welcome to the Script Page</p>
+            <p></p>
+            <div className="scriptContainer">
+              {scenes && scenes.map((scene, index) => (
+                <Card
+                  key={index}
+                  scene={scene}
+                  index={index}
+                  updateCard={updateCard}
+                  deleteCard={deleteCard}
+                  addCard={addCard}
+                />
+              ))}
+            </div>
+            <button className="submit" onClick={handleSubmit}>Submit</button>
+            {errorMessage && <p className="error">{errorMessage}</p>}
+          
+          {/* {fromTitlePage === 'generated' && script ? (
+            <form onSubmit={handleSubmit}>
+              <textarea
+                value={script}
+                onChange={handleScriptChange}
+                placeholder="Enter Script"
+              />
+              <button type="submit"> Submit </button>
+            </form>
+          ) : (
+              <div>
+              <textarea
+                value={script}
+                onChange={handleScriptChange}
+                placeholder="Enter Script"
+              />
+              <button onClick={handleSubmit}>Submit</button>
+            </div>
+          )} */}
         </div>
-        
-        {/* {fromTitlePage === 'generated' && script ? (
-          <form onSubmit={handleSubmit}>
-            <textarea
-              value={script}
-              onChange={handleScriptChange}
-              placeholder="Enter Script"
-            />
-            <button type="submit"> Submit </button>
-          </form>
-        ) : (
-            <div>
-            <textarea
-              value={script}
-              onChange={handleScriptChange}
-              placeholder="Enter Script"
-            />
-            <button onClick={handleSubmit}>Submit</button>
-          </div>
-        )} */}
-        {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
     );
 }

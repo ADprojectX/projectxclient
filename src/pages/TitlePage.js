@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import { useNavigate, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import './css/TitlePage.css'
 import NavBar from '../components/NavBar';
 import Cookies from 'js-cookie';
-// import SideBar from '../components/SideBar';
+import SideBar from '../components/SideBar';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
@@ -51,14 +52,17 @@ function TitlePage() {
   };
 
   return (
-    <div className="title-page">
-      {/* <SideBar/> */}
-      <p>Welcome to the Title Page</p>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter Title" />
-        <button type="submit">Submit</button>
-      </form>
-      {errorMessage && <p className="error">{errorMessage}</p>}
+    <div className="title">
+      <SideBar />
+      <div className="title-content">
+        {/* <SideBar/> */}
+        <p>Welcome to the Title Page</p>
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter Title" />
+          <button type="submit">Submit</button>
+        </form>
+        {errorMessage && <p className="error">{errorMessage}</p>}
+      </div>
     </div>
   );
 }
