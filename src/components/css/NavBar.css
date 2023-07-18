@@ -1,0 +1,29 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f1f1f1;
+  }
+  
+  .navbar h1 {
+    margin: 0;
+  }
+  
+  .navbar button {
+    border: none;
+    background-color: #8EECF5;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #7439db;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-right p {
+    margin-right: 1rem;
+  }
