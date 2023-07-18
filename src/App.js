@@ -14,25 +14,41 @@ import VoicePage from './pages/VoicePage';
 import LoadingPage from './pages/LoadingPage';
 import HomePage from './pages/HomePage';
 import PrivateRouteLayout from './layout/PrivateRouteLayout'
+import TestLayout from './layout/TestLayout'
+import {  useOutletContext } from "react-router-dom";
+
 // import SScriptPage from './pages/SScriptPage';
 
 
 
 function App() {
+  const  title  = useOutletContext();
+
   return (
+    
       <Router>
         <div className="App">
+        <div >{title}</div>
           <Routes>
             {/* Public Routes */}
+            
+            {/* <Route path="/" element={<TestLayout />} />
+              <Route path="/home" element={<HomePage />} />
+            <Route /> */}
+
+
+
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             {/* Private Routes */}
+            
             <Route element={<PrivateRouteLayout/>}>
               <Route path="/dashboard" element={<DashboardPage />}/>
               <Route path="/script" element={<ScriptPage />} />
               <Route path="/title" element={<TitlePage />} />
             </Route>
+            
             <Route path="/video" element={<VideoPlayer />} />
             <Route path="/voice" element={<VoicePage />} />
             <Route path="/script" element={<ScriptPage />} />
