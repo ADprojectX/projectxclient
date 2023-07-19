@@ -43,6 +43,7 @@ const SideNavBar = () => {
                             </div>
 							{/* <img className="menu-item-icon" src={icon} alt="" srcset="" /> */}
 							{isExpanded && <p className='menu-item-text'>{text}</p>}
+                            {!isExpanded && <div className="tooltip">{text}</div>}
 						</a>
 					))}
 				</div>
