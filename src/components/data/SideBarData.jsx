@@ -2,25 +2,25 @@ import React from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
-import HomeIcon from '@mui/icons-material/Home';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export const SidebarData = [
     {
         text: "Dashboard",
-        icon: <HomeIcon />,
+        icon: <DashboardIcon />,
         link: "/dashboard",
     },
     {
         text: "Profile",
         icon: <AccountBoxIcon />,
-        link: "/dashboard",
+        link: "/",
     },
     {
         text: "Settings",
         icon: <SettingsIcon/>,
-        link: "/dashboard",
+        link: "/",
     },
 ];
 // export const SidebarData = [

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import "./css/Sidebar.css";
 import { SidebarData } from "./data/SideBarData";
-import SettingsIcon from '@mui/icons-material/Settings';
+import { useLocation } from "react-router-dom";
 
 const SideNavBar = () => {
 	const [isExpanded, setExpendState] = useState(false);
 	const menuItems = SidebarData
+    const location = useLocation();
+
+    const isMenuItemActive = (link) => {
+		return location.pathname === link;
+	};
+
 	return (
 		<div
 			className={
@@ -35,7 +41,7 @@ const SideNavBar = () => {
 				<div className="nav-menu">
 					{menuItems.map(({ text, icon, link }) => (
 						<a
-							className={isExpanded ? "menu-item" : "menu-item menu-item-NX"}
+							className={isExpanded ? `menu-item ${isMenuItemActive(link) ? "active" : ""}` : `menu-item menu-item-NX ${isMenuItemActive(link) ? "active" : ""}`}
 							href={link}
 						>
                             <div className="menu-item-icon">
