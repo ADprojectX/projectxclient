@@ -1,11 +1,57 @@
 .dashboard {
     display: flex;
+    margin-top: 10px;
+    padding-right: 15px;
     height: calc(100vh - 62px);
-    background-color: #F5F6FA;
+    /* background-color: #F5F6FA; */
+    background-color: transparent;
+    border-radius: 20px;
   }
   
   .dashboard-content {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+  }
+
+  .dashboard-content p {
+    height: 150px;
+    margin: 0;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(
+        225deg,
+        #19fa7e 0%,
+        #10ad9e 29%,
+        #13d4ff 67%,
+        #fff800 100%
+    );
+    opacity: 1;
+    color: #F5F6FA;
+    font-size: 3rem;
+    font-weight: 700;
+    /* border-color: transparent;
+    border-radius: 10px; */
+  }
+
+  .dashboard-content-subtitle {
+    display: flex;
+    padding: 20px;
+    padding-left: 50px;
+    font-size: x-large;
+    font-weight: 600;
+    color: #26116d;
+  }
+
+  .dashboard-tiles {
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* background-color: #13d4ff; */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 100px;
   }

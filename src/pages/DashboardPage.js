@@ -1,29 +1,37 @@
 import React from 'react';
-import {DashboardPageCss} from './css/DashboardPage.css'
+import './css/DashboardPage.css'
 import SideBar from '../components/SideBar';
-import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = 'http://localhost:8000/api';
+import DBTile from '../components/DBTile';
+import {ic_receipt_outline} from 'react-icons-kit/md/ic_receipt_outline'
+import {arrowRightOutline} from 'react-icons-kit/typicons/arrowRightOutline'
+import {play} from 'react-icons-kit/icomoon/play'
+import {list} from 'react-icons-kit/ikons/list'
 
 function DashboardPage() {
-  const navigate = useNavigate();
-  
-  const handleTitleClick = () => {
-    navigate('/title');
-  };
-
-  const handleScriptClick = () => {
-    navigate('/script');
-  };
 
   return (
     <div className="dashboard">
       <SideBar />
       <div className="dashboard-content">
         <p>Welcome to your dashboard</p>
-        <div>
-          <button onClick={handleTitleClick}>Title</button>
-          <button onClick={handleScriptClick}>Script</button>
+        <div className="dashboard-content-subtitle">Take the first step towards video creation excellence. Your choices await! </div>
+        <div className="dashboard-tiles">
+          <DBTile
+            icon1={{'icon': list, 'size': 30}}
+            icon2={{'icon': arrowRightOutline, 'size': 28}}
+            icon3={{'icon': play, 'size': 32}}    
+            text={"Title to Video"} 
+            link = {"/title"}
+          />
+          <DBTile 
+            icon1={{'icon': ic_receipt_outline, 'size': 32}}
+            icon2={{'icon': arrowRightOutline, 'size': 28}}
+            icon3={{'icon': play, 'size': 32}}            
+            text={"Script to Video"}
+            link = {"/script"}
+          />
+          {/* <button className="tile" onClick={handleTitleClick}>Title</button>
+          <button className="tile" onClick={handleScriptClick}>Script</button> */}
         </div>
       </div>
     </div>
