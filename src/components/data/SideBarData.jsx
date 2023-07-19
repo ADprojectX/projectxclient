@@ -10,17 +10,17 @@ export const SidebarData = [
     {
         text: "Dashboard",
         icon: <DashboardIcon />,
-        link: "/dashboard",
+        links: ["/dashboard", "/title", "/script", "/voice"],
     },
     {
         text: "Profile",
         icon: <AccountBoxIcon />,
-        link: "/",
+        links: ["/"],
     },
     {
         text: "Settings",
         icon: <SettingsIcon/>,
-        link: "/",
+        links: ["/"],
     },
 ];
 // export const SidebarData = [

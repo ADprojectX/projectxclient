@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
-import {userLoggedIn} from '../auth/userLoggedIn';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import NavBarCss from './css/NavBar.css'    
+import {userLoggedIn} from '../auth/userLoggedIn';
 import {userLogout} from '../auth/userLogout' //Firebase
 import { onAuthStateChanged } from "firebase/auth"; //firebase
 import {auth} from '../firebase/config' //firebase
@@ -29,20 +29,20 @@ const NavBar = ( { user } ) => {
   // }
   // getUserResponse()
   
-  const handleLogoutClick = () => {
-    let data = { token: Cookies.get('jwt') };
-    axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
-    .then((response) => {
-      Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
-      Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
-      console.log('logout_successful');
-      navigate('/login');
-    })
-    .catch((error) => {
-      setErrorMessage('cannot logout');
-      console.log(errorMessage);
-    });
-  };
+  // const handleLogoutClick = () => {
+  //   let data = { token: Cookies.get('jwt') };
+  //   axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
+  //   .then((response) => {
+  //     Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
+  //     Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
+  //     console.log('logout_successful');
+  //     navigate('/login');
+  //   })
+  //   .catch((error) => {
+  //     setErrorMessage('cannot logout');
+  //     console.log(errorMessage);
+  //   });
+  // };
   
   return (
     <div className='navbar'>
@@ -50,7 +50,7 @@ const NavBar = ( { user } ) => {
         <div className='nav-right'>
           <p>Hello {user}</p> 
           {/* change user.email to username for django and user.email for firebase */}
-          <button onClick={handleLogoutClick}>Logout</button>
+          {/* <button onClick={handleLogoutClick}>Logout</button> */}
         </div>
     </div>
   );

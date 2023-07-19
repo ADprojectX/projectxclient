@@ -1,6 +1,7 @@
 .title {
     display: flex;
     height: calc(100vh - 62px);
+    background-color: #F5F6FA;
   }
   
   .title-content {

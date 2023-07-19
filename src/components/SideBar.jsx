@@ -1,16 +1,38 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import "./css/Sidebar.css";
 import { SidebarData } from "./data/SideBarData";
 import { useLocation } from "react-router-dom";
 
 const SideNavBar = () => {
 	const [isExpanded, setExpendState] = useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const navigate = useNavigate()
 	const menuItems = SidebarData
     const location = useLocation();
 
-    const isMenuItemActive = (link) => {
-		return location.pathname === link;
-	};
+    const API_BASE_URL = 'http://localhost:8000/api';
+
+    const isMenuItemActive = (links) => {
+        return links.some((link) => location.pathname === link);
+      };
+
+    const handleLogoutClick = () => {
+        let data = { token: Cookies.get('jwt') };
+        axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
+        .then((response) => {
+            Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
+            Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
+            console.log('logout_successful');
+            navigate('/login');
+        })
+        .catch((error) => {
+            setErrorMessage('cannot logout');
+            console.log(errorMessage);
+        });
+    };
 
 	return (
 		<div
@@ -39,30 +61,39 @@ const SideNavBar = () => {
 					</button>
 				</div>
 				<div className="nav-menu">
-					{menuItems.map(({ text, icon, link }) => (
-						<a
-							className={isExpanded ? `menu-item ${isMenuItemActive(link) ? "active" : ""}` : `menu-item menu-item-NX ${isMenuItemActive(link) ? "active" : ""}`}
-							href={link}
-						>
-                            <div className="menu-item-icon">
-                                {icon}
-                            </div>
-							{/* <img className="menu-item-icon" src={icon} alt="" srcset="" /> */}
-							{isExpanded && <p className='menu-item-text'>{text}</p>}
-                            {!isExpanded && <div className="tooltip">{text}</div>}
-						</a>
+					{menuItems.map(({ text, icon, links }) => (
+						// <a
+						// 	className={isExpanded ? `menu-item ${isMenuItemActive(links) ? "active" : ""}` : `menu-item menu-item-NX ${isMenuItemActive(links) ? "active" : ""}`}
+						// 	href={links[0]}
+						// >
+                        //     <div className="menu-item-icon">
+                        //         {icon}
+                        //     </div>
+						// 	{/* <img className="menu-item-icon" src={icon} alt="" srcset="" /> */}
+						// 	{isExpanded && <p className='menu-item-text'>{text}</p>}
+                        //     {!isExpanded && <div className="tooltip">{text}</div>}
+						// </a>
+                        <button
+                        className={
+                          isExpanded
+                            ? `menu-item ${isMenuItemActive(links) ? "active" : ""}`
+                            : `menu-item menu-item-NX ${isMenuItemActive(links) ? "active" : ""}`
+                        }
+                        onClick={() => window.location.href = links[0]}
+                      >
+                        <div className="menu-item-icon">
+                          {icon}
+                        </div>
+                        {isExpanded && <p className='menu-item-text'>{text}</p>}
+                        {!isExpanded && <div className="tooltip">{text}</div>}
+                      </button>
 					))}
 				</div>
 			</div>
 			<div className="nav-footer">
 				{isExpanded && (
 					<div className="nav-details">
-						<img
-							className="nav-footer-avatar"
-							src="icons/admin-avatar.svg"
-							alt=""
-							srcset=""
-						/>
+                        <button className={isExpanded ? `logout-item` : "logout-item logout-item-NX"} onClick={handleLogoutClick}>Log out</button>
 						<div className="nav-footer-info">
 							<p className="nav-footer-user-name">XYZ</p>
 							<p className="nav-footer-user-position">store admin</p>
