@@ -14,11 +14,12 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 
 function ScriptPage() {
     // const jsonData = Object.values(sampleData); 
-    const navigate = useNavigate();
     // const { reqid } = useParams();
+    // const [userName, setUserName] = useState(null);
+    const navigate = useNavigate();
     const [scenes, setScenes] = useState();
+    const [selectedValue, setSelectedValue] = useState('Adam');
     const [errorMessage, setErrorMessage] = useState('');
-    const [userName, setUserName] = useState(null);
     const location = useLocation();
     let reqid = location.state && location.state.reqid
 
@@ -61,20 +62,20 @@ function ScriptPage() {
           });
       };
   
-    const handleLogoutClick = () => {
-      let data = { token: Cookies.get('jwt') };
-      axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
-        .then((response) => {
-          Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
-          Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
-          console.log('logout_successful');
-          navigate('/login');
-        })
-        .catch((error) => {
-          setErrorMessage('cannot logout');
-          console.log(error);
-        });
-    };
+    // const handleLogoutClick = () => {
+    //   let data = { token: Cookies.get('jwt') };
+    //   axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
+    //     .then((response) => {
+    //       Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
+    //       Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
+    //       console.log('logout_successful');
+    //       navigate('/login');
+    //     })
+    //     .catch((error) => {
+    //       setErrorMessage('cannot logout');
+    //       console.log(error);
+    //     });
+    // };
 
     
     // const handleScriptChange = (e) => {
@@ -100,8 +101,6 @@ function ScriptPage() {
       setScenes(newScenes);
     }
     const handleSubmit = async () => {
-      // let SCENE = `SCENE${}`
-      console.log(scenes[0], 'y')
       let finalScene = {};
       let i = 0;
       for (let scene of scenes) {
@@ -112,15 +111,13 @@ function ScriptPage() {
           i++;
         }
       }
-            
-      console.log('x',finalScene)
       const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
-
-      axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}`, { withCredentials: true })
+      axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
         .then(response => {
           // Handle the response
+          let reqid = location.state && location.state.reqid
           console.log(response.data);
-          navigate('/voice')
+          navigate('/loading', {state:{reqid:reqid}})
         })
         .catch(error => {
           // Handle the error

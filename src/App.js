@@ -28,7 +28,7 @@ const router = createBrowserRouter(
       <Route path="/title" element={<TitlePage />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/video" element={<VideoPlayer />} />
-      <Route path="/Loading" element={<LoadingPage />} />
+      <Route path="/loading" element={<LoadingPage />} />
     </Route>
     {/* <Route path="/videolist" element={<VideoList />} /> */}
   </Route>
