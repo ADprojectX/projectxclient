@@ -1,0 +1,9 @@
+.v-player {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+
+.slider {
+    margin: 50px;
+}

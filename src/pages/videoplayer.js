@@ -1,40 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
+import { useLocation } from 'react-router-dom';
 import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
-// import { Container, AppBar, Toolbar, Typography }  from "@mui/material";
-// import Slider, { SliderInput } from "@mui/material/Slider"
+import './css/VideoPlayer.css'
+import ScriptContainer from '../components/ScriptContainer';
 import axios from 'axios';
 import JSZip from 'jszip';
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
-const VideoDurationGetter = ({ videos, onDurationsReady }) => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [videoDurations, setVideoDurations] = useState([]);
+// const VideoDurationGetter = ({ videos, onDurationsReady }) => {
+//   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+//   const [videoDurations, setVideoDurations] = useState([]);
   
-  const handleDuration = (duration) => {
-    setVideoDurations([...videoDurations, duration]);
-    setCurrentVideoIndex(currentVideoIndex + 1);
-  };
+//   const handleDuration = (duration) => {
+//     setVideoDurations([...videoDurations, duration]);
+//     setCurrentVideoIndex(currentVideoIndex + 1);
+//   };
   
-  useEffect(() => {
-    if (currentVideoIndex >= videos.length) {
-      onDurationsReady(videoDurations);
-    }
-  }, [currentVideoIndex, videoDurations, videos.length, onDurationsReady]);
+//   useEffect(() => {
+//     if (currentVideoIndex >= videos.length) {
+//       onDurationsReady(videoDurations);
+//     }
+//   }, [currentVideoIndex, videoDurations, videos.length, onDurationsReady]);
   
-  if (currentVideoIndex < videos.length) {
-    return (
-      <ReactPlayer
-        url={videos[currentVideoIndex]}
-        onDuration={handleDuration}
-        style={{ display: "none" }} // Hide the video player
-      />
-    );
-  }
+//   if (currentVideoIndex < videos.length) {
+//     return (
+//       <ReactPlayer
+//         url={videos[currentVideoIndex]}
+//         onDuration={handleDuration}
+//         style={{ display: "none" }} // Hide the video player
+//       />
+//     );
+//   }
   
-  return null;
-};
+//   return null;
+// };
+
 
 const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
   const reactPlayerRef = useRef();
@@ -122,75 +124,108 @@ const SceneSelector = ({ scenes }) => {
           <Typography variant="h6">ProjectX Video Player</Typography>
         </Toolbar>
       </AppBar>
-      <Toolbar />
-      <VPlayer 
-        videoSrc={scenes[currentSceneIndex].video} 
-        audioSrc={scenes[currentSceneIndex].audio} 
-        handleSceneEnd={handleSceneEnd}
-        handleProgress={handleProgress}
-        seekTo={seekTo}
-      />
-      <Slider
-        value={currentProgress}
-        step={1}
-        min={0}
-        max={totalDuration}
-        onChange={handleSliderChange}
-        valueLabelDisplay="auto"
-        marks={sliderMarks}
-      />
+      <div className='v-player-main'>
+        <ScriptContainer />
+        {/* <div className="scriptContainer">
+              {scenes && scenes.map((scene, index) => (
+                <Card
+                  key={index}
+                  scene={scene}
+                  index={index}
+                  updateCard={updateCard}
+                  deleteCard={deleteCard}
+                  addCard={addCard}
+                />
+              ))}
+          </div> */}
+        <div className='v-player'>
+          <VPlayer 
+            videoSrc={scenes[currentSceneIndex].video} 
+            audioSrc={scenes[currentSceneIndex].audio} 
+            handleSceneEnd={handleSceneEnd}
+            handleProgress={handleProgress}
+            seekTo={seekTo}
+            />
+          <div className='slider'>  
+            <Slider
+              value={currentProgress}
+              step={1}
+              min={0}
+              max={totalDuration}
+              onChange={handleSliderChange}
+              valueLabelDisplay="auto"
+              marks={sliderMarks}
+              />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
+// ... Your imports ...
+
+// const App = () => {
+//   const location = useLocation();
+//   const videoData = location.state?.videoFiles || [];
+
+//   return <SceneSelector scenes={videoData} />;
+// };
+
+// export default App;
 
 const App = () => {
   const [videoFiles, setVideoFiles] = useState([]);
-
+  const location = useLocation();
+  let reqid = location.state && location.state.reqid
+  let videoData = location.state && location.state.videoFiles
+  
   useEffect(() => {
-    axios.get(`${REQ_BASE_URL}/video-files/`, { responseType: 'arraybuffer' })
-      .then((response) => {
-        const zip = new JSZip();
-        return zip.loadAsync(response.data);
-      })
-      .then((zip) => {
-        const filePromises = Object.keys(zip.files).map((fileName) => {
-          const file = zip.files[fileName];
-          return file.async('blob').then((blob) => {
-            return { name: fileName, url: URL.createObjectURL(blob) };
-          });
-        });
-        return Promise.all(filePromises);
-      })
-      .then((videos) => {
-        const videoPromises = videos.map((video) => {
-          return new Promise((resolve) => {
-            const videoElement = document.createElement('video');
-            videoElement.src = video.url;
-            videoElement.addEventListener('loadedmetadata', () => {
-              const duration = videoElement.duration;
-              resolve({ ...video, duration });
-            });
-          });
-        });
-        return Promise.all(videoPromises);
-      })
-      .then((videosWithDuration) => {
-        setVideoFiles(
-          videosWithDuration.map((video, index) => ({
-            name: `Scene${index}`,
-            video: video.url,
-            audio: '', // Provide audio URL if available
-            duration: video.duration
-          }))
-        );
-      })
-      .catch((error) => {
-        console.error('Failed to retrieve video files:', error);
-      });
+    setVideoFiles(videoData)
   }, []);
   
   return <SceneSelector scenes={videoFiles} />;
 };
 
 export default App;
+
+// axios.get(`${REQ_BASE_URL}/video-files/`, { responseType: 'arraybuffer' })
+//   .then((response) => {
+//     const zip = new JSZip();
+//     return zip.loadAsync(response.data);
+//   })
+//   .then((zip) => {
+//     const filePromises = Object.keys(zip.files).map((fileName) => {
+//       const file = zip.files[fileName];
+//       return file.async('blob').then((blob) => {
+//         return { name: fileName, url: URL.createObjectURL(blob) };
+//       });
+//     });
+//     return Promise.all(filePromises);
+//   })
+//   .then((videos) => {
+//     const videoPromises = videos.map((video) => {
+//       return new Promise((resolve) => {
+//         const videoElement = document.createElement('video');
+//         videoElement.src = video.url;
+//         videoElement.addEventListener('loadedmetadata', () => {
+//           const duration = videoElement.duration;
+//           resolve({ ...video, duration });
+//         });
+//       });
+//     });
+//     return Promise.all(videoPromises);
+//   })
+//   .then((videosWithDuration) => {
+//     setVideoFiles(
+//       videosWithDuration.map((video, index) => ({
+//         name: `Scene${index}`,
+//         video: video.url,
+//         audio: '', // Provide audio URL if available
+//         duration: video.duration
+//       }))
+//     );
+//   })
+//   .catch((error) => {
+//     console.error('Failed to retrieve video files:', error);
+//   });

@@ -42,7 +42,7 @@ function ScriptPage() {
     // }, [0]);
 
     React.useEffect(() => {
-      if(scenes == null || scenes.length() == 0){
+      if(scenes == null || scenes.length == 0){
         fetchScriptFromBackend();
       }
     }, [0]);
@@ -157,7 +157,20 @@ function ScriptPage() {
   
       // navigate('/voice');
       };
-    
+
+      // const handleSubmit2 = () => {
+      //   axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
+      //   .then(response => {
+      //     // Handle the response
+      //     let reqid = location.state && location.state.reqid
+      //     console.log(response.data);
+      //     navigate('/loading', {state:{reqid:reqid}})
+      //   })
+      //   .catch(error => {
+      //     // Handle the error
+      //     console.error(error);
+      //   });
+      // }
     return(
       <div className="script">
         <SideBar />
@@ -179,28 +192,29 @@ function ScriptPage() {
             <button className="submit" onClick={handleSubmit}>Submit</button>
             {errorMessage && <p className="error">{errorMessage}</p>}
           
-          {/* {fromTitlePage === 'generated' && script ? (
-            <form onSubmit={handleSubmit}>
-              <textarea
-                value={script}
-                onChange={handleScriptChange}
-                placeholder="Enter Script"
-              />
-              <button type="submit"> Submit </button>
-            </form>
-          ) : (
-              <div>
-              <textarea
-                value={script}
-                onChange={handleScriptChange}
-                placeholder="Enter Script"
-              />
-              <button onClick={handleSubmit}>Submit</button>
-            </div>
-          )} */}
         </div>
       </div>
     );
-}
+  }
+  
+  export default ScriptPage;
 
-export default ScriptPage;
+  {/* {fromTitlePage === 'generated' && script ? (
+    <form onSubmit={handleSubmit}>
+      <textarea
+        value={script}
+        onChange={handleScriptChange}
+        placeholder="Enter Script"
+      />
+      <button type="submit"> Submit </button>
+    </form>
+  ) : (
+      <div>
+      <textarea
+        value={script}
+        onChange={handleScriptChange}
+        placeholder="Enter Script"
+      />
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  )} */}
