@@ -3,68 +3,40 @@ import ReactPlayer from "react-player";
 import { useLocation } from 'react-router-dom';
 import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 import './css/VideoPlayer.css'
+import VPlayer from '../components/VPlayer';
 import ScriptContainer from '../components/ScriptContainer';
 import axios from 'axios';
 import JSZip from 'jszip';
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
-// const VideoDurationGetter = ({ videos, onDurationsReady }) => {
-//   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-//   const [videoDurations, setVideoDurations] = useState([]);
-  
-//   const handleDuration = (duration) => {
-//     setVideoDurations([...videoDurations, duration]);
-//     setCurrentVideoIndex(currentVideoIndex + 1);
-//   };
-  
+// const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
+//   const reactPlayerRef = useRef();
+
 //   useEffect(() => {
-//     if (currentVideoIndex >= videos.length) {
-//       onDurationsReady(videoDurations);
+//     if (seekTo > 0) {
+//       setTimeout(() => {
+//         reactPlayerRef.current.seekTo(seekTo);
+//       }, 200); // Delay seekTo to allow video to load
 //     }
-//   }, [currentVideoIndex, videoDurations, videos.length, onDurationsReady]);
-  
-//   if (currentVideoIndex < videos.length) {
-//     return (
-//       <ReactPlayer
-//         url={videos[currentVideoIndex]}
-//         onDuration={handleDuration}
-//         style={{ display: "none" }} // Hide the video player
-//       />
-//     );
-//   }
-  
-//   return null;
+//   }, [videoSrc, seekTo]);
+
+//   return (
+//     <div>
+//       <Container maxWidth="md" height="md">
+//         <ReactPlayer 
+//           ref={reactPlayerRef}
+//           url={videoSrc}
+//           playing={true} 
+//           controls={true} 
+//           onEnded={handleSceneEnd} 
+//           onProgress={handleProgress}
+//         />
+//         {/* <audio id='audio' src={audioSrc} autoPlay /> */}
+//       </Container>
+//     </div>
+//   );
 // };
-
-
-const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
-  const reactPlayerRef = useRef();
-
-  useEffect(() => {
-    if (seekTo > 0) {
-      setTimeout(() => {
-        reactPlayerRef.current.seekTo(seekTo);
-      }, 200); // Delay seekTo to allow video to load
-    }
-  }, [videoSrc, seekTo]);
-
-  return (
-    <div>
-      <Container maxWidth="md" height="md">
-        <ReactPlayer 
-          ref={reactPlayerRef}
-          url={videoSrc}
-          playing={true} 
-          controls={true} 
-          onEnded={handleSceneEnd} 
-          onProgress={handleProgress}
-        />
-        {/* <audio id='audio' src={audioSrc} autoPlay /> */}
-      </Container>
-    </div>
-  );
-};
 
 const SceneSelector = ({ scenes }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
@@ -125,19 +97,6 @@ const SceneSelector = ({ scenes }) => {
         </Toolbar>
       </AppBar>
       <div className='v-player-main'>
-        <ScriptContainer />
-        {/* <div className="scriptContainer">
-              {scenes && scenes.map((scene, index) => (
-                <Card
-                  key={index}
-                  scene={scene}
-                  index={index}
-                  updateCard={updateCard}
-                  deleteCard={deleteCard}
-                  addCard={addCard}
-                />
-              ))}
-          </div> */}
         <div className='v-player'>
           <VPlayer 
             videoSrc={scenes[currentSceneIndex].video} 
@@ -163,28 +122,31 @@ const SceneSelector = ({ scenes }) => {
   );
 };
 
-// ... Your imports ...
 
-// const App = () => {
-//   const location = useLocation();
-//   const videoData = location.state?.videoFiles || [];
-
-//   return <SceneSelector scenes={videoData} />;
-// };
-
-// export default App;
 
 const App = () => {
+  const [scenes, setScenes] = useState();
   const [videoFiles, setVideoFiles] = useState([]);
   const location = useLocation();
+
+  
   let reqid = location.state && location.state.reqid
   let videoData = location.state && location.state.videoFiles
-  
+
+  const setScenesFromChild = (childScenes) => {
+    setScenes(childScenes);
+  }
+
   useEffect(() => {
     setVideoFiles(videoData)
   }, []);
   
-  return <SceneSelector scenes={videoFiles} />;
+  return (
+    <div className='editor'>
+      <ScriptContainer setScenesFromChild={setScenesFromChild} />
+      <SceneSelector scenes={videoFiles} />;
+    </div>
+    );
 };
 
 export default App;
