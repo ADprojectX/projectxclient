@@ -1,5 +1,6 @@
 .editor {
-    display: flex;   
+    display: flex;  
+    margin: 20px; 
 }
 
 .v-player {
@@ -12,3 +13,13 @@
     margin: 50px;
 }
 
+.scrpt {
+    width: 700px;
+    max-width: 800px;
+}
+
+.video-player {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+}

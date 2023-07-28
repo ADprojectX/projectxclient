@@ -10,34 +10,6 @@ import JSZip from 'jszip';
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
-// const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
-//   const reactPlayerRef = useRef();
-
-//   useEffect(() => {
-//     if (seekTo > 0) {
-//       setTimeout(() => {
-//         reactPlayerRef.current.seekTo(seekTo);
-//       }, 200); // Delay seekTo to allow video to load
-//     }
-//   }, [videoSrc, seekTo]);
-
-//   return (
-//     <div>
-//       <Container maxWidth="md" height="md">
-//         <ReactPlayer 
-//           ref={reactPlayerRef}
-//           url={videoSrc}
-//           playing={true} 
-//           controls={true} 
-//           onEnded={handleSceneEnd} 
-//           onProgress={handleProgress}
-//         />
-//         {/* <audio id='audio' src={audioSrc} autoPlay /> */}
-//       </Container>
-//     </div>
-//   );
-// };
-
 const SceneSelector = ({ scenes }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [currentProgress, setCurrentProgress] = useState(0);
@@ -143,8 +115,12 @@ const App = () => {
   
   return (
     <div className='editor'>
-      <ScriptContainer setScenesFromChild={setScenesFromChild} />
-      <SceneSelector scenes={videoFiles} />;
+      <div className='scrpt'>
+        <ScriptContainer setScenesFromChild={setScenesFromChild} />
+      </div>
+      <div className='video-player'>
+        <SceneSelector scenes={videoFiles} />;
+      </div>
     </div>
     );
 };
