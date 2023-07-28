@@ -2,7 +2,6 @@
   display: flex;
   height: calc(100vh - 62px);
   background-color: #F5F6FA;
-
 }
 
 .script-content {
@@ -17,14 +16,16 @@
 }
 
 .scriptContainer {
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     width: 80%;
-    margin: auto;
+    /* margin: auto; */
     border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
-    height: 600px; 
+    height: 60%; 
     overflow-y: auto;
   }
   
@@ -44,3 +45,15 @@
     margin: 5px;
   }
   
+  .footer {
+    margin-left: auto;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    gap: 100px;
+    display: flex;
+  }
+
+  /* .voice-in-script {
+    margin-right: 50px;
+  } */

@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import VoiceContainer from '../components/VoiceContainer';
 import SideBar from '../components/SideBar';
-
+import ScriptContainer from '../components/ScriptContainer';
 import NavBar from '../components/NavBar';
 // import sampleData from './sampleData.json'
 import Card from '../components/Card';
@@ -18,7 +19,7 @@ function ScriptPage() {
     // const [userName, setUserName] = useState(null);
     const navigate = useNavigate();
     const [scenes, setScenes] = useState();
-    const [selectedValue, setSelectedValue] = useState('Adam');
+    const [selectedValue, setSelectedValue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
     let reqid = location.state && location.state.reqid
@@ -81,7 +82,9 @@ function ScriptPage() {
     // const handleScriptChange = (e) => {
     //   setScript(e.target.value);
     // };
-  
+    const handleVoiceChange = (selectedVoice) => {
+      setSelectedValue(selectedVoice);
+    };
     
     const updateCard = (index, newScene) => {
       const newScenes = [...scenes];
@@ -101,8 +104,13 @@ function ScriptPage() {
       setScenes(newScenes);
     }
     const handleSubmit = async () => {
+      if (selectedValue === null) {
+        setErrorMessage('Please select a voice before submitting.');
+        return;
+      }
       let finalScene = {};
       let i = 0;
+      
       for (let scene of scenes) {
         if (typeof scene[0] === 'string' && scene[0].trim() !== '') {
           const sceneNumber = i + 1;
@@ -173,26 +181,37 @@ function ScriptPage() {
       // }
     return(
       <div className="script">
+
         <SideBar />
-          <div className="script-content">
-            <p>Welcome to the Script Page</p>
-            <p></p>
-            <div className="scriptContainer">
-              {scenes && scenes.map((scene, index) => (
-                <Card
-                  key={index}
-                  scene={scene}
-                  index={index}
-                  updateCard={updateCard}
-                  deleteCard={deleteCard}
-                  addCard={addCard}
-                />
+
+        <div className="script-content">
+          <p>Welcome to the Script Page</p>
+          <ScriptContainer />
+          {/* <div className="scriptContainer">
+            {scenes && scenes.map((scene, index) => (
+              <Card
+              key={index}
+              scene={scene}
+              index={index}
+              updateCard={updateCard}
+              deleteCard={deleteCard}
+              addCard={addCard}
+              />
               ))}
+          </div> */}
+
+          <div className='footer'>
+            <div className='voice-in-script'>
+              <VoiceContainer onVoiceChange={handleVoiceChange} />
+              {/* <h3>{selectedValue}</h3> */}
             </div>
-            <button className="submit" onClick={handleSubmit}>Submit</button>
-            {errorMessage && <p className="error">{errorMessage}</p>}
-          
+            <div>
+              <button className="submit" onClick={handleSubmit}>Submit</button>
+              {errorMessage && <p className="error">{errorMessage}</p>}
+            </div>
+          </div>
         </div>
+
       </div>
     );
   }

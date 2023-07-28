@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useLocation } from 'react-router-dom';
 import axios from 'axios';
+import './css/ScriptContainer.css'
 import Card from '../components/Card';
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
@@ -12,7 +13,7 @@ function ScriptContainer() {
     let reqid = location.state && location.state.reqid
 
     React.useEffect(() => {
-      if(scenes == null || scenes.length() == 0){
+      if(scenes == null || scenes.length == 0){
         fetchScriptFromBackend();
       }
     }, [0]);
