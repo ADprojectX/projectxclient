@@ -1,8 +1,7 @@
 .script {
   display: flex;
   height: calc(100vh - 62px);
-  background-color: #F5F6FA;
-
+  /* background-color: #F5F6FA; */
 }
 
 .script-content {
@@ -16,24 +15,14 @@
   width: 80px;
 }
 
-.scriptContainer {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: auto;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    height: 600px; 
-    overflow-y: auto;
-  }
+
   
-  .card {
+  /* .card {
     border: 1px solid grey;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
-  }
+  } */
   
   .editField {
     width: 100%;
@@ -44,3 +33,11 @@
     margin: 5px;
   }
   
+  .footer {
+    margin-left: auto;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    gap: 100px;
+    display: flex;
+  }

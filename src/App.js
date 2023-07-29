@@ -1,10 +1,11 @@
 import './App.css';
+import { NextUIProvider } from '@nextui-org/react';
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 // import { Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import DashboardPage from './pages/DashboardPage';
-import VideoPlayer from './pages/videoplayer';
+import VideoPlayer from './pages/Videoplayer';
 import TitlePage from './pages/TitlePage';
 import ScriptPage from './pages/ScriptPage';
 import VoicePage from './pages/VoicePage';
@@ -28,7 +29,7 @@ const router = createBrowserRouter(
       <Route path="/title" element={<TitlePage />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/video" element={<VideoPlayer />} />
-      <Route path="/Loading" element={<LoadingPage />} />
+      <Route path="/loading" element={<LoadingPage />} />
     </Route>
     {/* <Route path="/videolist" element={<VideoList />} /> */}
   </Route>
@@ -37,11 +38,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-      // <Router>
+    // <NextUIProvider>
         <div className="App">
-        <RouterProvider router={router}/>        
+          <RouterProvider router={router}/>        
         </div>
-      // </Router>
+    // </NextUIProvider>
     );
 }
 

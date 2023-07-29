@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect, useRef} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import './css/VoicePage.css'
 import axios from 'axios';
@@ -17,6 +17,8 @@ function VoicePage() {
     const [errorMessage, setErrorMessage] = useState('');
     const [userName, setUserName] = useState(null);
     const [selectedValue, setSelectedValue] = useState('');
+    const location = useLocation();
+    let reqid = location.state && location.state.reqid
 
     const audioRef = useRef();
 
@@ -30,20 +32,6 @@ function VoicePage() {
         });
     }, []);
 
-    const handleLogoutClick = () => {
-      let data = { token: Cookies.get('jwt') };
-      axios.post(`${API_BASE_URL}/logout/`, data, { withCredentials: true })
-        .then((response) => {
-          Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
-          Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
-          console.log('logout_successful');
-          navigate('/login');
-        })
-        .catch((error) => {
-          setErrorMessage('cannot logout');
-          console.log(error);
-        });
-    };
 
     const handleSelectChange = (event) => {
       setSelectedValue(event.target.value);
@@ -56,7 +44,7 @@ function VoicePage() {
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log('submit');
-      axios.get(`${REQ_BASE_URL}/voice/`, selectedValue ,{ withCredentials: true })
+      axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
         .then((response) => {
           console.log('voice sent');
           navigate('/loading');
@@ -68,7 +56,7 @@ function VoicePage() {
 
     return(
       <div className="voice">
-      <SideBar />
+        <SideBar />
         <div className="voice-content">
         <p>Welcome to the Voice Page</p>
         <form onSubmit={handleSubmit}>

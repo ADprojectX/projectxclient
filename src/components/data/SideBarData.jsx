@@ -7,7 +7,7 @@ export const SidebarData = [
     {
         text: "Dashboard",
         icon: <DashboardIcon />,
-        links: ["/dashboard", "/title", "/script", "/voice"],
+        links: ["/dashboard", "/title", "/script", "/voice", "/video"],
     },
     {
         text: "Profile",
