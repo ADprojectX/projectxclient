@@ -23,7 +23,7 @@ const VideoScriptCard = ({ index, scene, updateCard, onSceneClick, isActive }) =
   }, []);  
   
   return (
-    <div onClick={() => onSceneClick(index)} className={`card ${isActive ? 'active' : ''}`}>
+    <div onClick={() => onSceneClick(index)} className={`VideoScriptCard ${isActive ? 'active' : ''}`}>
       <h2>{`${index + 1}`}</h2>
       <textarea 
         ref={textareaRef}

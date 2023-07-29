@@ -1,4 +1,4 @@
-.card {
+.VideoScriptCard {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -8,7 +8,7 @@
     border-bottom: 1px solid rgb(203, 200, 200);
   }
   
-  .card h2 {
+  .VideoScriptCard h2 {
     color: rgb(87, 82, 82);
     display: flex;
     width: 20px;
@@ -18,7 +18,7 @@
     font-size: 1rem;
   }
   
-  .card .editField {
+  .VideoScriptCard .editField {
     padding: 7px;
     flex-grow: 1;
     margin: 0 10px;
@@ -33,31 +33,31 @@
   }
 
   @media (max-width: 600px) {
-    .card .editField {
+    .VideoScriptCard .editField {
       font-size: 12px; /* Adjust font size */
     }
   }
   
-  .card .insertButton,
-  .card .deleteButton {
+  .VideoScriptCard .insertButton,
+  .VideoScriptCard .deleteButton {
     padding: 5px 10px;
     font-size: 0.9rem;
     cursor: pointer;
   }
   
-  .card .deleteButton {
+  .VideoScriptCard .deleteButton {
     color: white;
     background-color: red;
     border: none;
   }
   
-  .card .insertButton {
+  .VideoScriptCard .insertButton {
     color: white;
     background-color: green;
     border: none;
   }
   
-  .card.active {
+  .VideoScriptCard.active {
     padding: 0;
     background-color: rgb(157, 248, 175);
     border-color: rgb(157, 248, 175);  
