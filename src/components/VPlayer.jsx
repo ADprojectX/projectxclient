@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import ReactPlayer from "react-player";
-import { Container}  from "@mui/material";
+import { Container }  from "@mui/material";
 
 const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo }) => {
     const reactPlayerRef = useRef();

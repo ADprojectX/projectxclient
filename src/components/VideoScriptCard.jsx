@@ -1,7 +1,7 @@
 import React from 'react';
-import './css/Card.css';
+import './css/VideoScriptCard.css';
 
-const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isActive }) => {
+const VideoScriptCard = ({ index, scene, updateCard, onSceneClick, isActive }) => {
   const textareaRef = React.useRef();
 
   React.useEffect(() => {
@@ -12,6 +12,9 @@ const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isA
   
     // Recompute the height when the window is resized
     window.addEventListener('resize', handleResize);
+
+    // Call handleResize initially to set textarea's height
+    handleResize();
   
     // Clean up event listener
     return () => {
@@ -21,7 +24,7 @@ const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isA
   
   return (
     <div onClick={() => onSceneClick(index)} className={`card ${isActive ? 'active' : ''}`}>
-      <h2>{`Scene ${index + 1} :`}</h2>
+      <h2>{`${index + 1}`}</h2>
       <textarea 
         ref={textareaRef}
         className="editField" 
@@ -32,4 +35,4 @@ const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isA
   );
 };
 
-export default Card;
+export default VideoScriptCard;

@@ -17,6 +17,7 @@ function ScriptPage() {
 
     const navigate = useNavigate();
     const [scenes, setScenes] = useState();
+    const [currentSceneIndex, setCurrentSceneIndex] = useState(0);  // new state for current scene
     const [selectedValue, setSelectedValue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
@@ -25,11 +26,10 @@ function ScriptPage() {
     const handleVoiceChange = (selectedVoice) => {
       setSelectedValue(selectedVoice);
     };
-    
-    const setScenesFromChild = (childScenes) => {
-      setScenes(childScenes);
-  }
   
+    const setScriptScenesFromChild = (childScenes) => {
+      setScenes(childScenes);
+    }
 
     const handleSubmit = async () => {
       if (selectedValue === null) {
@@ -47,6 +47,15 @@ function ScriptPage() {
           i++;
         }
       }
+      console.log('submitting voice');
+      axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
+        .then((response) => {
+          console.log('voice sent');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
       const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
       console.log(finalSceneString)
       axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
@@ -60,6 +69,7 @@ function ScriptPage() {
           // Handle the error
           console.error(error);
         });
+
       };
       
       return(
@@ -69,8 +79,12 @@ function ScriptPage() {
 
         <div className="script-content">
           <p>Welcome to the Script Page</p>
-          <ScriptContainer setScenesFromChild={setScenesFromChild} />
-
+          {/* <ScriptContainer setScenesFromChild={setScenesFromChild} /> */}
+          <ScriptContainer 
+            setScenesFromChild={setScriptScenesFromChild} 
+            currentSceneIndex={currentSceneIndex} 
+            setCurrentSceneIndex={setCurrentSceneIndex} 
+          />
 
           <div className='footer'>
             <div className='voice-in-script'>

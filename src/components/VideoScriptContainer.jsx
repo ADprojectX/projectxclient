@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import {useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './css/ScriptContainer.css'
-import Card from '../components/Card';
+import VideoScriptCard from './VideoScriptCard';
+import './css/VideoScriptContainer.css'
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
-function ScriptContainer( { setScenesFromChild, currentSceneIndex, setCurrentSceneIndex } ) {
+function VideoScriptContainer( { setScenesFromChild, currentSceneIndex, setCurrentSceneIndex } ) {
     const [scenes, setScenes] = useState();
     const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
     let reqid = location.state && location.state.reqid
+    const activeCardRef = useRef(null);
 
     React.useEffect(() => {
       if(scenes == null || scenes.length == 0){
@@ -65,24 +66,36 @@ function ScriptContainer( { setScenesFromChild, currentSceneIndex, setCurrentSce
     const handleSceneClick = (index) => {
       setCurrentSceneIndex(index);
     };
+
+    // Scroll the container to the active card whenever the active scene index changes
+    useEffect(() => {
+        if (activeCardRef.current) {
+        activeCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [currentSceneIndex]);
     
     return(
-        <div className="scriptContainer">
+        <div className="videoScriptContainer">
             {scenes && scenes.map((scene, index) => (
-            <Card
-                key={index}
-                scene={scene}
-                index={index}
-                updateCard={updateCard}
-                deleteCard={deleteCard}
-                addCard={addCard}
-                onSceneClick={handleSceneClick} // new prop to handle scene click
-                isActive={index === currentSceneIndex} // new prop to indicate active scene
-            />
+            <div
+            key={index}
+            ref={index === currentSceneIndex ? activeCardRef : null}
+            >
+                <VideoScriptCard
+                    key={index}
+                    scene={scene}
+                    index={index}
+                    updateCard={updateCard}
+                    deleteCard={deleteCard}
+                    addCard={addCard}
+                    onSceneClick={handleSceneClick} // new prop to handle scene click
+                    isActive={index === currentSceneIndex} // new prop to indicate active scene
+                />
+            </div>
             ))}
             {errorMessage && <p className="error">{errorMessage}</p>}
         </div>
     );
 }
 
-export default ScriptContainer;
+export default VideoScriptContainer;

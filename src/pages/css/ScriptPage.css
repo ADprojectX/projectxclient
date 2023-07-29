@@ -1,7 +1,7 @@
 .script {
   display: flex;
   height: calc(100vh - 62px);
-  background-color: #F5F6FA;
+  /* background-color: #F5F6FA; */
 }
 
 .script-content {
@@ -17,12 +17,12 @@
 
 
   
-  .card {
+  /* .card {
     border: 1px solid grey;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
-  }
+  } */
   
   .editField {
     width: 100%;
