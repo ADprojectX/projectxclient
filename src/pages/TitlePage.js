@@ -35,6 +35,7 @@ function TitlePage() {
     let data = {topic:topic}
     axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
       .then((response) => {
+        localStorage.setItem('reqid', response.data.reqid);
         // console.log(response.data.script);
         console.log(response.data)
         console.log('Project Submitted');

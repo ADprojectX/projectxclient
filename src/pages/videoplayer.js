@@ -27,7 +27,14 @@ const VideoPlayer = () => {
   return (
     <div className='editor'>
     <SideNavBar />
-
+      <div className='video-player'>
+        <SceneSelector 
+          scenes={videoFiles} 
+          currentSceneIndex={currentSceneIndex}
+          setCurrentSceneIndex={setCurrentSceneIndex}
+          />
+      </div>
+      
       <div className='scrpt'>
         <VideoScriptContainer 
           setScenesFromChild={setScriptScenesFromChild} 
@@ -36,13 +43,7 @@ const VideoPlayer = () => {
           />
       </div>
 
-      <div className='video-player'>
-        <SceneSelector 
-          scenes={videoFiles} 
-          currentSceneIndex={currentSceneIndex}
-          setCurrentSceneIndex={setCurrentSceneIndex}
-          />
-      </div>
+
 
     </div>
     );

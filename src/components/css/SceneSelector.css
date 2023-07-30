@@ -1,0 +1,15 @@
+.thumbnail {
+    height: 50px;
+    cursor: pointer;
+}
+
+.thumbnail.active {
+    border: 2px solid blue;
+}
+
+.timeline {
+    display: flex;
+    overflow-x: auto;
+    gap: 2px;
+    padding: 10px 0;
+}

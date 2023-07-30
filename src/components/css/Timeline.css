@@ -1,0 +1,45 @@
+/* For Firefox */
+.timeline {
+    display: flex;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 50%;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(209, 207, 207, 0.5) transparent;
+  }
+  
+  /* For WebKit-based browsers (Chrome, Safari, Opera) */
+  .timeline::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  .timeline::-webkit-scrollbar-track {
+    background: transparent; /* This is the scrollbar track (background), make it transparent */
+  }
+  
+  .timeline::-webkit-scrollbar-thumb {
+    background-color: rgba(209, 207, 207, 0.3); /* This is the scrollbar thumb (movable part), replace rgba(209, 207, 207, 0.5) with the color you want */
+    border-radius: 10px;
+  }
+  
+  /* Add this to style the scrollbar when hovering over it */
+  .timeline::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(209, 207, 207, 0.8); /* Change the color to the one you want when hovering */
+  }
+  
+  
+  .thumbnail {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    scroll-snap-align: center;
+    width: 120px;
+    height: 70px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+  .thumbnail.active {
+    border: 3px solid #0158f8;
+  }
+  

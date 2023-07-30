@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 import VPlayer from './VPlayer';
+import './css/SceneSelector.css'
+import Timeline from './Timeline';
 
 const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
     // const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
@@ -53,12 +55,38 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
       setSeekTo(0); // reset the seekTo value after seeking
     };
 
+    const handleClick = (index) => {
+      setCurrentSceneIndex(index);
+    };
   
     const sliderMarks = scenes.map((scene, i) => ({
       value: sceneStartTimes[i],
     //   label: scene.name,
-      label: (i + 1).toString(),
+      // label: (i + 1).toString(),
     }));
+
+    const sx = {
+      // Customize the color for the Slider track and thumb
+      '& .MuiSlider-rail': {
+        backgroundColor: 'rgb(157, 248, 175)', // Change the color for the track
+      },
+      '& .MuiSlider-track': {
+        backgroundColor: 'rgb(70, 241, 104)', // Change the color for the track before the thumb
+      },
+      '& .MuiSlider-thumb': {
+        backgroundColor: 'rgb(70, 241, 104)', // Change the color for the thumb
+        outline: 'none',
+      },
+      '& .MuiSlider-valueLabel': {
+        color: 'rgba(209, 207, 207, 0.8)', // Change the color for the value label
+      },
+      '& .MuiSlider-mark': {
+        color: 'rgb(0, 255, 51)', // Change the color for the value label
+      },
+      '& .MuiSlider-markLabel': {
+        color: 'rgb(0, 255, 51)', // Change the color for the value label
+      },
+    }
   
     if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
       return <div>Loading...</div>;
@@ -83,7 +111,21 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
                         onChange={handleSliderChange}
                         valueLabelDisplay="auto"
                         marks={sliderMarks}
+                        // sx={sx}
                     />
+                </div>
+                <div className='timeline'>  
+                    <Timeline scenes={scenes} currentSceneIndex={currentSceneIndex} handleClick={handleClick} />
+                    {/* {scenes.map((scene, index) => (
+                        <img
+                            key={index}
+                            // src={scene.thumbnail}
+                            src={`../thumbnails/${index}.jpg`}
+                            alt={`Thumbnail ${index}`}
+                            className={`thumbnail ${index === currentSceneIndex ? 'active' : ''}`}
+                            onClick={() => handleClick(index)}
+                        />
+                    ))} */}
                 </div>
             </div>
         </div>
