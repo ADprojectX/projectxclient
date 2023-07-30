@@ -94,14 +94,15 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
   
     return (
         <div className='v-player-main'>
-            <div className='v-player'>
-                <VPlayer 
-                    videoSrc={scenes[currentSceneIndex].video} 
-                    audioSrc={scenes[currentSceneIndex].audio} 
-                    handleSceneEnd={handleSceneEnd}
-                    handleProgress={handleProgress}
-                    seekTo={seekTo}
-                />
+                <div className='v-player'>
+                  <VPlayer 
+                      videoSrc={scenes[currentSceneIndex].video} 
+                      audioSrc={scenes[currentSceneIndex].audio} 
+                      handleSceneEnd={handleSceneEnd}
+                      handleProgress={handleProgress}
+                      seekTo={seekTo}
+                  />
+                </div>
                 <div className='slider'>  
                     <Slider
                         value={currentProgress}
@@ -127,7 +128,6 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
                         />
                     ))} */}
                 </div>
-            </div>
         </div>
     );
   };

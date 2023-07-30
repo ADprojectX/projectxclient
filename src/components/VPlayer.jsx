@@ -20,7 +20,7 @@ const VPlayer = ({ videoSrc, audioSrc, handleSceneEnd, handleProgress, seekTo })
             ref={reactPlayerRef}
             url={videoSrc}
             playing={true} 
-            controls={true} 
+            controls={false} 
             onEnded={handleSceneEnd} 
             onProgress={handleProgress}
           />

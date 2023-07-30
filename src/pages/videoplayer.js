@@ -26,7 +26,7 @@ const VideoPlayer = () => {
   
   return (
     <div className='editor'>
-    <SideNavBar />
+      <SideNavBar />
       <div className='video-player'>
         <SceneSelector 
           scenes={videoFiles} 
@@ -34,7 +34,7 @@ const VideoPlayer = () => {
           setCurrentSceneIndex={setCurrentSceneIndex}
           />
       </div>
-      
+
       <div className='scrpt'>
         <VideoScriptContainer 
           setScenesFromChild={setScriptScenesFromChild} 
@@ -42,8 +42,6 @@ const VideoPlayer = () => {
           setCurrentSceneIndex={setCurrentSceneIndex} 
           />
       </div>
-
-
 
     </div>
     );

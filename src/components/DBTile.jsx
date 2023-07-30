@@ -1,7 +1,6 @@
 import './css/DashboardTile.css'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Icon } from 'react-icons-kit'
-import {fileText} from 'react-icons-kit/icomoon/fileText'
 
 
 const DBTile = ( {icon1, icon2, icon3, text, link} ) => {
@@ -16,7 +15,7 @@ const DBTile = ( {icon1, icon2, icon3, text, link} ) => {
         <div className="tile">
 
             <div className='icons'>
-                <Icon icon={icon1.icon} size={icon1.size} color={icon1.color}/>
+                <Icon icon={icon1.icon} size={icon1.size} />
                 <Icon icon={icon2.icon} size={icon2.size}/>
                 <Icon icon={icon3.icon} size={icon3.size}/>
             </div>  

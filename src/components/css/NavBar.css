@@ -56,3 +56,37 @@
   .nav-right p {
     margin-right: 1rem;
   }
+
+  
+  .profile {
+    position: relative; /* Make sure the dropdown is positioned relative to the profile div */
+  }
+  
+  .profile:hover .dropdown {
+    display: block; /* Show the dropdown on hover */
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 150px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+  }
+  
+  .dropdown-item {
+    padding: 8px 0;
+    /* cursor: pointer; */
+  }
+  
+  .dropdown-item:hover {
+    background-color: rgba(221, 238, 245, 0.5);
+    border-radius: 8px;
+
+  }

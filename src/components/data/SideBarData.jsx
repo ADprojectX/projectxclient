@@ -1,7 +1,9 @@
 import React from "react";
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import SettingsIcon from '@mui/icons-material/Settings';
+import InventoryIcon from '@mui/icons-material/Inventory';
+// import GetAppIcon from '@mui/icons-material/GetApp';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+// import SettingsIcon from '@mui/icons-material/Settings';
 
 export const SidebarData = [
     {
@@ -9,15 +11,15 @@ export const SidebarData = [
         icon: <DashboardIcon />,
         links: ["/dashboard", "/title", "/script", "/voice", "/video"],
     },
+    // {
+    //     text: "My Projects",
+    //     icon: <InventoryIcon />,
+    //     links: ["/projects"],
+    // },
     {
-        text: "Profile",
-        icon: <AccountBoxIcon />,
-        links: ["/"],
-    },
-    {
-        text: "Settings",
-        icon: <SettingsIcon/>,
-        links: ["/"],
+        text: "My Exports",
+        icon: <ExitToAppIcon/>,
+        links: ["/exports"],
     },
 ];
 // export const SidebarData = [

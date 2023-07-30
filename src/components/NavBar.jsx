@@ -1,5 +1,7 @@
 import React from 'react';
+import { Icon } from 'react-icons-kit'
 import { useNavigate } from 'react-router-dom';
+import VideoCameraFrontRoundedIcon from '@mui/icons-material/VideoCameraFrontRounded';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import NavBarCss from './css/NavBar.css'    
@@ -11,8 +13,30 @@ import {auth} from '../firebase/config' //firebase
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
+const Dropdown = () => {
+  return (
+    <div className="dropdown">
+      <div className='dropdown-item'>My Account</div>
+      <div className='dropdown-item'>My Plan</div>
+    </div>
+  );
+};
+
+
 const NavBar = ( { user } ) => {
   const navigate = useNavigate()
+  const [showDropdown, setShowDropdown] = React.useState(false);
+
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+    console.log("Entered")
+  };
+
+  const handleMouseLeave = () => {
+    setShowDropdown(false);
+    console.log("Exit")
+
+  };
   
   //django
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -48,7 +72,16 @@ const NavBar = ( { user } ) => {
     <div className='navbar'>
         <h1>ProjectX</h1>
         <div className='nav-right'>
-          <p>Hello {user}</p> 
+          <p>{user}</p>
+          <div
+            className="profile"
+            style={{ color: '#585A5A' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <VideoCameraFrontRoundedIcon fontSize='large' color="inherit" />
+            {showDropdown && <Dropdown />}
+        </div>
           {/* change user.email to username for django and user.email for firebase */}
           {/* <button onClick={handleLogoutClick}>Logout</button> */}
         </div>
