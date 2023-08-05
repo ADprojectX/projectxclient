@@ -47,14 +47,14 @@ function ScriptPage() {
           i++;
         }
       }
-      console.log('submitting voice');
-      axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
-        .then((response) => {
-          console.log('voice sent');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      // console.log('submitting voice');
+      // axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
+      //   .then((response) => {
+      //     console.log('voice sent');
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
 
       const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
       console.log(finalSceneString)
