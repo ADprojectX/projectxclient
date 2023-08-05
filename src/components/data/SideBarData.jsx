@@ -9,7 +9,7 @@ export const SidebarData = [
     {
         text: "Dashboard",
         icon: <DashboardIcon />,
-        links: ["/dashboard", "/title", "/script", "/voice", "/video"],
+        links: ["/dashboard", "/title", "/script", "/voice"],
     },
     // {
     //     text: "My Projects",

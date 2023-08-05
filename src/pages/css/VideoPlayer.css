@@ -1,46 +1,10 @@
+.video-page {
+    display: flex;
+}
+
 .editor {
-    display: flex;  
-    margin: 20px; 
-    justify-content: flex-start;
-}
-
-.video-player {
-    min-width: 500px;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    flex: 1;
-}
-
-.v-player-main {
-    margin-left: 30px;
-    margin-right: 10px;
+    margin: 30px;
     display: flex;
     flex-direction: column;
-    min-width: 400px;
-    /* width: 1000px; */
-    max-width: 1000px;
-    background-color: #F5F6FA;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-}
-
-.slider {
-    margin: 50px;
-}
-
-.scrpt {
-    margin-right: auto;
-    width: 700px;
-    max-width: 700px;
-    flex: 1;
-
-    /* max-width: 1000px; */
-}
-
-.v-player {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 15px;
+    gap: 25px;
 }

@@ -3,12 +3,16 @@ import { AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 import VPlayer from './VPlayer';
 import './css/SceneSelector.css'
 import Timeline from './Timeline';
+import { PiPlayPause } from "react-icons/pi";
+import { Widgets } from '@mui/icons-material';
+
 
 const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
     // const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
     const [totalDuration, setTotalDuration] = useState(0);
+    const [playing, setPlaying] = useState(true);
     const [seekTo, setSeekTo] = useState(0);
   
     useEffect(() => {
@@ -30,16 +34,6 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
       }
       setSeekTo(newValue - sceneStartTimes[newSceneIndex]);
     };
-  
-    // const handleSceneEnd = () => {
-    //   const nextSceneIndex = currentSceneIndex + 1;
-    //   if (nextSceneIndex < scenes.length) {
-    //     setCurrentSceneIndex(nextSceneIndex);
-    //   } else {
-    //     setCurrentSceneIndex(0);
-    //     setCurrentProgress(0);
-    //   }
-    // };
 
     const handleSceneEnd = () => {
         const nextSceneIndex = currentSceneIndex + 1;
@@ -58,6 +52,11 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
     const handleClick = (index) => {
       setCurrentSceneIndex(index);
     };
+
+    // Function to toggle play and pause
+    const handlePlayPause = () => {
+      setPlaying(!playing);
+    };
   
     const sliderMarks = scenes.map((scene, i) => ({
       value: sceneStartTimes[i],
@@ -65,29 +64,6 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
       // label: (i + 1).toString(),
     }));
 
-    const sx = {
-      // Customize the color for the Slider track and thumb
-      '& .MuiSlider-rail': {
-        backgroundColor: 'rgb(157, 248, 175)', // Change the color for the track
-      },
-      '& .MuiSlider-track': {
-        backgroundColor: 'rgb(70, 241, 104)', // Change the color for the track before the thumb
-      },
-      '& .MuiSlider-thumb': {
-        backgroundColor: 'rgb(70, 241, 104)', // Change the color for the thumb
-        outline: 'none',
-      },
-      '& .MuiSlider-valueLabel': {
-        color: 'rgba(209, 207, 207, 0.8)', // Change the color for the value label
-      },
-      '& .MuiSlider-mark': {
-        color: 'rgb(0, 255, 51)', // Change the color for the value label
-      },
-      '& .MuiSlider-markLabel': {
-        color: 'rgb(0, 255, 51)', // Change the color for the value label
-      },
-    }
-  
     if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
       return <div>Loading...</div>;
     }
@@ -101,9 +77,21 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
                       handleSceneEnd={handleSceneEnd}
                       handleProgress={handleProgress}
                       seekTo={seekTo}
+                      playing={playing}
                   />
                 </div>
-                <div className='slider'>  
+
+                <svg width="0" height="0">
+                  <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
+                    <stop stopColor="#385BFE" offset="0%" />
+                    <stop stopColor="#3ACAF8" offset="100%" />
+                  </linearGradient>
+                </svg>
+
+                <div className='slider'> 
+                    <button className='playpause-button'onClick={handlePlayPause}>
+                      <PiPlayPause style={{ fill: "url(#blue-gradient)" }} size={27}  />
+                    </button>
                     <Slider
                         value={currentProgress}
                         step={1}
@@ -112,21 +100,10 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
                         onChange={handleSliderChange}
                         valueLabelDisplay="auto"
                         marks={sliderMarks}
-                        // sx={sx}
                     />
                 </div>
                 <div className='timeline'>  
                     <Timeline scenes={scenes} currentSceneIndex={currentSceneIndex} handleClick={handleClick} />
-                    {/* {scenes.map((scene, index) => (
-                        <img
-                            key={index}
-                            // src={scene.thumbnail}
-                            src={`../thumbnails/${index}.jpg`}
-                            alt={`Thumbnail ${index}`}
-                            className={`thumbnail ${index === currentSceneIndex ? 'active' : ''}`}
-                            onClick={() => handleClick(index)}
-                        />
-                    ))} */}
                 </div>
         </div>
     );

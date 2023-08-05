@@ -1,0 +1,66 @@
+.editor-main {
+    /* background-color: rgb(253, 218, 218); */
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr;
+}
+
+.grid-col-span-2 {
+    grid-column: span 2;
+}
+
+.grid-col-span-3 {
+    grid-column: span 3;
+}
+
+.grid-scene-settings {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 4;
+}
+
+.v-player {
+    min-width: 700px;
+    max-height: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* border: 2px solid black; */
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.timeline-unit {
+    max-width: 1508px;
+    display: flex;
+    padding-left: 15px;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.playpause-button {
+    margin: 0;
+    background-color: white;
+    border-color: transparent;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playpause-button:hover {
+    background-color: rgb(238, 242, 253);
+    /* border-color: rgb(219, 255, 250); */
+}
+
+.playpause-button:active {
+    background-color: rgb(217, 230, 255);
+}
+

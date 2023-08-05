@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/VideoScriptCard.css';
+import '../css/video-editing/VideoScriptCard.css';
 
 const VideoScriptCard = ({ index, scene, updateCard, onSceneClick, isActive }) => {
   const textareaRef = React.useRef();

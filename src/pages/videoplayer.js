@@ -1,48 +1,40 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './css/VideoPlayer.css'
-import SceneSelector from '../components/SceneSelector';
-import VideoScriptContainer from '../components/VideoScriptContainer';
+// import './css/VideoPlayer.css'
+import EditorMain from '../components/video-editing/Editormain';
+import EditorMenuBar from '../components/video-editing/EditorMenuBar';
+import VideoScriptContainer from '../components/video-editing/VideoScriptContainer';
 import ScriptContainer from '../components/ScriptContainer';
 import SideNavBar from '../components/SideBar';
 
 const VideoPlayer = () => {
-  const [scriptScenes, setScriptScenes] = useState();
   const [videoFiles, setVideoFiles] = useState([]);
-  const [currentSceneIndex, setCurrentSceneIndex] = useState(0);  // new state for current scene
   
   const location = useLocation();
   let reqid = location.state && location.state.reqid
   let videoData = location.state && location.state.videoFiles
 
-  const setScriptScenesFromChild = (childScenes) => {
-    setScriptScenes(childScenes);
-  }
 
   useEffect(() => {
     setVideoFiles(videoData)
-    console.log(videoData)
+    console.log(videoFiles)
   }, []);
   
   return (
-    <div className='editor'>
+    <div className='video-page'>
       <SideNavBar />
-      <div className='video-player'>
-        <SceneSelector 
-          scenes={videoFiles} 
-          currentSceneIndex={currentSceneIndex}
-          setCurrentSceneIndex={setCurrentSceneIndex}
-          />
-      </div>
 
-      <div className='scrpt'>
-        <VideoScriptContainer 
-          setScenesFromChild={setScriptScenesFromChild} 
-          currentSceneIndex={currentSceneIndex} 
-          setCurrentSceneIndex={setCurrentSceneIndex} 
-          />
-      </div>
+      <div className='editor'>
 
+        <div>
+          <EditorMenuBar />
+        </div>
+
+        <div className='video-player'>
+          <EditorMain scenes={videoFiles} />
+        </div>
+
+      </div>
     </div>
     );
 };

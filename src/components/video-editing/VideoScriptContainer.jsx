@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import VideoScriptCard from './VideoScriptCard';
-import './css/VideoScriptContainer.css'
+import '../css/video-editing/VideoScriptContainer.css'
 
 const REQ_BASE_URL = 'http://localhost:8000/req';
 

@@ -1,4 +1,4 @@
-import './css/Timeline.css'
+import '../css/video-editing/Timeline.css'
 
 import React, { useRef, useEffect } from 'react';
 
