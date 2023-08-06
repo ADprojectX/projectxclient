@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-// import './css/VideoPlayer.css'
 import EditorMain from '../components/video-editing/Editormain';
-import EditorMenuBar from '../components/video-editing/EditorMenuBar';
-import VideoScriptContainer from '../components/video-editing/VideoScriptContainer';
-import ScriptContainer from '../components/ScriptContainer';
 import SideNavBar from '../components/SideBar';
+import './css/VideoPlayer.css'
+
 
 const VideoPlayer = () => {
   const [videoFiles, setVideoFiles] = useState([]);
@@ -25,10 +23,6 @@ const VideoPlayer = () => {
       <SideNavBar />
 
       <div className='editor'>
-
-        <div>
-          <EditorMenuBar />
-        </div>
 
         <div className='video-player'>
           <EditorMain scenes={videoFiles} />

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AppBar, Toolbar, Typography, Slider }  from "@mui/material";
 import VPlayer from './VPlayer';
 // import './css/SceneSelector.css'
 import '../css/video-editing/EditorMain.css'
 import Timeline from './Timeline';
 import SceneSettings from './SceneSettings';
+import EditorMenuBar from './EditorMenuBar';
 import VideoScriptContainer from './VideoScriptContainer';
 import { PiPlayPause } from "react-icons/pi";
 import { Widgets } from '@mui/icons-material';
 
 
-const SceneSelector = ({ scenes }) => {
+const Editormain = ({ scenes }) => {
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
@@ -18,7 +19,12 @@ const SceneSelector = ({ scenes }) => {
     const [playing, setPlaying] = useState(true);
     const [scriptScenes, setScriptScenes] = useState();
     const [seekTo, setSeekTo] = useState(0);
-  
+    const vPlayerRef = useRef();
+
+    const handleFullScreen = () => {
+      vPlayerRef.current.handleFullScreen();
+    };
+
     useEffect(() => {
       let tempTotalDuration = 0;
       let tempStartTimes = [];
@@ -78,6 +84,9 @@ const SceneSelector = ({ scenes }) => {
   
     return (
         <div className='editor-main'>
+                <div className='grid-col-span-4'>
+                  <EditorMenuBar handleFullScreen={handleFullScreen}/>
+                </div>
 
                 <div className='v-player grid-col-span-2'>
                   <VPlayer 
@@ -87,6 +96,8 @@ const SceneSelector = ({ scenes }) => {
                       handleProgress={handleProgress}
                       seekTo={seekTo}
                       playing={playing}
+                      setPlaying = {setPlaying}
+                      ref={vPlayerRef}
                   />
                 </div>
 
@@ -135,4 +146,4 @@ const SceneSelector = ({ scenes }) => {
     );
   };
   
-  export default SceneSelector;
+  export default Editormain;

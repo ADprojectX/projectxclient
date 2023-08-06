@@ -11,3 +11,17 @@
     padding-right: 25px;
 }
 
+.emb-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    /* background-color: red; */
+    border-radius: 30px;
+}
+
+.hover-effect:hover {
+    width: 35px;
+    height: 35px;
+}

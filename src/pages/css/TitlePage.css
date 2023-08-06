@@ -1,11 +1,102 @@
 .title {
-    display: flex;
-    height: calc(100vh - 62px);
-    background-color: #F5F6FA;
-  }
-  
-  .title-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  height: calc(100vh - 62px);
+  /* background-color: #F5F6FA; */
+}
+
+.title-content {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+
+.title-input-unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  /* margin-right: 30px; */
+  width: 500px;
+  height: 50px;
+  border: double 2px transparent;
+  border-radius: 80px;
+  background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FDFF90,#7CFF14, #14FFC7, #EC14FF);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 3px 3px 3px rgb(184, 184, 184);
+}
+
+
+.title-input-unit input {
+  width: 450px;
+  height: 30px;
+  border: none;
+  padding-left: 20px;
+  margin: 0;
+  margin-left: 2px;
+  border-radius: 30px;
+  outline: none;
+  /* margin: 20px; */
+}
+
+.title-input-unit input::placeholder {
+  color: #747272;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.title-input-unit input:focus {
+  color: #747272;
+  font-weight: 700; 
+  font-size: medium;
+  letter-spacing: 2px;
+}
+.title-input-unit input:not(:focus) {
+  color: #747272;
+  font-weight: 700; 
+  font-size: medium;
+  letter-spacing: 2px;
+}
+
+.title-input-unit button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 30px;
+  margin: 0;
+}
+
+.typewriter-display {
+  margin: auto;
+  width: 600px;
+  min-height: 400px;
+  background-color: #FDFFFA;
+  box-shadow: 0px 4px 4px rgb(184, 184, 184);
+  border-radius: 30px;
+}
+
+.typewriter-texts {
+  display: flex;
+  margin-left: 50px;
+  margin-right: 50px;
+  min-height: 400px;
+  justify-content: space-around;
+  /* margin: auto; */
+  flex-direction: column;
+  /* width: 500px; */
+  color: #247100;
+}
+
+.tt {
+  /* display: flex; */
+  font-size:x-large;
+  align-items: flex-start;
+
+}
+
+.TypeWriter {
+  display: flex;
+}

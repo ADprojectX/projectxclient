@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-import ReactPlayer from "react-player";
-import { Container, AppBar, Toolbar, Typography, Slider }  from "@mui/material";
-import './css/VideoPlayer.css'
-import ScriptContainer from '../components/ScriptContainer';
 import axios from 'axios';
 import JSZip from 'jszip';
 

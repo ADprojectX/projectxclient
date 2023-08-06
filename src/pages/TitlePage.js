@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import { useNavigate, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './css/TitlePage.css'
-import NavBar from '../components/NavBar';
-import Cookies from 'js-cookie';
+import TypeWriterEffect from 'react-typewriter-effect';
+import Typewriter from "typewriter-effect";
 import SideBar from '../components/SideBar';
+import { BsFillArrowRightCircleFill } from "react-icons/bs"; 
 
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
@@ -56,13 +57,129 @@ function TitlePage() {
     <div className="title">
       <SideBar />
       <div className="title-content">
-        {/* <SideBar/> */}
-        <p>Welcome to the Title Page</p>
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter Title" />
-          <button type="submit">Submit</button>
-        </form>
-        {errorMessage && <p className="error">{errorMessage}</p>}
+          {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
+          
+          <div className='title-input-unit'>
+              <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter your title here..." />
+              <button onClick={handleSubmit} type="submit">
+                <BsFillArrowRightCircleFill color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/>
+              </button>
+          </div>
+
+        <div className='typewriter-display'>
+          <div className='typewriter-texts'>
+            <div className='tt'>
+              <Typewriter
+                options={{
+                  loop:true,
+                  skipAddStyles:false,
+                  cursor:"",
+                  delay: 40,
+                }}
+                onInit={(typewriter) => {
+                  typewriter
+                  .typeString("10 Essential tips for raising happy and healthy pets")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .pauseFor(1000)
+                  .typeString("The Ultimate Guide to Personal Finance: Master Your Money")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .typeString("Delicious and easy recipes for quick weeknight dinners")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .pauseFor(1000)
+                  .typeString("Yoga for Beginners: Relax and Rejuvenate with Simple Poses")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .typeString("Effective workouts without any equipment")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .pauseFor(1000)
+                  .typeString("Gardening Tips and Tricks: Cultivate a Stunning Green Oasis")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .typeString("Parenting Advice: Nurturing Happy and Confident Children")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .pauseFor(1000)
+                  .typeString("Self-Care Routine: Pamper Yourself for a Healthy Mind and Body")
+                  .pauseFor(1000)
+                  .deleteAll()
+                  .start();
+                  typewriter.loop = true;
+                }}
+                />
+            </div>
+            
+            {/* <div className='tt'>
+              <Typewriter
+                options={{
+                  loop:true,
+                  skipAddStyles:false,
+                  cursor:"",
+                }}
+                onInit={(typewriter) => {
+                    typewriter
+                        .typeString("Delicious and easy recipes for quick weeknight dinners")
+                        .pauseFor(5000)
+                        .deleteAll()
+                        .pauseFor(2000)
+                        .typeString("Yoga for Beginners: Relax and Rejuvenate with Simple Poses")
+                        .pauseFor(1000)
+                        .deleteAll()
+                        .start();
+                    typewriter.loop = true;
+                }}
+              />
+            </div>
+
+            <div className='tt'>
+              <Typewriter
+                options={{
+                  loop:true,
+                  skipAddStyles:false,
+                  cursor:"",
+                }}
+                onInit={(typewriter) => {
+                    typewriter
+                        .typeString("Effective workouts without any equipment")
+                        .pauseFor(5000)
+                        .deleteAll()
+                        .pauseFor(2000)
+                        .typeString("Gardening Tips and Tricks: Cultivate a Stunning Green Oasis")
+                        .pauseFor(1000)
+                        .deleteAll()
+                        .start();
+                    typewriter.loop = true;
+                }}
+              />
+            </div>
+
+            <div className='tt'>
+              <Typewriter
+                options={{
+                  loop:true,
+                  skipAddStyles:false,
+                  cursor:"",
+                }}
+                onInit={(typewriter) => {
+                    typewriter
+                        .typeString("Parenting Advice: Nurturing Happy and Confident Children")
+                        .pauseFor(5000)
+                        .deleteAll()
+                        .pauseFor(2000)
+                        .typeString("Self-Care Routine: Pamper Yourself for a Healthy Mind and Body")
+                        .pauseFor(1000)
+                        .deleteAll()
+                        .start();
+                    typewriter.loop = true;
+                }}
+              />
+            </div> */}
+          </div>
+        </div>
+
       </div>
     </div>
   );

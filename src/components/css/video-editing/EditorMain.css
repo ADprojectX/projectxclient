@@ -13,14 +13,18 @@
     grid-column: span 3;
 }
 
+.grid-col-span-4 {
+    grid-column: span 4;
+}
+
 .grid-scene-settings {
-    grid-row-start: 1;
-    grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
     grid-column-start: 4;
 }
 
 .v-player {
-    min-width: 700px;
+    /* min-width: 700px; */
     max-height: 450px;
     margin-left: auto;
     margin-right: auto;
@@ -63,4 +67,3 @@
 .playpause-button:active {
     background-color: rgb(217, 230, 255);
 }
-
