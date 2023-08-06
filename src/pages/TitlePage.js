@@ -60,9 +60,9 @@ function TitlePage() {
           {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
           
           <div className='title-input-unit'>
-              <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter your title here..." />
+              <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter your video title here..." />
               <button onClick={handleSubmit} type="submit">
-                <BsFillArrowRightCircleFill color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/>
+                <BsFillArrowRightCircleFill className="title-btn" color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/>
               </button>
           </div>
 

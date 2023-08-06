@@ -73,6 +73,11 @@
   margin: 0;
 }
 
+.title-btn:hover {
+  width: 35px;
+  height: 35px;
+}
+
 .typewriter-display {
   margin: auto;
   width: 600px;
