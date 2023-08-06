@@ -25,7 +25,11 @@
   background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FDFF90,#7CFF14, #14FFC7, #EC14FF);
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  box-shadow: 3px 3px 3px rgb(184, 184, 184);
+  box-shadow: 0px 4px 4px rgb(184, 184, 184);
+}
+
+.title-input-unit:hover {
+  box-shadow: 0px 6px 6px rgb(184, 184, 184);
 }
 
 
@@ -92,7 +96,8 @@
 
 .tt {
   /* display: flex; */
-  font-size:x-large;
+  font-size: 30px;
+  font-weight: 600;
   align-items: flex-start;
 
 }
