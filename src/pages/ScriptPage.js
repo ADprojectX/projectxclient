@@ -78,7 +78,7 @@ function ScriptPage() {
         <SideBar />
 
         <div className="script-content">
-          <p>Welcome to the Script Page</p>
+          <p>LET'S CRAFT YOUR SCRIPT</p>
           {/* <ScriptContainer setScenesFromChild={setScenesFromChild} /> */}
           <ScriptContainer 
             setScenesFromChild={setScriptScenesFromChild} 

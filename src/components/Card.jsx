@@ -1,5 +1,10 @@
 import React from 'react';
 import './css/Card.css';
+import { AiFillPlusCircle } from "react-icons/ai";
+import { FiPlusCircle } from "react-icons/fi";
+
+import { MdDeleteOutline } from "react-icons/md";
+
 
 const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isActive }) => {
   const textareaRef = React.useRef();
@@ -31,8 +36,45 @@ const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isA
         value={scene[0]} 
         onChange={(e) => updateCard(index, [e.target.value, scene[1]])} 
       />
+
+      {isActive && (
+        <div className="card-buttons">
+          <button onClick={(e) => {
+            e.stopPropagation();
+            addCard(index);
+          }}>
+            <FiPlusCircle className='card-icon-plus-hover-effect' color='#005E4D' size={20}/>
+          </button>
+
+          <button className="card-button" onClick={(e) => {
+            e.stopPropagation();
+            deleteCard(index);
+          }}>
+            <MdDeleteOutline className='card-icon-hover-effect' color='#FF006B' size={24}/>
+          </button>
+        </div>
+      )}
+
+
     </div>
   );
 };
 
 export default Card;
+
+
+// <div className="card-buttons"> 
+// <button onClick={(e) => {
+//   e.stopPropagation();  
+//   addCard(index);
+// }}>
+//   <FiPlusCircle color='darkgreen' size={17}/>
+// </button>
+
+// <button className="card-button" onClick={(e) => {
+//   e.stopPropagation();  
+//   deleteCard(index);
+// }}>
+//   <MdDeleteForever color='#FF006B' size={20}/>
+// </button>
+// </div>
