@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef} from 'react';
 import { useNavigate, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './css/TitlePage.css'
@@ -16,9 +16,20 @@ function TitlePage() {
   const [title, setTitle] = useState('');
   const [csrfToken, setCsrfToken] = React.useState('')
   const [topic, setTopic] = React.useState('');
+  const formRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
+  };
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (title.trim() !== '') {
+        handleSubmit(e);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -27,8 +38,10 @@ function TitlePage() {
         setErrorMessage('Title cannot be empty');
         return;
       }
+    setIsLoading(true);
     // Perform the desired action with the title
     console.log('Title:', title);
+
     let headers = {
       'X-CSRFToken': csrfToken,
       'Content-Type': 'application/json'
@@ -56,15 +69,24 @@ function TitlePage() {
   return (
     <div className="title">
       <SideBar />
+
+      {isLoading && (
+            <div className="loading-popup">
+                Loading...
+            </div>
+        )}
+
       <div className="title-content">
           {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
           
           <div className='title-input-unit'>
-              <input type="text" value={title} onChange={handleTitleChange} placeholder="Enter your video title here..." />
+              <input type="text"  onKeyPress={handleEnterKeyPress} value={title} onChange={handleTitleChange} placeholder="Enter your video title here..." />
               <button onClick={handleSubmit} type="submit">
                 <BsFillArrowRightCircleFill className="title-btn" color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/>
               </button>
           </div>
+        
+        
 
         <div className='typewriter-display'>
           <div className='typewriter-texts'>
@@ -111,72 +133,6 @@ function TitlePage() {
                 }}
                 />
             </div>
-            
-            {/* <div className='tt'>
-              <Typewriter
-                options={{
-                  loop:true,
-                  skipAddStyles:false,
-                  cursor:"",
-                }}
-                onInit={(typewriter) => {
-                    typewriter
-                        .typeString("Delicious and easy recipes for quick weeknight dinners")
-                        .pauseFor(5000)
-                        .deleteAll()
-                        .pauseFor(2000)
-                        .typeString("Yoga for Beginners: Relax and Rejuvenate with Simple Poses")
-                        .pauseFor(1000)
-                        .deleteAll()
-                        .start();
-                    typewriter.loop = true;
-                }}
-              />
-            </div>
-
-            <div className='tt'>
-              <Typewriter
-                options={{
-                  loop:true,
-                  skipAddStyles:false,
-                  cursor:"",
-                }}
-                onInit={(typewriter) => {
-                    typewriter
-                        .typeString("Effective workouts without any equipment")
-                        .pauseFor(5000)
-                        .deleteAll()
-                        .pauseFor(2000)
-                        .typeString("Gardening Tips and Tricks: Cultivate a Stunning Green Oasis")
-                        .pauseFor(1000)
-                        .deleteAll()
-                        .start();
-                    typewriter.loop = true;
-                }}
-              />
-            </div>
-
-            <div className='tt'>
-              <Typewriter
-                options={{
-                  loop:true,
-                  skipAddStyles:false,
-                  cursor:"",
-                }}
-                onInit={(typewriter) => {
-                    typewriter
-                        .typeString("Parenting Advice: Nurturing Happy and Confident Children")
-                        .pauseFor(5000)
-                        .deleteAll()
-                        .pauseFor(2000)
-                        .typeString("Self-Care Routine: Pamper Yourself for a Healthy Mind and Body")
-                        .pauseFor(1000)
-                        .deleteAll()
-                        .start();
-                    typewriter.loop = true;
-                }}
-              />
-            </div> */}
           </div>
         </div>
 
