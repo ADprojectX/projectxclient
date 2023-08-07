@@ -44,39 +44,43 @@ function VoiceContainer({ onVoiceChange }) {
     };
 
     
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log('submit');
-      axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
-        .then((response) => {
-          console.log('voice sent');
-          navigate('/loading');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   console.log('submit');
+    //   axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
+    //     .then((response) => {
+    //       console.log('voice sent');
+    //       navigate('/loading');
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // };
 
     return(
     <div className="voice-content">
-        <form onSubmit={handleSubmit}>
-            <select value={selectedValue} onChange={handleSelectChange}>
-            <option value="" disabled hidden>Select Voice</option>
-            {Object.entries(voiceSamples).map(([audioName,_]) => (
-                <option key={audioName} value={audioName}>{audioName}</option>
-            ))}
-            </select>
-            {/* <button type="submit">Submit</button> */}
-            {errorMessage && <p className="error">{errorMessage}</p>}
-        </form>
+        {/* <form onSubmit={handleSubmit}> */}
 
-        {selectedAudio && (
+        {/* </form> */}
+
+        <div className='voice-tile'>
+          {selectedAudio && (
             <div>
-            <audio controls ref={audioRef}> 
-                <source src={`data:audio/mp3;base64,${selectedAudio}`} type="audio/mp3" />
-            </audio>
-            </div>
-        )}
+              <audio controls ref={audioRef}> 
+                  <source src={`data:audio/mp3;base64,${selectedAudio}`} type="audio/mp3" />
+              </audio>
+              </div>
+          )}
+
+          <select className='select-voice-dropdown' value={selectedValue} onChange={handleSelectChange}>
+              <option value="" disabled hidden>Select Voice</option>
+              {Object.entries(voiceSamples).map(([audioName,_]) => (
+                  <option key={audioName} value={audioName}>{audioName}</option>
+              ))}
+          </select>
+        </div>
+
+
         {errorMessage && <p className="error">{errorMessage}</p>}
     </div>
     );

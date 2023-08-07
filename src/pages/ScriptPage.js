@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -20,6 +20,10 @@ function ScriptPage() {
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);  // new state for current scene
     const [selectedValue, setSelectedValue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const animateButtonRef = useRef(null);
+
     const location = useLocation();
     let reqid = location.state && location.state.reqid
 
@@ -31,11 +35,36 @@ function ScriptPage() {
       setScenes(childScenes);
     }
 
+    useEffect(() => {
+      const animateButton = (e) => {
+          e.preventDefault();
+          // reset animation
+          e.target.classList.remove('animate');
+          e.target.classList.add('animate');
+          setTimeout(() => {
+              e.target.classList.remove('animate');
+          }, 700);
+      };
+  
+      const button = animateButtonRef.current;
+      if (button) {
+          button.addEventListener('click', animateButton);
+      }
+  
+      // Cleanup the event listener on component unmount
+      return () => {
+          if (button) {
+              button.removeEventListener('click', animateButton);
+          }
+      };
+    }, []);
+  
     const handleSubmit = async () => {
       if (selectedValue === null) {
         setErrorMessage('Please select a voice before submitting.');
         return;
       }
+      setIsLoading(true);
       let finalScene = {};
       let i = 0;
       
@@ -76,7 +105,11 @@ function ScriptPage() {
         <div className="script">
 
         <SideBar />
-
+        {isLoading && (
+            <div className="loading-popup">
+                Loading...
+            </div>
+        )}
         <div className="script-content">
           <p>LET'S CRAFT YOUR SCRIPT</p>
           {/* <ScriptContainer setScenesFromChild={setScenesFromChild} /> */}
@@ -84,17 +117,28 @@ function ScriptPage() {
             setScenesFromChild={setScriptScenesFromChild} 
             currentSceneIndex={currentSceneIndex} 
             setCurrentSceneIndex={setCurrentSceneIndex} 
-          />
+            />
+          {errorMessage && <p className="error">{errorMessage}</p>}
 
           <div className='footer'>
             <div className='voice-in-script'>
-              <VoiceContainer onVoiceChange={handleVoiceChange} />
+              <VoiceContainer 
+                onVoiceChange={handleVoiceChange} 
+                handleSubmit={handleSubmit}
+              />
               {/* <h3>{selectedValue}</h3> */}
+
+              <div className='create-video-btn-div'>
+                <button 
+                  ref={animateButtonRef} 
+                  className="create-video-btn" 
+                  onClick={handleSubmit}
+                  >
+                    CREATE VIDEO
+                </button>
+              </div>
             </div>
-            <div>
-              <button className="submit" onClick={handleSubmit}>Submit</button>
-              {errorMessage && <p className="error">{errorMessage}</p>}
-            </div>
+            
           </div>
         </div>
 
