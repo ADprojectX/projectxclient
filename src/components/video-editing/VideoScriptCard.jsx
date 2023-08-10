@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/video-editing/VideoScriptCard.css';
 
-const VideoScriptCard = ({ index, scene, updateCard, onSceneClick, isActive }) => {
+const VideoScriptCard = ({ uuid, index, scene, updateCard, onSceneClick, isActive }) => {
   const textareaRef = React.useRef();
 
   React.useEffect(() => {
@@ -28,8 +28,8 @@ const VideoScriptCard = ({ index, scene, updateCard, onSceneClick, isActive }) =
       <textarea 
         ref={textareaRef}
         className="editField" 
-        value={scene[0]} 
-        onChange={(e) => updateCard(index, [e.target.value, scene[1]])} 
+        value={scene} 
+        onChange={(e) => updateCard(index, [index, uuid, e.target.value])}
       />
     </div>
   );
