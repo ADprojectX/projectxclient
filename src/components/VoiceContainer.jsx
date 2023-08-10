@@ -72,6 +72,16 @@ function VoiceContainer({ onVoiceChange }) {
               </div>
           )}
 
+        {/* <div className="custom-select-wrapper">
+            <select className='select-voice-dropdown' value={selectedValue} onChange={handleSelectChange}>
+                <option value="" disabled hidden>Select Voice</option>
+                {Object.entries(voiceSamples).map(([audioName,_]) => (
+                    <option key={audioName} value={audioName}>{audioName}</option>
+                ))}
+            </select>
+        </div> */}
+
+
           <select className='select-voice-dropdown' value={selectedValue} onChange={handleSelectChange}>
               <option value="" disabled hidden>Select Voice</option>
               {Object.entries(voiceSamples).map(([audioName,_]) => (

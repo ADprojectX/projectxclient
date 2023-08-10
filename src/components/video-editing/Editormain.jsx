@@ -17,6 +17,7 @@ const Editormain = ({ scenes }) => {
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
     const [totalDuration, setTotalDuration] = useState(0);
     const [playing, setPlaying] = useState(true);
+    const [currentTime, setCurrentTime] = useState(0);
     const [scriptScenes, setScriptScenes] = useState();
     const [seekTo, setSeekTo] = useState(0);
     const vPlayerRef = useRef();
@@ -35,6 +36,13 @@ const Editormain = ({ scenes }) => {
       setTotalDuration(tempTotalDuration);
       setSceneStartTimes(tempStartTimes);
     }, [scenes]);
+
+  const formatTime = (seconds) => {
+      const hrs = Math.floor(seconds / 3600);
+      const mins = Math.floor((seconds % 3600) / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${hrs ? `${hrs}:` : ''}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
   
     const handleSliderChange = (event, newValue) => {
       setCurrentProgress(newValue);
@@ -55,8 +63,10 @@ const Editormain = ({ scenes }) => {
       };
   
     const handleProgress = ({ playedSeconds }) => {
+      const accumulatedTime = sceneStartTimes[currentSceneIndex] + playedSeconds;
+      setCurrentTime(accumulatedTime);
       setCurrentProgress(sceneStartTimes[currentSceneIndex] + playedSeconds);
-      setSeekTo(0); // reset the seekTo value after seeking
+      setSeekTo(0);
     };
 
     const handleClick = (index) => {
@@ -69,7 +79,7 @@ const Editormain = ({ scenes }) => {
     };
   
     const sliderMarks = scenes.map((scene, i) => ({
-      value: sceneStartTimes[i],
+      value: sceneStartTimes[i] || 0,
     //   label: scene.name,
       // label: (i + 1).toString(),
     }));
@@ -125,6 +135,13 @@ const Editormain = ({ scenes }) => {
                           </svg>
                           <PiPlayPause style={{ fill: "url(#blue-gradient)" }} size={35}  />
                         </button>
+
+                        <div>
+                            <div className="time-display"> {/* <-- New div for time display */}
+                                {formatTime(currentTime)} / {formatTime(totalDuration)}
+                            </div>
+                            {/* ... (rest of your JSX inside timeline-unit) */}
+                        </div>
 
                         <Slider
                             value={currentProgress}

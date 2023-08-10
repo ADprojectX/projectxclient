@@ -16,7 +16,7 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 function ScriptPage() {
 
     const navigate = useNavigate();
-    const [scenes, setScenes] = useState();
+    const [scenes, setScenes] = useState([]);
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);  // new state for current scene
     const [selectedValue, setSelectedValue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -64,42 +64,80 @@ function ScriptPage() {
         setErrorMessage('Please select a voice before submitting.');
         return;
       }
-      setIsLoading(true);
-      let finalScene = {};
-      let i = 0;
-      
+
       for (let scene of scenes) {
-        if (typeof scene[0] === 'string' && scene[0].trim() !== '') {
-          const sceneNumber = i + 1;
-          const key = `scene#${sceneNumber}`;
-          finalScene[key] = scene;
-          i++;
+        if (!scene[2] || scene[2].trim() === '') { // If script is empty or null
+          setErrorMessage('One or more scenes have empty script content. Please fill them before submitting.');
+          return; // Exit the function early
         }
       }
-      // console.log('submitting voice');
-      // axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
-      //   .then((response) => {
-      //     console.log('voice sent');
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
 
-      const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
-      console.log(finalSceneString)
-      axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
-        .then(response => {
+      setIsLoading(true);
+  
+      // const structuredScenes = scenes.map(scene => {
+      //   return {
+      //       identifier: scene[0], 
+      //       uuid: scene[1],
+      //       narr: scene[2],
+      //       img_desc: scene[3]
+      //   };
+      // });
+
+      const payload = {
+          reqid: reqid,
+          scenes: JSON.stringify(scenes),
+          voice: selectedValue
+      };
+
+      axios.post(`${REQ_BASE_URL}/save-script/`, payload, { 
+          withCredentials: true 
+      })
+      .then(response => {
           // Handle the response
-          let reqid = location.state && location.state.reqid
           console.log(response.data);
-          navigate('/loading', {state:{reqid:reqid}})
-        })
-        .catch(error => {
+          navigate('/loading', {state: {reqid: reqid}});
+      })
+      .catch(error => {
           // Handle the error
           console.error(error);
-        });
+      });
+    };
 
-      };
+
+    // let finalScene = {};
+    // let i = 0;
+    // console.log(scenes)
+    // for (let scene of scenes) {
+    //   if (typeof scene[0] === 'string' && scene[0].trim() !== '') {
+    //     // const sceneNumber = i + 1;
+    //     const key = scene[0];//`scene#${sceneNumber}`;
+    //     finalScene[key] = scene;
+    //     i++;
+    //   }
+    // }
+
+    // console.log('submitting voice');
+    // axios.get(`${REQ_BASE_URL}/set-voice/?reqid=${reqid}&selectedValue=${selectedValue}`, { withCredentials: true })
+    //   .then((response) => {
+    //     console.log('voice sent');
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+
+    // const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
+    // console.log(finalSceneString)
+    // axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
+    //   .then(response => {
+    //     // Handle the response
+    //     let reqid = location.state && location.state.reqid
+    //     console.log(response.data);
+    //     navigate('/loading', {state:{reqid:reqid}})
+    //   })
+    //   .catch(error => {
+    //     // Handle the error
+    //     console.error(error);
+    //   });
       
       return(
         <div className="script">
@@ -114,7 +152,7 @@ function ScriptPage() {
           <p>LET'S CRAFT YOUR SCRIPT</p>
           {/* <ScriptContainer setScenesFromChild={setScenesFromChild} /> */}
           <ScriptContainer 
-            setScenesFromChild={setScriptScenesFromChild} 
+            setScenesForParent={setScriptScenesFromChild} 
             currentSceneIndex={currentSceneIndex} 
             setCurrentSceneIndex={setCurrentSceneIndex} 
             />
