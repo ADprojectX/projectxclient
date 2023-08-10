@@ -1,0 +1,24 @@
+.project-page {
+    display: flex;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 20px; /* space between the grid items */
+    padding: 20px;
+}
+
+.project-item {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* light background for visibility */
+    transition: 0.3s;
+
+    /* Optionally, add a hover effect */
+    &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}

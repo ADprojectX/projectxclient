@@ -15,7 +15,6 @@ function TitlePage() {
   const [errorMessage, setErrorMessage] = React.useState('');
   const [title, setTitle] = useState('');
   const [csrfToken, setCsrfToken] = React.useState('')
-  const [topic, setTopic] = React.useState('');
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,7 +45,7 @@ function TitlePage() {
       'X-CSRFToken': csrfToken,
       'Content-Type': 'application/json'
     };
-    let data = {topic:topic}
+    let data = {topic:title}
     axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
       .then((response) => {
         localStorage.setItem('reqid', response.data.reqid);

@@ -11,6 +11,7 @@ import ScriptPage from './pages/ScriptPage';
 import VoicePage from './pages/VoicePage';
 import LoadingPage from './pages/LoadingPage';
 import HomePage from './pages/HomePage';
+import ProjectPage from './pages/ProjectPage';
 import PrivateRouteLayout from './layout/PrivateRouteLayout'
 // import VideoPlayer from './VideoPlayer';
 // import VideoList from './VideoList';
@@ -29,7 +30,7 @@ const router = createBrowserRouter(
       <Route path="/title" element={<TitlePage />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/video" element={<VideoPlayer />} />
-      <Route path="/loading" element={<LoadingPage />} />
+      <Route path="/projects" element={<ProjectPage />} />
     </Route>
     {/* <Route path="/videolist" element={<VideoList />} /> */}
   </Route>

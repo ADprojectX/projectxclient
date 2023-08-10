@@ -3,6 +3,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import InventoryIcon from '@mui/icons-material/Inventory';
 // import GetAppIcon from '@mui/icons-material/GetApp';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { BiSolidVideos } from "react-icons/bi";
 // import SettingsIcon from '@mui/icons-material/Settings';
 
 export const SidebarData = [
@@ -17,9 +18,9 @@ export const SidebarData = [
     //     links: ["/projects"],
     // },
     {
-        text: "My Exports",
-        icon: <ExitToAppIcon/>,
-        links: ["/exports"],
+        text: "My Projects",
+        icon: <BiSolidVideos size={22}/>,
+        links: ["/projects"],
     },
 ];
 // export const SidebarData = [

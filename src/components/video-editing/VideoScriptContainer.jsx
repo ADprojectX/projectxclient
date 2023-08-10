@@ -116,9 +116,11 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 function VideoScriptContainer( { setScenesFromChild, currentSceneIndex, setCurrentSceneIndex } ) {
     const [scenes, setScenes] = useState();
     const [errorMessage, setErrorMessage] = useState('');
-    const location = useLocation();
-    let reqid = location.state && location.state.reqid
+    // const location = useLocation();
+    // let reqid = location.state && location.state.reqid
     const activeCardRef = useRef(null);
+    let reqid = localStorage.getItem('reqid');
+
 
     React.useEffect(() => {
       if(scenes == null || scenes.length == 0){
