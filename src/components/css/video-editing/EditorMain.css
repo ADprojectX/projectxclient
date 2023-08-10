@@ -67,3 +67,11 @@
 .playpause-button:active {
     background-color: rgb(217, 230, 255);
 }
+
+.time-display {
+    display: flex;
+    width: 100px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #1976D2;
+}
