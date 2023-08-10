@@ -55,7 +55,7 @@ const VideoPlayer = () => {
         setVideoFiles(videoFiles); // Set the state here instead of navigating
       })
       .catch((error) => {
-        console.error('Failed to retrieve video files:', error);
+        console.error('Failed to retrieve video files:- ', error);
       });
   }, []);
   
