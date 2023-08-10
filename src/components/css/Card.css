@@ -62,10 +62,9 @@
   
   .card.active {
     padding: 0;
-    background-color: rgb(157, 248, 175);
+    background-color: rgb(190, 254, 203);
     /* border-color: rgb(157, 248, 175);   */
     border-color: rgb(0, 255, 51);  
-
   }
   
   .card-buttons {
