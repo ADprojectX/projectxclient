@@ -95,7 +95,8 @@ function ScriptPage() {
       .then(response => {
           // Handle the response
           console.log(response.data);
-          navigate('/loading', {state: {reqid: reqid}});
+          // navigate('/loading', {state: {reqid: reqid}});
+          navigate('/video', {state: {reqid: reqid}});
       })
       .catch(error => {
           // Handle the error
