@@ -69,7 +69,7 @@ const Editormain = ({ scenes }) => {
     };
   
     const sliderMarks = scenes.map((scene, i) => ({
-      value: sceneStartTimes[i],
+      value: sceneStartTimes[i] || 0,
     //   label: scene.name,
       // label: (i + 1).toString(),
     }));
