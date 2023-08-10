@@ -73,19 +73,19 @@ function ScriptPage() {
       }
 
       setIsLoading(true);
-
-      const structuredScenes = scenes.map(scene => {
-        return {
-            identifier: scene[0], 
-            uuid: scene[1],
-            narr: scene[2],
-            img_desc: scene[3]
-        };
-      });
+  
+      // const structuredScenes = scenes.map(scene => {
+      //   return {
+      //       identifier: scene[0], 
+      //       uuid: scene[1],
+      //       narr: scene[2],
+      //       img_desc: scene[3]
+      //   };
+      // });
 
       const payload = {
           reqid: reqid,
-          scenes: JSON.stringify(structuredScenes),
+          scenes: JSON.stringify(scenes),
           voice: selectedValue
       };
 
