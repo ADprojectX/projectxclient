@@ -3,22 +3,31 @@
 }
 
 .project-grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    grid-template-columns: repeat(6, 1fr); /* 4 columns */
     gap: 20px; /* space between the grid items */
     padding: 20px;
 }
+.project-page-main {
+    width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
 
 .project-item {
-    border: 1px solid #e0e0e0;
+    border: 1px solid rgba(216, 150, 255, 0.5);
+    background-color: rgb(242, 219, 255, 0.5);
     padding: 10px;
+    min-width: 150px;
+    max-width: 200px;
     border-radius: 5px;
-    background-color: #f9f9f9; /* light background for visibility */
     transition: 0.3s;
 
     /* Optionally, add a hover effect */
     &:hover {
         transform: scale(1.03);
+        background-color: rgb(242, 219, 255, 1);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
