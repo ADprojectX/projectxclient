@@ -64,6 +64,14 @@ function ScriptPage() {
         setErrorMessage('Please select a voice before submitting.');
         return;
       }
+
+      for (let scene of scenes) {
+        if (!scene[2] || scene[2].trim() === '') { // If script is empty or null
+          setErrorMessage('One or more scenes have empty script content. Please fill them before submitting.');
+          return; // Exit the function early
+        }
+      }
+      
       setIsLoading(true);
       let finalScene = {};
       let i = 0;
