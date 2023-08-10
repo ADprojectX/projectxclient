@@ -16,7 +16,7 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 function ScriptPage() {
 
     const navigate = useNavigate();
-    const [scenes, setScenes] = useState();
+    const [scenes, setScenes] = useState([]);
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);  // new state for current scene
     const [selectedValue, setSelectedValue] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -67,11 +67,11 @@ function ScriptPage() {
       setIsLoading(true);
       let finalScene = {};
       let i = 0;
-      
+      console.log(scenes)
       for (let scene of scenes) {
         if (typeof scene[0] === 'string' && scene[0].trim() !== '') {
-          const sceneNumber = i + 1;
-          const key = `scene#${sceneNumber}`;
+          // const sceneNumber = i + 1;
+          const key = scene[0];//`scene#${sceneNumber}`;
           finalScene[key] = scene;
           i++;
         }
@@ -87,17 +87,17 @@ function ScriptPage() {
 
       const finalSceneString = JSON.stringify(finalScene); // Serialize the finalScene object to a JSON string
       console.log(finalSceneString)
-      axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
-        .then(response => {
-          // Handle the response
-          let reqid = location.state && location.state.reqid
-          console.log(response.data);
-          navigate('/loading', {state:{reqid:reqid}})
-        })
-        .catch(error => {
-          // Handle the error
-          console.error(error);
-        });
+      // axios.get(`${REQ_BASE_URL}/save-script/?reqid=${reqid}&finalScene=${encodeURIComponent(finalSceneString)}&voice=${selectedValue}`, { withCredentials: true })
+      //   .then(response => {
+      //     // Handle the response
+      //     let reqid = location.state && location.state.reqid
+      //     console.log(response.data);
+      //     navigate('/loading', {state:{reqid:reqid}})
+      //   })
+      //   .catch(error => {
+      //     // Handle the error
+      //     console.error(error);
+      //   });
 
       };
       
@@ -114,7 +114,7 @@ function ScriptPage() {
           <p>LET'S CRAFT YOUR SCRIPT</p>
           {/* <ScriptContainer setScenesFromChild={setScenesFromChild} /> */}
           <ScriptContainer 
-            setScenesFromChild={setScriptScenesFromChild} 
+            setScenesForParent={setScriptScenesFromChild} 
             currentSceneIndex={currentSceneIndex} 
             setCurrentSceneIndex={setCurrentSceneIndex} 
             />

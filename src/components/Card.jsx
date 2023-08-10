@@ -6,7 +6,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 
 
-const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isActive }) => {
+const Card = ({ uuid, index, scene, updateCard, addCard, deleteCard, onSceneClick, isActive }) => {
   const textareaRef = React.useRef();
 
   React.useEffect(() => {
@@ -26,15 +26,19 @@ const Card = ({ index, scene, updateCard, addCard, deleteCard, onSceneClick, isA
       window.removeEventListener('resize', handleResize);
     };
   }, []);  
+
   
   return (
     <div onClick={() => onSceneClick(index)} className={`card ${isActive ? 'active' : ''}`}>
-      <h2>{`Scene ${index + 1} :`}</h2>
+      {/* <h2>{`Scene ${index + 1} :`}</h2> */}
+      <h2 style={{ color: scene.trim() === '' ? 'red' : 'inherit' }}>{`Scene ${index + 1} :`}</h2>
+
+
       <textarea 
         ref={textareaRef}
         className="editField" 
-        value={scene[0]} 
-        onChange={(e) => updateCard(index, [e.target.value, scene[1]])} 
+        value={scene} 
+        onChange={(e) => updateCard(index, [index, uuid, e.target.value])}
       />
 
       {isActive && (
