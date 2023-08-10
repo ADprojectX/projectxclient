@@ -84,14 +84,12 @@ function ScriptPage() {
       });
 
       const payload = {
-          scenes: structuredScenes,
+          reqid: reqid,
+          scenes: JSON.stringify(structuredScenes),
           voice: selectedValue
       };
 
       axios.post(`${REQ_BASE_URL}/save-script/`, payload, { 
-          params: {
-              reqid: reqid
-          },
           withCredentials: true 
       })
       .then(response => {
