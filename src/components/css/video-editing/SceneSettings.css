@@ -21,19 +21,29 @@
     flex-direction: column;
     align-items: center;
     padding: 35px;
-    gap: 30px;
+    gap: 15px;
 }
 
 .ss-tile {
     border: 2px solid #0086afae;
     display: flex;
     width: 180px;
-    height: 40px;
+    height: 50px;
     align-items: center;
     /* border: none; */
     background: #ffffff;
     border-radius: 15px;
+    font-weight: 600;
+
     justify-content: flex-start;
+    transition: 0.3s;
+
+
+    &:hover {
+        transform: scale(1.05);
+        /* background-color: rgb(242, 219, 255, 1); */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
     /* background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 100%); */
     
     /* background-image: linear-gradient(white, white), radial-gradient(circle at top left, #19fa7e,#10ad9e, #13d4ff, #fff800);   */
@@ -58,10 +68,12 @@
 }
 
 .scene-settings-delete-footer {
+    margin-top: 16px;
     display: flex;
     justify-content: end;
     padding-right: 10px;
     padding-left: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .scene-settings-delete-button {
@@ -74,3 +86,113 @@
     border: none;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent gray */
+    z-index: 999; /* Below the popup but above everything else */
+}
+
+.popup {
+    display: flex;
+    gap: 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;  /* to ensure the popup is above everything else */
+    /* width: 300px; */
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.change-visual-btns {
+    /* position: relative; */
+    width: 200px;
+    height: 200px;
+    border: double 2px #8EB0BC;
+    border-radius: 30px;
+    
+    transition: 0.3s;
+
+
+    &:hover {
+        transform: scale(1.05);
+        /* background-color: rgb(242, 219, 255, 1); */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.change-visual-btns p {
+    text-transform: uppercase;
+    color: #009B10;
+    font-weight: 600;
+    font-size: medium;
+}
+
+.first-btn {
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FDFF90,#7CFF14, #14FFC7, #EC14FF);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border: double 2px transparent;
+    /* border-radius: 30px; */
+    /* box-shadow: 0px 4px 4px rgb(184, 184, 184); */
+}
+
+.gradient-border-color {
+    border: double 2px transparent;
+    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #FDFF90,#7CFF14, #14FFC7, #EC14FF);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0px 4px 4px rgb(184, 184, 184);
+}
+
+.change-visual-btn-icon {
+    width: 100px;  
+    height: 100px; 
+    border-radius: 15px; 
+    /* object-fit: cover;  */
+}
+
+.tile-divider {
+    width: 2px;  
+    align-self: center;
+    height: 130px;  
+    background-color: #b7b7b7; 
+}
+
+/* .change-visual-btns:nth-child(2)::after {
+    content: "";  
+    position: absolute;  
+    top: 10%;  
+    left: 114%; 
+    transform: translateX(-50%);  
+    width: 2px;  
+    height: 130px;  
+    background-color: #b7b7b7; 
+} */
+/* .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+} */
+
+/* .close-btn:hover {
+    background-color: #ddd;
+} */
+
+

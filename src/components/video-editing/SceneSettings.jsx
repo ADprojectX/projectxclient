@@ -1,12 +1,48 @@
 import '../css/video-editing/SceneSettings.css'
+import { useState } from 'react';
 import { BsImage } from "react-icons/bs";
 import { BiCaptions, BiVideoRecording, BiHide } from "react-icons/bi";
 import { TbTransitionRight } from "react-icons/tb";
 import { IoDuplicateOutline, IoVideocam } from "react-icons/io5";
 import { RiImageEditFill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { FaPhotoFilm } from "react-icons/fa6";
+import { LuUpload } from "react-icons/lu";
+
+
+
+const Overlay = ({ onClick }) => (
+    <div className="overlay" onClick={onClick}></div>
+);
+
+
+const ChangeVisualPopup = ({ onClose }) => (
+    <div className="popup">
+        <div className='change-visual-btns gradient-border-color'>
+            <img style={{ width: '110px', height: '110px' }} className="change-visual-btn-icon" src="../midjourney_logo.png"/>
+            <p>Prompt Like Midjourney</p>
+        </div>
+        <div className='change-visual-btns gradient-border-color'>
+            <img style={{ width: '70px', height: '70px', margin: '20px' }} className="change-visual-btn-icon" src="../stability-logo.png"/>
+            <p>Prompt Like Stable Diffusion</p>
+        </div>
+
+        <div className='tile-divider'></div>
+
+        <div className='change-visual-btns'>
+            <FaPhotoFilm style={{ margin: '16px' }} color='#8EB0BC' size={80}/>
+            <p style={{ margin: '15px' }}>Choose Stock Footages</p>
+        </div>
+        <div className='change-visual-btns'>
+            <LuUpload style={{ margin: '20px' }} color='#8EB0BC' size={70}/>
+            <p style={{ margin: '15px' }}>Upload your own Footage</p>
+        </div>
+        {/* <button className="close-btn" onClick={onClose}>X</button> */}
+    </div>
+);
 
 const SceneSettings = () => {
+    const [activePopup, setActivePopup] = useState(null);
 
     return (
         <div className="scene-settings">
@@ -16,7 +52,7 @@ const SceneSettings = () => {
 
             <div className='scene-settings-tiles'>
                 {/* Change Visual */}
-                <button className='ss-tile first-tile'>
+                <button className='ss-tile first-btn' onClick={() => setActivePopup('visual')}>
                     <div className='ss-tile-icon'>
                         <RiImageEditFill size={22}/>
                     </div>
@@ -76,6 +112,9 @@ const SceneSettings = () => {
                 </button>
 
             </div>
+            {activePopup && <Overlay onClick={() => setActivePopup(null)} />}
+            {activePopup === 'visual' && <ChangeVisualPopup onClose={() => setActivePopup(null)} />}
+            {/* {activePopup === 'caption' && <ChangeCaptionPopup onClose={() => setActivePopup(null)} />} */}
 
             <div className='scene-settings-delete-footer'>
                 <button className='scene-settings-delete-button'>
