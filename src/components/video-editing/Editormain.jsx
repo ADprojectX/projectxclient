@@ -22,6 +22,27 @@ const Editormain = ({ scenes }) => {
     const [seekTo, setSeekTo] = useState(0);
     const vPlayerRef = useRef();
 
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (currentVideoIndex < scenes.length) {
+      videoRef.current.src = scenes[currentVideoIndex];
+    }
+  }, [currentVideoIndex, scenes]);
+
+  const handleMetadataLoaded = () => {
+    const videoDuration = videoRef.current.duration;
+    setTotalDuration(prevDuration => prevDuration + videoDuration);
+
+    if (currentVideoIndex < scenes.length - 1) {
+      setCurrentVideoIndex(prevIndex => prevIndex + 1);
+    }
+  };
+
+    
+    console.log("IN EDITORMAIN")
+    console.log(scenes)
     const handleFullScreen = () => {
       vPlayerRef.current.handleFullScreen();
     };
@@ -88,19 +109,25 @@ const Editormain = ({ scenes }) => {
       setScriptScenes(childScenes);
     }
 
-    if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
-      return <div>Loading...</div>;
-    }
+    // if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
+    //   return <div>Loading...</div>;
+    // }
   
     return (
         <div className='editor-main'>
+                <video
+        ref={videoRef}
+        onLoadedMetadata={handleMetadataLoaded}
+        style={{ display: 'none' }}
+      />
                 <div className='grid-col-span-4'>
                   <EditorMenuBar handleFullScreen={handleFullScreen}/>
                 </div>
 
                 <div className='v-player grid-col-span-2'>
                   <VPlayer 
-                      videoSrc={scenes[currentSceneIndex].video} 
+                      // videoSrc={scenes[currentSceneIndex].video} 
+                      videoSrc={scenes[0]} 
                       audioSrc={scenes[currentSceneIndex].audio} 
                       handleSceneEnd={handleSceneEnd}
                       handleProgress={handleProgress}

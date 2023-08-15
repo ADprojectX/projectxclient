@@ -11,6 +11,7 @@ const VideoPlayer = () => {
   const [videoFiles, setVideoFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
 
+  
   const location = useLocation();
   const reqid = location.state && location.state.reqid;
 
@@ -24,7 +25,7 @@ const VideoPlayer = () => {
 
   const fetchVideo = async (scene) => {
     const [index, sceneId, cloudfrontUrl] = scene;
-
+    console.log(scene)
     if (hasUrlExpired(cloudfrontUrl)) {
       try {
         const response = await axios.get(`${REQ_BASE_URL}/video-files/?sceneid=${sceneId}&category=image`);
@@ -37,9 +38,10 @@ const VideoPlayer = () => {
       }
     }
 
+    //1286
+    //9729
+
     try {
-      console.log('URL')
-      console.log(cloudfrontUrl)
       const videoResponse = await fetch(cloudfrontUrl);
       if (!videoResponse.ok) {
         throw new Error('Video not available');
@@ -67,7 +69,11 @@ const VideoPlayer = () => {
       .then(async (response) => {
         if (response.data && response.data.asset_urls) {
           const assetUrls = response.data.asset_urls;
+          console.log(URL)
+          console.log(assetUrls)
           const fetchedVideos = await Promise.all(assetUrls.map(fetchVideo));
+          console.log("fetchedVideos")
+          console.log(fetchedVideos)
           setVideoFiles(fetchedVideos);
         }
       })
