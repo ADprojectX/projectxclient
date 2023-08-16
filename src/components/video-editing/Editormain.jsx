@@ -12,6 +12,14 @@ import { Widgets } from '@mui/icons-material';
 
 
 const Editormain = ({ scenes }) => {
+  //scene   //   const videoFiles = videosWithDuration.map((video, index) => ({
+  //     name: `Scene${index}`,
+  //     video: video.url,
+  //     audio: '', 
+  //     duration: video.duration
+  //   }));
+
+  // [urls]
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
@@ -126,8 +134,8 @@ const Editormain = ({ scenes }) => {
 
                 <div className='v-player grid-col-span-2'>
                   <VPlayer 
-                      // videoSrc={scenes[currentSceneIndex].video} 
-                      videoSrc={scenes[0]} 
+                      videoSrc={scenes[currentSceneIndex].video} 
+                      // videoSrc={scenes[0]} 
                       audioSrc={scenes[currentSceneIndex].audio} 
                       handleSceneEnd={handleSceneEnd}
                       handleProgress={handleProgress}

@@ -95,6 +95,7 @@ const VPlayer = forwardRef(({
 
     return (
       <div ref={playerWrapperRef} style={{ width: '100%', height: '100%' }}>
+        {/* {!checkActionCode(videosrc)&&updateurl()} */}
         <ReactPlayer
           ref={reactPlayerRef}
           url={videoSrc}
