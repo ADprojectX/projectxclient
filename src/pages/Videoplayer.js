@@ -10,132 +10,125 @@ const REQ_BASE_URL = 'http://localhost:8000/req';
 const VideoPlayer = () => {
   const [videoFiles, setVideoFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
+  // const location = useLocation();
+  // const reqid = location.state && location.state.reqid;
 
-  
-  const location = useLocation();
-  const reqid = location.state && location.state.reqid;
+  let reqid = localStorage.getItem('reqid');
 
-  // const hasUrlExpired = (url) => {
-  //   const expiresMatch = url.match(/Expires=(\d+)/);
-  //   if (!expiresMatch) return true;
+  const fetchThumbnails = async (reqId) => {
+    try {
+        const res = await axios.get(`${REQ_BASE_URL}/get-thumbnails/?reqid=${reqId}`);
+        return res.data.asset_urls.map(thumbnailArr => thumbnailArr[2]); // assuming the URL structure is the same
+    } catch (error) {
+        console.error('Failed to retrieve thumbnails:', error);
+        return [];
+    }
+  }
 
-  //   const expiryTimestamp = parseInt(expiresMatch[1], 10);
-  //   return (Date.now() / 1000) > expiryTimestamp;
-  // };
+  const fetchVideoFiles = async (reqId) => {
+    try {
+        const [response, thumbnails] = await Promise.all([
+            axios.get(`${REQ_BASE_URL}/video-files/?reqid=${reqId}`),
+            fetchThumbnails(reqId)
+        ]);
 
-  // const fetchVideo = async (scene) => {
-  //   const [index, sceneId, cloudfrontUrl] = scene;
-  //   console.log(scene)
-  //   if (hasUrlExpired(cloudfrontUrl)) {
-  //     try {
-  //       const response = await axios.get(`${REQ_BASE_URL}/video-files/?sceneid=${sceneId}&category=image`);
-  //       if (response.data && response.data.url) {
-  //         return fetchVideo([index, sceneId, response.data.url]);
-  //       }
-  //     } catch (err) {
-  //       console.error('Error fetching new URL:', err);
-  //       throw err;
-  //     }
-  //   }
+        const videoData = response.data.asset_urls;
+        const videosWithDuration = await Promise.all(videoData.map(async (videoArr, index) => {
+            const url = videoArr[2];
 
-  //   //1286
-  //   //9729
+            return new Promise((resolve) => {
+                const videoElement = document.createElement('video');
+                videoElement.src = url;
+                videoElement.addEventListener('loadedmetadata', () => {
+                    const duration = videoElement.duration;
+                    resolve({ url, duration, thumbnail: thumbnails[index] });
+                });
+            });
+        }));
 
+        const videoFiles = videosWithDuration.map((video, index) => ({
+            name: `Scene${index}`,
+            video: video.url,
+            thumbnail: video.thumbnail,
+            audio: '', // Provide audio URL if available
+            duration: video.duration
+        }));
+
+        setVideoFiles(videoFiles);
+        setIsLoading(false);
+    } catch (error) {
+        console.error('Failed to retrieve video files:', error);
+    }
+  }
+
+  // const fetchVideoFiles = async (reqId) => {
   //   try {
-  //     const videoResponse = await fetch(cloudfrontUrl);
-  //     if (!videoResponse.ok) {
-  //       throw new Error('Video not available');
-  //     }
-  //     console.log("videores")
-  //     console.log(videoResponse)
-  //     return cloudfrontUrl; // or return videoResponse.blob() based on your need.
-  //   } catch (err) {
-  //     console.warn('Video not available yet, will retry:', err.message);
-  //     return new Promise((resolve, reject) => {
-  //       setTimeout(async () => {
-  //         try {
-  //           const videoUrl = await fetchVideo(scene);
-  //           resolve(videoUrl);
-  //         } catch (retryErr) {
-  //           reject(retryErr);
-  //         }
-  //       }, 2 * 60 * 1000); // 2 minutes
-  //     });
-  //   }
-  // };
+  //       const response = await axios.get(`${REQ_BASE_URL}/video-files/?reqid=${reqId}`);
+      
+  //       const videoData = response.data.asset_urls; // array of arrays with the given structure
+  //       const videosWithDuration = await Promise.all(videoData.map(async (videoArr) => {
+  //           const url = videoArr[2]; // third element of the inner array is the URL
 
-  // useEffect(() => {
-  //   setIsLoading(true); // Start loading
+  //           return new Promise((resolve) => {
+  //               const videoElement = document.createElement('video');
+  //               videoElement.src = url;
+  //               videoElement.addEventListener('loadedmetadata', () => {
+  //                   const duration = videoElement.duration;
+  //                   resolve({ url, duration });
+  //               });
+  //           });
+  //       }));
 
-  //   axios.get(`${REQ_BASE_URL}/video-files/?reqid=${reqid}`)
-  //     .then(async (response) => {
-  //       if (response.data && response.data.asset_urls) {
-  //         const assetUrls = response.data.asset_urls;
-  //         console.log(URL)
-  //         console.log(assetUrls)
-  //         const fetchedVideos = await Promise.all(assetUrls.map(fetchVideo));
-  //         console.log("fetchedVideos")
-  //         console.log(fetchedVideos)
-  //         setVideoFiles(fetchedVideos);
-  //       }
-  //     })
-  //     .catch((error) => {
+  //       const videoFiles = videosWithDuration.map((video, index) => ({
+  //           name: `Scene${index}`,
+  //           video: video.url,
+  //           // thumbnail: 
+  //           audio: '', // Provide audio URL if available
+  //           duration: video.duration
+  //       }));
+
+  //       setVideoFiles(videoFiles);
+  //       setIsLoading(false);
+  //   } catch (error) {
   //       console.error('Failed to retrieve video files:', error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false); // End loading once everything is done
-  //     });
-  // }, [reqid]);
-
-
+  //   }
+  // }
 
   useEffect(() => {
-    axios
-      .get(`${REQ_BASE_URL}/video-files/?reqid=${reqid}`)
-      .then((response) => {
-        console.log("RESPONSE DATA")
-        console.log(response.data);
-        const videoData = response.data.asset_urls; // array of arrays with the given structure
-        const videoPromises = videoData.map((videoArr) => {
-          const url = videoArr[2]; // third element of the inner array is the URL
-          return new Promise((resolve) => {
-            const videoElement = document.createElement('video');
-            videoElement.src = url;
-            videoElement.addEventListener('loadedmetadata', () => {
-              const duration = videoElement.duration;
-              resolve({ url, duration });
-            });
-          });
-        });
-        return Promise.all(videoPromises);
-      })
-      .then((videosWithDuration) => {
-        const videoFiles = videosWithDuration.map((video, index) => ({
-          name: `Scene${index}`,
-          video: video.url,
-          audio: '', // Provide audio URL if available
-          duration: video.duration
-        }));
-        setVideoFiles(videoFiles);
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error('Failed to retrieve video files:', error);
-      });
+    fetchVideoFiles(reqid);
   }, [reqid]);
-  
 
+  const checkURLExpired = (url) => {
+    if (hasUrlExpired(url)) {
+      console.log("URL expired")
+      updateExpiredURL();
+  }
+  }
+
+
+  const updateExpiredURL = () => {
+    fetchVideoFiles(reqid);
+  };
+
+  const hasUrlExpired = (url) => {
+    const expiresMatch = url.match(/Expires=(\d+)/);
+    if (!expiresMatch) return true;
+  
+    const expiryTimestamp = parseInt(expiresMatch[1], 10);
+    return (Date.now() / 1000) > expiryTimestamp;
+  };
+  
   // Loading condition
   if (isLoading) {
     return <div>Loading videos...</div>;
   }
-
+  
   return (
     <div className='video-page'>
       <SideNavBar />
       <div className='editor'>
         <div className='video-player'>
-          <EditorMain scenes={videoFiles} />
+          <EditorMain scenes={videoFiles} checkURLExpired={checkURLExpired}/>
         </div>
       </div>
     </div>
@@ -144,6 +137,113 @@ const VideoPlayer = () => {
 
 export default VideoPlayer;
 
+
+// useEffect(() => {
+//   axios
+//   .get(`${REQ_BASE_URL}/video-files/?reqid=${reqid}`)
+//   .then((response) => {
+//     console.log("RESPONSE DATA")
+//     console.log(response.data);
+//     const videoData = response.data.asset_urls; // array of arrays with the given structure
+//     const videoPromises = videoData.map((videoArr) => {
+//       const url = videoArr[2]; // third element of the inner array is the URL
+//       return new Promise((resolve) => {
+//         const videoElement = document.createElement('video');
+//         videoElement.src = url;
+//         videoElement.addEventListener('loadedmetadata', () => {
+//           const duration = videoElement.duration;
+//           resolve({ url, duration });
+//         });
+//       });
+//     });
+//     return Promise.all(videoPromises);
+//   })
+//   .then((videosWithDuration) => {
+//     const videoFiles = videosWithDuration.map((video, index) => ({
+//       name: `Scene${index}`,
+//       video: video.url,
+//       audio: '', // Provide audio URL if available
+//       duration: video.duration
+//     }));
+//     setVideoFiles(videoFiles);
+//     setIsLoading(false)
+//   })
+//   .catch((error) => {
+//     console.error('Failed to retrieve video files:', error);
+//   });
+// }, [reqid]);
+
+// const hasUrlExpired = (url) => {
+//   const expiresMatch = url.match(/Expires=(\d+)/);
+//   if (!expiresMatch) return true;
+
+//   const expiryTimestamp = parseInt(expiresMatch[1], 10);
+//   return (Date.now() / 1000) > expiryTimestamp;
+// };
+
+// const fetchVideo = async (scene) => {
+//   const [index, sceneId, cloudfrontUrl] = scene;
+//   console.log(scene)
+//   if (hasUrlExpired(cloudfrontUrl)) {
+//     try {
+//       const response = await axios.get(`${REQ_BASE_URL}/video-files/?sceneid=${sceneId}&category=image`);
+//       if (response.data && response.data.url) {
+//         return fetchVideo([index, sceneId, response.data.url]);
+//       }
+//     } catch (err) {
+//       console.error('Error fetching new URL:', err);
+//       throw err;
+//     }
+//   }
+
+//   //1286
+//   //9729
+
+//   try {
+//     const videoResponse = await fetch(cloudfrontUrl);
+//     if (!videoResponse.ok) {
+//       throw new Error('Video not available');
+//     }
+//     console.log("videores")
+//     console.log(videoResponse)
+//     return cloudfrontUrl; // or return videoResponse.blob() based on your need.
+//   } catch (err) {
+//     console.warn('Video not available yet, will retry:', err.message);
+//     return new Promise((resolve, reject) => {
+//       setTimeout(async () => {
+//         try {
+//           const videoUrl = await fetchVideo(scene);
+//           resolve(videoUrl);
+//         } catch (retryErr) {
+//           reject(retryErr);
+//         }
+//       }, 2 * 60 * 1000); // 2 minutes
+//     });
+//   }
+// };
+
+// useEffect(() => {
+//   setIsLoading(true); // Start loading
+
+//   axios.get(`${REQ_BASE_URL}/video-files/?reqid=${reqid}`)
+//     .then(async (response) => {
+//       if (response.data && response.data.asset_urls) {
+//         const assetUrls = response.data.asset_urls;
+//         console.log(URL)
+//         console.log(assetUrls)
+//         const fetchedVideos = await Promise.all(assetUrls.map(fetchVideo));
+//         console.log("fetchedVideos")
+//         console.log(fetchedVideos)
+//         setVideoFiles(fetchedVideos);
+//       }
+//     })
+//     .catch((error) => {
+//       console.error('Failed to retrieve video files:', error);
+//     })
+//     .finally(() => {
+//       setIsLoading(false); // End loading once everything is done
+//     });
+// }, [reqid]);
 
 
 

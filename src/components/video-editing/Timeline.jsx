@@ -15,11 +15,12 @@ const Timeline = ({ scenes, currentSceneIndex, handleClick }) => {
 
   return (
     <div className='timeline'>
-      {scenes.map((scene, index) => (
+      {scenes.map((scene, index) => (        
         <img
           key={index}
           ref={(el) => thumbnailsRef.current[index] = el}
-          src={`../thumbnails/${index}.jpg`}
+          src={scene.thumbnail}
+          // src={`../thumbnails/${index}.jpg`}
           alt={`Thumbnail ${index}`}
           className={`thumbnail ${index === currentSceneIndex ? 'active' : ''}`}
           onClick={() => handleClick(index)}

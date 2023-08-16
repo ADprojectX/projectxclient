@@ -11,7 +11,7 @@ import { PiPlayPause } from "react-icons/pi";
 import { Widgets } from '@mui/icons-material';
 
 
-const Editormain = ({ scenes }) => {
+const Editormain = ({ scenes, checkURLExpired }) => {
   //scene   //   const videoFiles = videosWithDuration.map((video, index) => ({
   //     name: `Scene${index}`,
   //     video: video.url,
@@ -24,7 +24,7 @@ const Editormain = ({ scenes }) => {
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
     const [totalDuration, setTotalDuration] = useState(0);
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [scriptScenes, setScriptScenes] = useState();
     const [seekTo, setSeekTo] = useState(0);
@@ -49,8 +49,8 @@ const Editormain = ({ scenes }) => {
   };
 
     
-    console.log("IN EDITORMAIN")
-    console.log(scenes)
+    // console.log("IN EDITORMAIN")
+    // console.log(scenes)
     const handleFullScreen = () => {
       vPlayerRef.current.handleFullScreen();
     };
@@ -142,6 +142,7 @@ const Editormain = ({ scenes }) => {
                       seekTo={seekTo}
                       playing={playing}
                       setPlaying = {setPlaying}
+                      checkURLExpired={checkURLExpired}
                       ref={vPlayerRef}
                   />
                 </div>

@@ -24,8 +24,11 @@ function ScriptPage() {
 
     const animateButtonRef = useRef(null);
 
-    const location = useLocation();
-    let reqid = location.state && location.state.reqid
+    // const location = useLocation();
+    // let reqid = location.state && location.state.reqid
+
+    let reqid = localStorage.getItem('reqid');
+
 
     const handleVoiceChange = (selectedVoice) => {
       setSelectedValue(selectedVoice);

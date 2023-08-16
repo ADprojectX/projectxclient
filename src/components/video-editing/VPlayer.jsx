@@ -10,6 +10,7 @@ const VPlayer = forwardRef(({
   handleProgress,
   seekTo,
   playing,
+  checkURLExpired,
   setPlaying
 }, ref) => {
   
@@ -95,7 +96,8 @@ const VPlayer = forwardRef(({
 
     return (
       <div ref={playerWrapperRef} style={{ width: '100%', height: '100%' }}>
-        {/* {!checkActionCode(videosrc)&&updateurl()} */}
+        {checkURLExpired(videoSrc)}
+        
         <ReactPlayer
           ref={reactPlayerRef}
           url={videoSrc}
