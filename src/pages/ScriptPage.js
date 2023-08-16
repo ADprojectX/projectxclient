@@ -82,6 +82,9 @@ function ScriptPage() {
       //       img_desc: scene[3]
       //   };
       // });
+      
+      // navigate('/video', {state: {reqid: reqid}});
+
 
       const payload = {
           reqid: reqid,

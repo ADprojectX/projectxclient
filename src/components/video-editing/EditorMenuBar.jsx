@@ -5,7 +5,6 @@ import { FaCirclePlay } from "react-icons/fa6";
 
 const EditorMenuBar = ({ handleFullScreen }) => {
 
-    console.log("Editor Menu Bar")
     return (
         <div className="editor-menu-bar">
           <div className='emb-button'>

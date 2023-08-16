@@ -12,9 +12,7 @@ const VPlayer = forwardRef(({
   playing,
   setPlaying
 }, ref) => {
-
-  console.log("VPLAYER")
-
+  
     const reactPlayerRef = useRef();
     const playerWrapperRef = useRef();  // Reference for the div around ReactPlayer
     const [isFullscreen, setIsFullscreen] = useState(false);
