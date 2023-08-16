@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import "./css/Sidebar.css";
 import { SidebarData } from "./data/SideBarData";
 import { useLocation } from "react-router-dom";
+import { userLogout } from '../auth/userLogout'
+
 
 const SideNavBar = () => {
 	const [isExpanded, setExpendState] = useState(false);
@@ -12,12 +14,29 @@ const SideNavBar = () => {
     const navigate = useNavigate()
 	const menuItems = SidebarData
     const location = useLocation();
+	const { error, logout } = userLogout();
+
 
     const API_BASE_URL = 'http://localhost:8000/api';
 
     const isMenuItemActive = (links) => {
         return links.some((link) => location.pathname === link);
       };
+
+
+	  const handleLogout = async () => {
+		  try {
+			  await logout();
+			  // Clear cookies if you still need this.
+			  Cookies.remove('jwt', { domain: 'localhost', path: '/', secure: true });
+			  Cookies.remove('csrftoken', { domain: 'localhost', path: '/', secure: true });
+			  console.log('logout_successful');
+			  navigate('/login');
+		  } catch (err) {
+			  setErrorMessage('Cannot logout');
+			  console.log(errorMessage);
+		  }
+	  };
 
     const handleLogoutClick = () => {
         let data = { token: Cookies.get('jwt') };
@@ -93,7 +112,7 @@ const SideNavBar = () => {
 			<div className="nav-footer">
 				{isExpanded && (
 					<div className="nav-details">
-                        <button className={isExpanded ? `logout-item` : "logout-item logout-item-NX"} onClick={handleLogoutClick}>Log out</button>
+                        <button className={isExpanded ? `logout-item` : "logout-item logout-item-NX"} onClick={handleLogout}>Log out</button>
 						<div className="nav-footer-info">
 							<p className="nav-footer-user-name">XYZ</p>
 							<p className="nav-footer-user-position">store admin</p>

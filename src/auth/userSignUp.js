@@ -13,11 +13,23 @@ const signup = async (email, password) => {
             throw new Error("Something went wrong")
         }
 
+        return res
+
     } catch (err) {
         error = err.message
     }
 }
 
+const removeUser = async (userCredential) => {
+    try {
+        if (userCredential?.user) {
+            await userCredential.user.delete();
+        }
+    } catch (err) {
+        console.error("Failed to delete user from Firebase", err);
+    }
+}
+
 export const userSignup = () => {
-    return {error, signup};
+    return { error, signup, removeUser };
 }

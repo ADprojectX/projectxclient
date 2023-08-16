@@ -8,6 +8,7 @@ const login = async (email, password) => {
 
     try {
         const res = await signInWithEmailAndPassword(auth, email, password);
+        console.log(res)
         error = null
     } catch (err) {
         error = err.message
