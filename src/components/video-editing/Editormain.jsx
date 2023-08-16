@@ -11,17 +11,46 @@ import { PiPlayPause } from "react-icons/pi";
 import { Widgets } from '@mui/icons-material';
 
 
-const Editormain = ({ scenes }) => {
+const Editormain = ({ scenes, checkURLExpired }) => {
+  //scene   //   const videoFiles = videosWithDuration.map((video, index) => ({
+  //     name: `Scene${index}`,
+  //     video: video.url,
+  //     audio: '', 
+  //     duration: video.duration
+  //   }));
+
+  // [urls]
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
     const [totalDuration, setTotalDuration] = useState(0);
-    const [playing, setPlaying] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [scriptScenes, setScriptScenes] = useState();
     const [seekTo, setSeekTo] = useState(0);
     const vPlayerRef = useRef();
 
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (currentVideoIndex < scenes.length) {
+      videoRef.current.src = scenes[currentVideoIndex];
+    }
+  }, [currentVideoIndex, scenes]);
+
+  const handleMetadataLoaded = () => {
+    const videoDuration = videoRef.current.duration;
+    setTotalDuration(prevDuration => prevDuration + videoDuration);
+
+    if (currentVideoIndex < scenes.length - 1) {
+      setCurrentVideoIndex(prevIndex => prevIndex + 1);
+    }
+  };
+
+    
+    // console.log("IN EDITORMAIN")
+    // console.log(scenes)
     const handleFullScreen = () => {
       vPlayerRef.current.handleFullScreen();
     };
@@ -88,12 +117,17 @@ const Editormain = ({ scenes }) => {
       setScriptScenes(childScenes);
     }
 
-    if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
-      return <div>Loading...</div>;
-    }
+    // if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
+    //   return <div>Loading...</div>;
+    // }
   
     return (
         <div className='editor-main'>
+                <video
+        ref={videoRef}
+        onLoadedMetadata={handleMetadataLoaded}
+        style={{ display: 'none' }}
+      />
                 <div className='grid-col-span-4'>
                   <EditorMenuBar handleFullScreen={handleFullScreen}/>
                 </div>
@@ -101,12 +135,14 @@ const Editormain = ({ scenes }) => {
                 <div className='v-player grid-col-span-2'>
                   <VPlayer 
                       videoSrc={scenes[currentSceneIndex].video} 
+                      // videoSrc={scenes[0]} 
                       audioSrc={scenes[currentSceneIndex].audio} 
                       handleSceneEnd={handleSceneEnd}
                       handleProgress={handleProgress}
                       seekTo={seekTo}
                       playing={playing}
                       setPlaying = {setPlaying}
+                      checkURLExpired={checkURLExpired}
                       ref={vPlayerRef}
                   />
                 </div>

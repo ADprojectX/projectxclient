@@ -139,7 +139,7 @@ function VideoScriptContainer( { setScenesFromChild, currentSceneIndex, setCurre
       .then((response) => {
         let scriptFromBack = response.data.script
 
-        console.log("scriptfromback ")
+        console.log("scriptfrombackend")
 
         setScenesAndUpdateParent(scriptFromBack)
         // setScenes(jsonData)

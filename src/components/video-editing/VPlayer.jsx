@@ -10,9 +10,10 @@ const VPlayer = forwardRef(({
   handleProgress,
   seekTo,
   playing,
+  checkURLExpired,
   setPlaying
 }, ref) => {
-
+  
     const reactPlayerRef = useRef();
     const playerWrapperRef = useRef();  // Reference for the div around ReactPlayer
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -95,6 +96,8 @@ const VPlayer = forwardRef(({
 
     return (
       <div ref={playerWrapperRef} style={{ width: '100%', height: '100%' }}>
+        {checkURLExpired(videoSrc)}
+        
         <ReactPlayer
           ref={reactPlayerRef}
           url={videoSrc}
