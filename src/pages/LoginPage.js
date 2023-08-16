@@ -57,7 +57,7 @@ export default function LoginPage() {
   return (
     <div className="login">
       <div className='form-container'>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleLogin}>
           <h2>Login</h2>
 
           <input type="email" placeholder="Email" value={email} onChange={handleUsernameChange} />

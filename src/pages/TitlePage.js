@@ -3,6 +3,7 @@ import { useNavigate, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './css/TitlePage.css'
 import TypeWriterEffect from 'react-typewriter-effect';
+import {userLoggedIn} from '../auth/userLoggedIn';
 import Typewriter from "typewriter-effect";
 import SideBar from '../components/SideBar';
 import { BsFillArrowRightCircleFill } from "react-icons/bs"; 
@@ -11,6 +12,7 @@ const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
 
 function TitlePage() {
+  const { currentUser, error, checkUserAuthentication } = userLoggedIn();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState('');
   const [title, setTitle] = useState('');
@@ -45,7 +47,7 @@ function TitlePage() {
       'X-CSRFToken': csrfToken,
       'Content-Type': 'application/json'
     };
-    let data = {topic:title}
+    let data = {topic:title, fireid: currentUser.uid}
     axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
       .then((response) => {
         localStorage.setItem('reqid', response.data.reqid);

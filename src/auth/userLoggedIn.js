@@ -1,53 +1,43 @@
-import axios from "axios";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/config';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+let error = null;
+let currentUser = null;
 
-export const userLoggedIn = async () => {
-  let error = null;
-  let response = null;
-
-  try {
-    response = await axios.post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true });
-    error = null;
-  } catch (err) {
-    error = err.message;
-  }
-
-  return { error, response };
+const checkUserAuthentication = (callback) => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            error = null;
+            callback(true, user);
+        } else {
+            currentUser = null;
+            error = "User is not authenticated";
+            callback(false, null);
+        }
+    });
 };
+
+export const userLoggedIn = () => {
+    return { currentUser, error, checkUserAuthentication };
+};
+
 
 
 // import axios from "axios";
 
-
-// let error = null
-// let loading = true
-// let response = null
 // const API_BASE_URL = 'http://localhost:8000/api';
-// const REQ_BASE_URL = 'http://localhost:8000/req';
 
+// export const userLoggedIn = async () => {
+//   let error = null;
+//   let response = null;
 
-// const loggedIn = async () => {
-//     error = null
+//   try {
+//     response = await axios.post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true });
+//     error = null;
+//   } catch (err) {
+//     error = err.message;
+//   }
 
-//     try {
-//         response = await axios.post(`${API_BASE_URL}/alive/`, {}, { withCredentials: true });
-//         // setUser(response.data.email);
-//         error = null;
-//         loading = false;
-//     } catch (err) {
-//         error = err.message
-//         loading = false;
-//     }
-
-//     if (loading) {
-//         return <p>Loading...</p>; // Show a loading indicator while checking the user status
-//     }
-
-//     return response
-    
-// }
-
-// export const userLoggedIn = () => {
-//     return {error, loggedIn};
-// }
+//   return { error, response };
+// };

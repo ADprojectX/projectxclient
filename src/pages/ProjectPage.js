@@ -3,6 +3,8 @@ import './css/ProjectPage.css'
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {userLoggedIn} from '../auth/userLoggedIn';
+
 
 const API_BASE_URL = 'http://localhost:8000/api';
 const REQ_BASE_URL = 'http://localhost:8000/req';
@@ -11,9 +13,14 @@ function ProjectPage() {
   
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
+    const { currentUser, error, checkUserAuthentication } = userLoggedIn();
+    const fireid = currentUser.uid
+
+    console.log(fireid)
+
 
     useEffect(() => {
-        axios.get(`${REQ_BASE_URL}/get-project`, { withCredentials: true })
+        axios.get(`${REQ_BASE_URL}/get-project?fireid=${fireid}`, { withCredentials: true })
             .then(response => {
                 const sortedProjects = response.data.sort((a, b) => new Date(b.created) - new Date(a.created));  // sorting by date
                 setProjects(sortedProjects);
