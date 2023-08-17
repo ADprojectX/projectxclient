@@ -29,7 +29,8 @@ function ScriptPage() {
 
     let reqid = localStorage.getItem('reqid');
 
-
+    console.log('scenes')
+    console.log(scenes)
     const handleVoiceChange = (selectedVoice) => {
       setSelectedValue(selectedVoice);
     };
@@ -94,6 +95,9 @@ function ScriptPage() {
           scenes: JSON.stringify(scenes),
           voice: selectedValue
       };
+
+      console.log('scenes2')
+      console.log(JSON.stringify(scenes))
 
       axios.post(`${REQ_BASE_URL}/save-script/`, payload, { 
           withCredentials: true 
