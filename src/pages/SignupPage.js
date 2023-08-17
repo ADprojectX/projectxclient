@@ -3,6 +3,10 @@ import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {userSignup} from '../auth/userSignUp'
 import SignUpCssPage from './css/SignUpPage.css'
+import { sendEmailVerification } from 'firebase/auth'
+import {auth} from '../firebase/config'
+
+
 
 
 const API_BASE_URL = 'http://localhost:8000/api';
@@ -61,73 +65,137 @@ function SignupPage() {
   const from = location.state?.from?.pathname || '/dashboard'
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     if (password !== confirmPassword) {
-        setErrorMessage('Passwords do not match');
-        return;
+      setErrorMessage('Passwords do not match');
+      return;
     }
-
+  
     const userCredential = await signup(email, password);
     const fireid = userCredential.user.uid
-    // console.log("USERCRED")
-    // console.log(userCredential)
-    console.log("USERCRED")
-    console.log(fireid)
-    
-
+  
     if (!error && userCredential) {
       const data = {
         email: email,
         password: password,
         fireid: fireid
-    };
-
-        let backendSuccess = false;
-
-        for (let i = 0; i < 3; i++) {  // attempt sending data to backend for 3 times
+      };
+  
+      const makeBackendRequest = async (attempt = 0) => {
+        if (attempt >= 3) { // Max attempts reached
+          setErrorMessage('Unable to send to backend. Removing from Firebase...');
+          await userSignup().removeUser(userCredential);
+          return;
+        }
+  
+        try {
+          await axios.post(`${API_BASE_URL}/signup/`, data)
+          .then(response => {
+            // Handle success
             try {
-                await axios.post(`${API_BASE_URL}/signup/`, data)
-                .then(response => {
-                  // Handle success
-                  backendSuccess = true;
-                  userCredential.user.sendEmailVerification()
-                  console.log('Sent credentials to backend successful');
-              })
-                .catch(error => {
-                  if (error.response) {
-                      // The request was made and the server responded with a status code
-                      // that falls out of the range of 2xx
-                      console.error('Error data:', error.response.data);
-                      console.error('Error status:', error.response.status);
-                  } else if (error.request) {
-                      // The request was made but no response was received
-                      console.error('No response received:', error.request);
-                  } else {
-                      // Something happened in setting up the request that triggered an Error
-                      console.error('Error', error.message);
-                  }
-              });
-                
-            } catch (backendError) {
-                console.error(backendError);
+              sendEmailVerification(userCredential.user);
+              console.log("Email sent")
+            } catch {
+              console.log("Email Not sent")
             }
+            console.log('Sent credentials to backend : successful');
+            navigate(from, { replace: true });
+            setEmail("");
+            setPassword("");
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            setTimeout(() => makeBackendRequest(attempt + 1), 1000 * (attempt + 1)); // Delay for 1s, 2s, 3s, ...
+          });
+        } catch (backendError) {
+          console.error(backendError);
         }
-
-        if (!backendSuccess) {
-            setErrorMessage('Unable to send to backend. Removing from Firebase...');
-            await userSignup().removeUser(userCredential);
-            return;
-        }
-
-        navigate(from, { replace: true });
-        // localStorage.setItem('uid', userCredId)
-        setEmail("");
-        setPassword("");
-        return;
+      }
+  
+      makeBackendRequest();
     } else {
-        setErrorMessage(error);
+      setErrorMessage(error);
     }
-}
+  }
+  
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+
+//     if (password !== confirmPassword) {
+//         setErrorMessage('Passwords do not match');
+//         return;
+//     }
+
+//     const userCredential = await signup(email, password);
+//     const fireid = userCredential.user.uid
+//     // console.log("USERCRED")
+//     // console.log(userCredential)
+//     // console.log("USERCRED")
+//     // console.log(fireid)
+    
+
+//     if (!error && userCredential) {
+//       const data = {
+//         email: email,
+//         password: password,
+//         fireid: fireid
+//     };
+
+//       let backendSuccess = false;
+
+//       for (let i = 0; i < 3; i++) {  // attempt sending data to backend for 3 times
+//           try {
+//               await axios.post(`${API_BASE_URL}/signup/`, data)
+//               .then(response => {
+//                 // Handle success
+//                 backendSuccess = true;
+//                 console.log("userCredential.user");
+//                 console.log(userCredential.user);
+//                 try{
+//                   sendEmailVerification(userCredential.user);
+//                   console.log("Email sent")
+//                 }catch{
+//                   console.log("Email Not sent")
+//                 }
+//                 console.log('Sent credentials to backend successful');
+                
+//             })
+//               .catch(error => {
+//                 if (error.response) {
+//                     // The request was made and the server responded with a status code
+//                     // that falls out of the range of 2xx
+//                     console.error('Error data:', error.response.data);
+//                     console.error('Error status:', error.response.status);
+//                 } else if (error.request) {
+//                     // The request was made but no response was received
+//                     console.error('No response received:', error.request);
+//                 } else {
+//                     // Something happened in setting up the request that triggered an Error
+//                     console.error('Error', error.message);
+//                 }
+//             });
+              
+//           } catch (backendError) {
+//               console.error(backendError);
+//           }
+//         }
+
+//         if (!backendSuccess) {
+//             setErrorMessage('Unable to send to backend. Removing from Firebase...');
+//             await userSignup().removeUser(userCredential);
+//             return;
+//         }
+
+//         navigate(from, { replace: true });
+//         // localStorage.setItem('uid', userCredId)
+//         setEmail("");
+//         setPassword("");
+//         return;
+//     } else {
+//         setErrorMessage(error);
+//     }
+// }
 
   // const from = location.state?.from?.pathname || '/dashboard'
   // const handleSignUp = async (e) => {

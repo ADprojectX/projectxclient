@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import {auth} from '../firebase/config'
 
 let error = null
