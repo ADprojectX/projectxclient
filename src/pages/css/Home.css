@@ -1,8 +1,100 @@
-.home button {
-    border: none;
-    background-color: #8EECF5;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #7439db;
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 50px 25px;  /* Reduced padding for smaller screens */
+    height: auto;
+    gap: 10px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: 2.5rem; /* Adjusted for smaller screens */
+}
+
+.hero button {
+    margin-top: 20px;
+}
+
+.hero p {
+    margin: 0;
+}
+
+.hero-top-title {
+    font-weight: 700;
+    font-size: large;
+    background-image: linear-gradient(90deg, rgb(242, 0, 255), rgb(0, 55, 255));
+    background-clip: text;
+    color: transparent;
+}
+
+/* 
+.hero h1 {
+    margin: 0;
+    padding-top: 5px;
+    font-weight: 800;
+    font-size: 100px;
+} */
+
+.hero-title-gen-ai {
+    /* background-image: linear-gradient(90deg, rgb(0, 110, 255), rgb(255, 0, 255)); */
+    background-image: linear-gradient(90deg, rgb(0, 110, 255), rgb(255, 0, 255));
+
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-desc1 {
+    /* padding: 100px; */
+    font-weight: 700;
+    color: gray;
+    /* padding: 50px; */
+    font-size: large;
+
+}
+
+.hero-desc2 {
+    margin: 0;
+    /* padding: 100px; */
+    font-weight: 700;
+    color: gray;
+    padding-top: 30px;
+    /* padding: 50px; */
+    font-size: 25px;
+}
+
+@media (min-width: 1080px) {
+    .hero {
+        padding-top: 150px;
+        padding-left: 200px;
+        padding-right: 200px;
+        height: calc(60vh - 70px);
+    }
+
+    .hero h1 {
+        font-size: 100px;
+    }
+
+    /* Adjust other styles if necessary for larger screens */
+}
+
+.video-container {
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    border-radius: 30px;
+    overflow: hidden;  /* Add this line */
+    width: 1000px;
+    height: 562.5px;
+}
+
+.video-container video{
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
