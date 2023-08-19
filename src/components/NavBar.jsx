@@ -70,7 +70,7 @@ const NavBar = ( { user } ) => {
   
   return (
     <div className='navbar'>
-        <h1>ProjectX</h1>
+        <h1>magiclips.ai</h1>
         <div className='nav-right'>
           <p>{user}</p>
           <div

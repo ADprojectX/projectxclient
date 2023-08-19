@@ -1,8 +1,14 @@
 import React from 'react';
 import './css/PublicNavbar.css'
+import { useNavigate } from 'react-router-dom'
 
 
 const PublicNavBar = () => {
+    const navigate = useNavigate();
+
+    const handleGetStarted = () => {
+        navigate('/login');
+    }
 
     return (
         <div className="public-navbar">
@@ -13,7 +19,7 @@ const PublicNavBar = () => {
                 <a><p>Pricing</p></a>
                 <a><p>Contact</p></a>
                 <a><p>About Us</p></a>
-                <button>Get Started</button>
+                <button onClick={handleGetStarted}>Get Started</button>
             </div>
         </div>
       );

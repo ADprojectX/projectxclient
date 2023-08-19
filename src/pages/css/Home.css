@@ -103,7 +103,7 @@
 @media (min-width: 1270px) {
     .hero {
         /* Desktop specific styles for .hero */
-        padding-top: 150px;
+        padding-top: 120px;
         padding-left: 200px;
         padding-right: 200px;
         height: calc(60vh - 70px);
