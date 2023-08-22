@@ -5,28 +5,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {userLoggedIn} from '../auth/userLoggedIn';
 
-
-// const API_BASE_URL = 'http://localhost:8000/api';
-// const REQ_BASE_URL = 'http://localhost:8000/req';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
-console.log("REQ_BASE_URL")
-console.log(API_BASE_URL)
 
 function ProjectPage() {
   
     const [projects, setProjects] = useState([]);
     const navigate = useNavigate();
-    const { currentUser, error, checkUserAuthentication } = userLoggedIn();
+    const { currentUser } = userLoggedIn();
     const fireid = currentUser.uid
-
-    // console.log(fireid)
-
 
     useEffect(() => {
         axios.get(`${REQ_BASE_URL}/get-project?fireid=${fireid}`, { withCredentials: true })
             .then(response => {
-                const sortedProjects = response.data.sort((a, b) => new Date(b.created) - new Date(a.created));  // sorting by date
+                const sortedProjects = response.data.sort((a, b) => new Date(b.created) - new Date(a.created));
                 setProjects(sortedProjects);
             })
             .catch(error => {

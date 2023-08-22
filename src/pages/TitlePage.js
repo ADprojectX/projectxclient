@@ -1,26 +1,20 @@
 import React, { useState, useRef} from 'react';
-import { useNavigate, Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/TitlePage.css'
-import TypeWriterEffect from 'react-typewriter-effect';
 import {userLoggedIn} from '../auth/userLoggedIn';
 import Typewriter from "typewriter-effect";
 import SideBar from '../components/SideBar';
 import { BsFillArrowRightCircleFill } from "react-icons/bs"; 
 
-// const API_BASE_URL = 'http://localhost:8000/api';
-// const REQ_BASE_URL = 'http://localhost:8000/req';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function TitlePage() {
-  const { currentUser, error, checkUserAuthentication } = userLoggedIn();
+  const { currentUser } = userLoggedIn();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState('');
   const [title, setTitle] = useState('');
   const [csrfToken, setCsrfToken] = React.useState('')
-  const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTitleChange = (e) => {
@@ -54,18 +48,12 @@ function TitlePage() {
     axios.post(`${REQ_BASE_URL}/project/`, data, {headers: headers, withCredentials:true})
       .then((response) => {
         localStorage.setItem('reqid', response.data.reqid);
-        // console.log(response.data.script);
-        console.log(response.data)
-        console.log('Project Submitted');
-        // navigate('/script', { state: { script: response.data.script } });
         navigate('/script', {state:{reqid:response.data.reqid}});
       })
       .catch((error) => {
         setErrorMessage('project not submitted');
         console.log(error);
       });
-    // TODO: SEND THIS TITLE TO THE BACKEND---------------------
-
     // Reset the title field
     setTitle(title);
   };

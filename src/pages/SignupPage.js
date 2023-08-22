@@ -2,15 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {userSignup} from '../auth/userSignUp'
-import SignUpCssPage from './css/SignUpPage.css'
 import { sendEmailVerification } from 'firebase/auth'
-import {auth} from '../firebase/config'
-
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
-
-// const API_BASE_URL = 'http://localhost:8000/api';
 
 function SignupPage() {
   const [firstName, setFirstName] = useState('');
@@ -43,26 +37,6 @@ function SignupPage() {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
-      return;
-    }
-    const data = {email, password};
-    axios.post(`${API_BASE_URL}/signup/`, data)
-      .then((response) => {
-        console.log('successful');
-        navigate(`/login`);
-      })
-      .catch((error) => {
-        setErrorMessage(error.response.data.error ||'Unable to sign up');
-        console.log(error);
-        navigate.replace('/signup');
-      });
-  };
-
-
   const from = location.state?.from?.pathname || '/dashboard'
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -83,7 +57,7 @@ function SignupPage() {
       };
   
       const makeBackendRequest = async (attempt = 0) => {
-        if (attempt >= 3) { // Max attempts reached
+        if (attempt >= 10) { 
           setErrorMessage('Unable to send to backend. Removing from Firebase...');
           await userSignup().removeUser(userCredential);
           return;
@@ -106,7 +80,7 @@ function SignupPage() {
           })
           .catch(error => {
             console.error('Error:', error);
-            setTimeout(() => makeBackendRequest(attempt + 1), 1000 * (attempt + 1)); // Delay for 1s, 2s, 3s, ...
+            setTimeout(() => makeBackendRequest(attempt + 1), 1000 * (attempt + 1));
           });
         } catch (backendError) {
           console.error(backendError);
@@ -118,127 +92,9 @@ function SignupPage() {
       setErrorMessage(error);
     }
   }
-  
-
-//   const handleSignUp = async (e) => {
-//     e.preventDefault();
-
-//     if (password !== confirmPassword) {
-//         setErrorMessage('Passwords do not match');
-//         return;
-//     }
-
-//     const userCredential = await signup(email, password);
-//     const fireid = userCredential.user.uid
-//     // console.log("USERCRED")
-//     // console.log(userCredential)
-//     // console.log("USERCRED")
-//     // console.log(fireid)
-    
-
-//     if (!error && userCredential) {
-//       const data = {
-//         email: email,
-//         password: password,
-//         fireid: fireid
-//     };
-
-//       let backendSuccess = false;
-
-//       for (let i = 0; i < 3; i++) {  // attempt sending data to backend for 3 times
-//           try {
-//               await axios.post(`${API_BASE_URL}/signup/`, data)
-//               .then(response => {
-//                 // Handle success
-//                 backendSuccess = true;
-//                 console.log("userCredential.user");
-//                 console.log(userCredential.user);
-//                 try{
-//                   sendEmailVerification(userCredential.user);
-//                   console.log("Email sent")
-//                 }catch{
-//                   console.log("Email Not sent")
-//                 }
-//                 console.log('Sent credentials to backend successful');
-                
-//             })
-//               .catch(error => {
-//                 if (error.response) {
-//                     // The request was made and the server responded with a status code
-//                     // that falls out of the range of 2xx
-//                     console.error('Error data:', error.response.data);
-//                     console.error('Error status:', error.response.status);
-//                 } else if (error.request) {
-//                     // The request was made but no response was received
-//                     console.error('No response received:', error.request);
-//                 } else {
-//                     // Something happened in setting up the request that triggered an Error
-//                     console.error('Error', error.message);
-//                 }
-//             });
-              
-//           } catch (backendError) {
-//               console.error(backendError);
-//           }
-//         }
-
-//         if (!backendSuccess) {
-//             setErrorMessage('Unable to send to backend. Removing from Firebase...');
-//             await userSignup().removeUser(userCredential);
-//             return;
-//         }
-
-//         navigate(from, { replace: true });
-//         // localStorage.setItem('uid', userCredId)
-//         setEmail("");
-//         setPassword("");
-//         return;
-//     } else {
-//         setErrorMessage(error);
-//     }
-// }
-
-  // const from = location.state?.from?.pathname || '/dashboard'
-  // const handleSignUp = async (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     setErrorMessage('Passwords do not match');
-  //     return;
-  //   }
-  //   await signup(email, password);
-
-  //   if(!error){
-  //     const data = {email, password};
-
-  //     axios.post(`${API_BASE_URL}/signup/`, data)
-  //       .then((response) => {
-  //         console.log('Sent credentions to backend successful');
-  //       })
-  //       .catch((error) => {
-  //         setErrorMessage(error.response.data.error ||'Unable to send to backend');
-  //         console.log(error);
-  //       });
-
-  //     navigate(from, { replace: true});
-  //     setEmail("")
-  //     setPassword("")
-  //     return;
-  //   }else{
-  //     setErrorMessage(error);
-  //   }
-  // }
 
   return (
     <div className="signup">
-      {/* <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" value={username} onChange={handleUsernameChange} />
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
-        <button type="submit">Sign Up</button>
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </form> */}
-
       <div className='form-container'>
         <form className="form" onSubmit={handleSignUp}>
           <h2>Sign Up</h2>
