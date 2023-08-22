@@ -20,7 +20,6 @@ const Timeline = ({ scenes, currentSceneIndex, handleClick }) => {
           key={index}
           ref={(el) => thumbnailsRef.current[index] = el}
           src={scene.thumbnail}
-          // src={`../thumbnails/${index}.jpg`}
           alt={`Thumbnail ${index}`}
           className={`thumbnail ${index === currentSceneIndex ? 'active' : ''}`}
           onClick={() => handleClick(index)}
@@ -31,23 +30,3 @@ const Timeline = ({ scenes, currentSceneIndex, handleClick }) => {
 };
 
 export default Timeline;
-
-
-// import React from 'react';
-// const Timeline = ({ scenes, currentSceneIndex, handleClick }) => {
-//   return (
-//     <div className='timeline'>
-//       {scenes.map((scene, index) => (
-//         <img
-//           key={index}
-//           src={`../thumbnails/${index}.jpg`}
-//           alt={`Thumbnail ${index}`}
-//           className={`thumbnail ${index === currentSceneIndex ? 'active' : ''}`}
-//           onClick={() => handleClick(index)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default Timeline;

@@ -69,7 +69,7 @@ function TitlePage() {
         )}
 
       <div className="title-content">
-          {/* {errorMessage && <p className="error">{errorMessage}</p>} */}
+          {errorMessage && <p className="error">{errorMessage}</p>}
           
           <div className='title-input-unit'>
               <input type="text"  onKeyPress={handleEnterKeyPress} value={title} onChange={handleTitleChange} placeholder="Enter your video title here..." />

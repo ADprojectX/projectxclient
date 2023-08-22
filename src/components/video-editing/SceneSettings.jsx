@@ -1,22 +1,19 @@
 import '../css/video-editing/SceneSettings.css'
 import { useState } from 'react';
-import { BsImage } from "react-icons/bs";
 import { BiCaptions, BiVideoRecording, BiHide } from "react-icons/bi";
 import { TbTransitionRight } from "react-icons/tb";
-import { IoDuplicateOutline, IoVideocam } from "react-icons/io5";
+import { IoDuplicateOutline } from "react-icons/io5";
 import { RiImageEditFill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FaPhotoFilm } from "react-icons/fa6";
 import { LuUpload } from "react-icons/lu";
-
-
 
 const Overlay = ({ onClick }) => (
     <div className="overlay" onClick={onClick}></div>
 );
 
 
-const ChangeVisualPopup = ({ onClose }) => (
+const ChangeVisualPopup = () => (
     <div className="popup">
         <div className='change-visual-btns gradient-border-color'>
             <img style={{ width: '110px', height: '110px' }} className="change-visual-btn-icon" src="../midjourney_logo.png"/>
@@ -37,7 +34,6 @@ const ChangeVisualPopup = ({ onClose }) => (
             <LuUpload style={{ margin: '20px' }} color='#8EB0BC' size={70}/>
             <p style={{ margin: '15px' }}>Upload your own Footage</p>
         </div>
-        {/* <button className="close-btn" onClick={onClose}>X</button> */}
     </div>
 );
 
@@ -113,8 +109,7 @@ const SceneSettings = () => {
 
             </div>
             {activePopup && <Overlay onClick={() => setActivePopup(null)} />}
-            {activePopup === 'visual' && <ChangeVisualPopup onClose={() => setActivePopup(null)} />}
-            {/* {activePopup === 'caption' && <ChangeCaptionPopup onClose={() => setActivePopup(null)} />} */}
+            {activePopup === 'visual' && <ChangeVisualPopup />}
 
             <div className='scene-settings-delete-footer'>
                 <button className='scene-settings-delete-button'>

@@ -1,8 +1,6 @@
 import PublicNavBar from '../components/PublicNavBar'
 import './css/Home.css'
-import ReactPlayer from "react-player";
 import { useNavigate } from 'react-router-dom'
-
 
 function HomePage() {
   const navigate = useNavigate();

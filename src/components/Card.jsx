@@ -1,8 +1,6 @@
-import React from 'react';
 import './css/Card.css';
-import { AiFillPlusCircle } from "react-icons/ai";
+import React from 'react';
 import { FiPlusCircle } from "react-icons/fi";
-
 import { MdDeleteOutline } from "react-icons/md";
 
 
@@ -15,13 +13,10 @@ const Card = ({ uuid, index, scene, updateCard, addCard, deleteCard, onSceneClic
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     };
   
-    // Recompute the height when the window is resized
     window.addEventListener('resize', handleResize);
-
-    // Call handleResize initially to set textarea's height
-    handleResize();
     
-    // Clean up event listener
+    handleResize();
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -30,7 +25,6 @@ const Card = ({ uuid, index, scene, updateCard, addCard, deleteCard, onSceneClic
   
   return (
     <div onClick={() => onSceneClick(index)} className={`card ${isActive ? 'active' : ''}`}>
-      {/* <h2>{`Scene ${index + 1} :`}</h2> */}
       <h2 style={{ color: scene.trim() === '' ? 'red' : 'inherit' }}>{`Scene ${index + 1} :`}</h2>
 
 
@@ -65,20 +59,3 @@ const Card = ({ uuid, index, scene, updateCard, addCard, deleteCard, onSceneClic
 };
 
 export default Card;
-
-
-// <div className="card-buttons"> 
-// <button onClick={(e) => {
-//   e.stopPropagation();  
-//   addCard(index);
-// }}>
-//   <FiPlusCircle color='darkgreen' size={17}/>
-// </button>
-
-// <button className="card-button" onClick={(e) => {
-//   e.stopPropagation();  
-//   deleteCard(index);
-// }}>
-//   <MdDeleteForever color='#FF006B' size={20}/>
-// </button>
-// </div>

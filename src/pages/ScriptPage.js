@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './css/ScriptPage.css'
 import VoiceContainer from '../components/VoiceContainer';
 import SideBar from '../components/SideBar';
 import ScriptContainer from '../components/ScriptContainer';
@@ -19,8 +20,6 @@ function ScriptPage() {
     const animateButtonRef = useRef(null);
     let reqid = localStorage.getItem('reqid');
 
-    console.log('scenes')
-    console.log(scenes)
     const handleVoiceChange = (selectedVoice) => {
       setSelectedValue(selectedVoice);
     };
@@ -72,8 +71,6 @@ function ScriptPage() {
           voice: selectedValue
       };
 
-      console.log('scenes2')
-      console.log(JSON.stringify(scenes))
 
       axios.post(`${REQ_BASE_URL}/save-script/`, payload, { 
           withCredentials: true 
@@ -108,7 +105,6 @@ function ScriptPage() {
             <div className='voice-in-script'>
               <VoiceContainer 
                 onVoiceChange={handleVoiceChange} 
-                handleSubmit={handleSubmit}
               />
               <div className='create-video-btn-div'>
                 <button 
@@ -120,8 +116,8 @@ function ScriptPage() {
                 </button>
               </div>
             </div>
-            
           </div>
+
         </div>
 
       </div>

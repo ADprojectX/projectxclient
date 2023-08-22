@@ -1,11 +1,8 @@
-import React, {useState} from 'react';
-import {useLocation } from 'react-router-dom';
-import axios from 'axios';
 import './css/ScriptContainer.css'
+import axios from 'axios';
+import React, {useState} from 'react';
 import Card from '../components/Card';
 
-// const REQ_BASE_URL = 'http://localhost:8000/req';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSceneIndex } ) {
@@ -13,11 +10,6 @@ function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSce
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true); 
 
-    console.log("re-rendered")
-    console.log(scenes)
-
-    // const location = useLocation();
-    // let reqid = location.state && location.state.reqid
     let reqid = localStorage.getItem('reqid');
 
     React.useEffect(() => {
@@ -27,17 +19,12 @@ function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSce
     }, []);
 
     const fetchScriptFromBackend = () => {
-      // Make a request to the backend to fetch the script based on the title
       axios.get(`${REQ_BASE_URL}/fetch-script?reqid=${reqid}`, { withCredentials: true })
       .then((response) => {
         let scriptFromBack = response.data.script
 
-        console.log("scriptfromback ")
-
         setScenesAndUpdateParent(scriptFromBack)
         setIsLoading(false);
-        // setScenes(jsonData)
-        // setScript(scriptFromBack)
         })
         .catch((error) => {
           setErrorMessage('script generation failed');
@@ -48,28 +35,27 @@ function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSce
 
     const setScenesAndUpdateParent = (newScenes) => {
       setScenes(newScenes);
-      setScenesForParent(newScenes);  // pass the updated state to the parent
+      setScenesForParent(newScenes);
     }
     
     const updateCard = (index, updatedScene) => {
       const newScenes = [...scenes];
       newScenes[index] = updatedScene;
-      // setScenes(newScenes);
       setScenesAndUpdateParent(newScenes);
     };
   
     const deleteCard = (index) => {
       const newScenes = scenes.slice(0, index).concat(scenes.slice(index+1)).map((scene, idx) => {
-        scene[0] = idx;  // Update the index of each scene
+        scene[0] = idx; 
         return scene;
     });
     setScenesAndUpdateParent(newScenes);
     };
   
     const addCard = (index) => {
-      const newScene = [index + 1, '', ''];  // Assuming uuid is handled by the backend
+      const newScene = [index + 1, '', ''];
       const newScenes = scenes.slice(0, index+1).concat([newScene], scenes.slice(index+1)).map((scene, idx) => {
-          scene[0] = idx;  // Update the index of each scene
+          scene[0] = idx; 
           return scene;
       });
       setScenesAndUpdateParent(newScenes);
@@ -79,8 +65,6 @@ function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSce
       setCurrentSceneIndex(index);
     };
 
-    console.log("before return")
-    
     return(
         <div className="scriptContainer">
               {isLoading && (
@@ -90,14 +74,15 @@ function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSce
             )}
             {scenes && scenes.map(([i , uuid, script]) => (
             <Card
+                key={uuid}
                 uuid={uuid}
                 index={i}
                 scene={script}
                 updateCard={updateCard}
                 deleteCard={deleteCard}
                 addCard={addCard}
-                onSceneClick={handleSceneClick} // new prop to handle scene click
-                isActive={i === currentSceneIndex} // new prop to indicate active scene
+                onSceneClick={handleSceneClick} 
+                isActive={i === currentSceneIndex}
             />
             ))}
             {errorMessage && <p className="error">{errorMessage}</p>}

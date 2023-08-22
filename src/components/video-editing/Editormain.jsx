@@ -1,25 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { AppBar, Toolbar, Typography, Slider }  from "@mui/material";
-import VPlayer from './VPlayer';
-// import './css/SceneSelector.css'
 import '../css/video-editing/EditorMain.css'
+import React, { useState, useEffect, useRef } from 'react';
+import { Slider }  from "@mui/material";
+import { PiPlayPause } from "react-icons/pi";
+import VPlayer from './VPlayer';
 import Timeline from './Timeline';
 import SceneSettings from './SceneSettings';
 import EditorMenuBar from './EditorMenuBar';
 import VideoScriptContainer from './VideoScriptContainer';
-import { PiPlayPause } from "react-icons/pi";
-import { Widgets } from '@mui/icons-material';
 
 
 const Editormain = ({ scenes, checkURLExpired }) => {
-  //scene   //   const videoFiles = videosWithDuration.map((video, index) => ({
-  //     name: `Scene${index}`,
-  //     video: video.url,
-  //     audio: '', 
-  //     duration: video.duration
-  //   }));
-
-  // [urls]
     const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
@@ -29,9 +19,8 @@ const Editormain = ({ scenes, checkURLExpired }) => {
     const [scriptScenes, setScriptScenes] = useState();
     const [seekTo, setSeekTo] = useState(0);
     const vPlayerRef = useRef();
-
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const videoRef = useRef(null);
+    const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const videoRef = useRef(null);
 
   useEffect(() => {
     if (currentVideoIndex < scenes.length) {
@@ -48,9 +37,6 @@ const Editormain = ({ scenes, checkURLExpired }) => {
     }
   };
 
-    
-    // console.log("IN EDITORMAIN")
-    // console.log(scenes)
     const handleFullScreen = () => {
       vPlayerRef.current.handleFullScreen();
     };
@@ -102,25 +88,18 @@ const Editormain = ({ scenes, checkURLExpired }) => {
       setCurrentSceneIndex(index);
     };
 
-    // Function to toggle play and pause
     const handlePlayPause = () => {
       setPlaying(!playing);
     };
   
     const sliderMarks = scenes.map((scene, i) => ({
       value: sceneStartTimes[i] || 0,
-    //   label: scene.name,
-      // label: (i + 1).toString(),
     }));
 
     const setScriptScenesFromChild = (childScenes) => {
       setScriptScenes(childScenes);
     }
 
-    // if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
-    //   return <div>Loading...</div>;
-    // }
-  
     return (
         <div className='editor-main'>
                 <video
@@ -135,7 +114,6 @@ const Editormain = ({ scenes, checkURLExpired }) => {
                 <div className='v-player grid-col-span-2'>
                   <VPlayer 
                       videoSrc={scenes[currentSceneIndex].video} 
-                      // videoSrc={scenes[0]} 
                       audioSrc={scenes[currentSceneIndex].audio} 
                       handleSceneEnd={handleSceneEnd}
                       handleProgress={handleProgress}
@@ -173,10 +151,9 @@ const Editormain = ({ scenes, checkURLExpired }) => {
                         </button>
 
                         <div>
-                            <div className="time-display"> {/* <-- New div for time display */}
+                            <div className="time-display"> 
                                 {formatTime(currentTime)} / {formatTime(totalDuration)}
                             </div>
-                            {/* ... (rest of your JSX inside timeline-unit) */}
                         </div>
 
                         <Slider

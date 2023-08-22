@@ -1,10 +1,9 @@
 import '../css/video-editing/EditorMenuBar.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { FiDownload, FiMusic } from "react-icons/fi";
 import { FaCirclePlay } from "react-icons/fa6";
 import axios from 'axios';
 
-// const REQ_BASE_URL = 'http://localhost:8000/req';
 const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 const EditorMenuBar = ({ handleFullScreen }) => {
@@ -85,7 +84,6 @@ const EditorMenuBar = ({ handleFullScreen }) => {
             fetchVideoURL();
         } catch (error) {
             console.error('Failed to start the download process:', error);
-            // Optionally, inform the user about the initial fetch error, e.g., using a toast or alert.
         }
     };
     
@@ -109,18 +107,3 @@ const EditorMenuBar = ({ handleFullScreen }) => {
 }
 
 export default EditorMenuBar;
-
-    // WORKING    
-    // const checkResource = () => {
-    //     fetch(url, { method: 'GET'})
-    //         .then((response) => {
-    //             if (response.ok) {
-    //                 setStatus('Resource available.');
-    //             } else {
-    //                 setStatus('Resource not available.');
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             setStatus('Error occurred while checking resource: ' + error.message);
-    //         });
-    // };

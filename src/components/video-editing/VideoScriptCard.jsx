@@ -10,13 +10,10 @@ const VideoScriptCard = ({ uuid, index, scene, updateCard, onSceneClick, isActiv
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     };
   
-    // Recompute the height when the window is resized
     window.addEventListener('resize', handleResize);
 
-    // Call handleResize initially to set textarea's height
     handleResize();
-  
-    // Clean up event listener
+    
     return () => {
       window.removeEventListener('resize', handleResize);
     };

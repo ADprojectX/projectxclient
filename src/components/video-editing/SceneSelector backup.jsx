@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Slider }  from "@mui/material";
+import { Slider }  from "@mui/material";
 import VPlayer from './VPlayer';
 import './css/SceneSelector.css'
 import Timeline from './Timeline';
 import { PiPlayPause } from "react-icons/pi";
-import { Widgets } from '@mui/icons-material';
 
 
 const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
-    // const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
     const [currentProgress, setCurrentProgress] = useState(0);
     const [sceneStartTimes, setSceneStartTimes] = useState([]);
     const [totalDuration, setTotalDuration] = useState(0);
@@ -46,22 +44,19 @@ const SceneSelector = ({ scenes, currentSceneIndex, setCurrentSceneIndex }) => {
   
     const handleProgress = ({ playedSeconds }) => {
       setCurrentProgress(sceneStartTimes[currentSceneIndex] + playedSeconds);
-      setSeekTo(0); // reset the seekTo value after seeking
+      setSeekTo(0); 
     };
 
     const handleClick = (index) => {
       setCurrentSceneIndex(index);
     };
 
-    // Function to toggle play and pause
     const handlePlayPause = () => {
       setPlaying(!playing);
     };
   
     const sliderMarks = scenes.map((scene, i) => ({
       value: sceneStartTimes[i],
-    //   label: scene.name,
-      // label: (i + 1).toString(),
     }));
 
     if (scenes.length === 0 || !scenes[currentSceneIndex] || !scenes[currentSceneIndex].video) {
