@@ -4,10 +4,8 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import './css/VoicePage.css'
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://localhost:8000/api';
-const REQ_BASE_URL = 'http://localhost:8000/req';
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function VoicePage() {
     const navigate = useNavigate();

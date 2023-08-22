@@ -5,7 +5,9 @@ import LoginCssPage from './css/LoginPage.css'
 import { userLogin } from '../auth/userLogin'
 import { Link } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+// const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');

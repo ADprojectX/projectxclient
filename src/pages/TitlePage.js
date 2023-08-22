@@ -8,8 +8,11 @@ import Typewriter from "typewriter-effect";
 import SideBar from '../components/SideBar';
 import { BsFillArrowRightCircleFill } from "react-icons/bs"; 
 
-const API_BASE_URL = 'http://localhost:8000/api';
-const REQ_BASE_URL = 'http://localhost:8000/req';
+// const API_BASE_URL = 'http://localhost:8000/api';
+// const REQ_BASE_URL = 'http://localhost:8000/req';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function TitlePage() {
   const { currentUser, error, checkUserAuthentication } = userLoggedIn();

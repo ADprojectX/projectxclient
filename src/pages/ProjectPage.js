@@ -6,8 +6,12 @@ import axios from 'axios';
 import {userLoggedIn} from '../auth/userLoggedIn';
 
 
-const API_BASE_URL = 'http://localhost:8000/api';
-const REQ_BASE_URL = 'http://localhost:8000/req';
+// const API_BASE_URL = 'http://localhost:8000/api';
+// const REQ_BASE_URL = 'http://localhost:8000/req';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
+console.log("REQ_BASE_URL")
+console.log(API_BASE_URL)
 
 function ProjectPage() {
   
@@ -16,7 +20,7 @@ function ProjectPage() {
     const { currentUser, error, checkUserAuthentication } = userLoggedIn();
     const fireid = currentUser.uid
 
-    console.log(fireid)
+    // console.log(fireid)
 
 
     useEffect(() => {

@@ -16,8 +16,9 @@ const SideNavBar = () => {
     const location = useLocation();
 	const { error, logout } = userLogout();
 
-
-    const API_BASE_URL = 'http://localhost:8000/api';
+	const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+	const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
+    // const API_BASE_URL = 'http://localhost:8000/api';
 
     const isMenuItemActive = (links) => {
         return links.some((link) => location.pathname === link);

@@ -4,7 +4,9 @@ import axios from 'axios';
 import './css/ScriptContainer.css'
 import Card from '../components/Card';
 
-const REQ_BASE_URL = 'http://localhost:8000/req';
+// const REQ_BASE_URL = 'http://localhost:8000/req';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function ScriptContainer( { setScenesForParent, currentSceneIndex, setCurrentSceneIndex } ) {
     const [scenes, setScenes] = useState();

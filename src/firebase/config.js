@@ -5,24 +5,16 @@ import {getAuth} from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC3zt-3R0GYfj9xuR8R3nGtqVPM1K3seT0",
-//   authDomain: "projectx-54251.firebaseapp.com",
-//   projectId: "projectx-54251",
-//   storageBucket: "projectx-54251.appspot.com",
-//   messagingSenderId: "496706697351",
-//   appId: "1:496706697351:web:c3d977b68755b4b43ce022"
-// };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAzJEoDqkAzkK10nePuQ4gYSNs944Lmbb0",
-  authDomain: "magiclips-ed8cf.firebaseapp.com",
-  projectId: "magiclips-ed8cf",
-  storageBucket: "magiclips-ed8cf.appspot.com",
-  messagingSenderId: "7397627183",
-  appId: "1:7397627183:web:ca12dbacedcde2a3497dda"
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

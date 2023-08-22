@@ -10,9 +10,6 @@ import {userLogout} from '../auth/userLogout' //Firebase
 import { onAuthStateChanged } from "firebase/auth"; //firebase
 import {auth} from '../firebase/config' //firebase
 
-const API_BASE_URL = 'http://localhost:8000/api';
-const REQ_BASE_URL = 'http://localhost:8000/req';
-
 const Dropdown = () => {
   return (
     <div className="dropdown">

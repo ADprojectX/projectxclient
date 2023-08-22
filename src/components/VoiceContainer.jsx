@@ -6,8 +6,10 @@ import './css/VoiceContainer.css'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_BASE_URL = 'http://localhost:8000/api';
-const REQ_BASE_URL = 'http://localhost:8000/req';
+// const API_BASE_URL = 'http://localhost:8000/api';
+// const REQ_BASE_URL = 'http://localhost:8000/req';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
 function VoiceContainer({ onVoiceChange }) {
     const navigate = useNavigate();

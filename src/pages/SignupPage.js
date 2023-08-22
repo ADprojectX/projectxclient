@@ -7,9 +7,10 @@ import { sendEmailVerification } from 'firebase/auth'
 import {auth} from '../firebase/config'
 
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 
-
-const API_BASE_URL = 'http://localhost:8000/api';
+// const API_BASE_URL = 'http://localhost:8000/api';
 
 function SignupPage() {
   const [firstName, setFirstName] = useState('');

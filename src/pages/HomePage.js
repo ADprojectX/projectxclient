@@ -4,7 +4,6 @@ import ReactPlayer from "react-player";
 import { useNavigate } from 'react-router-dom'
 
 
-
 function HomePage() {
   const navigate = useNavigate();
 
