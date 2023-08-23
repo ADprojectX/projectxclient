@@ -14,25 +14,28 @@ const Overlay = ({ onClick }) => (
 
 
 const ChangeVisualPopup = () => (
-    <div className="popup">
-        <div className='change-visual-btns gradient-border-color'>
-            <img style={{ width: '110px', height: '110px' }} className="change-visual-btn-icon" src="../midjourney_logo.png"/>
-            <p>Prompt Like Midjourney</p>
-        </div>
-        <div className='change-visual-btns gradient-border-color'>
-            <img style={{ width: '70px', height: '70px', margin: '20px' }} className="change-visual-btn-icon" src="../stability-logo.png"/>
-            <p>Prompt Like Stable Diffusion</p>
-        </div>
+    <div className="popup-div">
+        <div className='popup-div-title'>Coming Soon</div>
+        <div className="popup">
+            <div className='change-visual-btns gradient-border-color'>
+                <img style={{ width: '110px', height: '110px' }} className="change-visual-btn-icon" src="../midjourney_logo.png"/>
+                <p>Prompt Like Midjourney</p>
+            </div>
+            <div className='change-visual-btns gradient-border-color'>
+                <img style={{ width: '70px', height: '70px', margin: '20px' }} className="change-visual-btn-icon" src="../stability-logo.png"/>
+                <p>Prompt Like Stable Diffusion</p>
+            </div>
 
-        <div className='tile-divider'></div>
+            <div className='tile-divider'></div>
 
-        <div className='change-visual-btns'>
-            <FaPhotoFilm style={{ margin: '16px' }} color='#8EB0BC' size={80}/>
-            <p style={{ margin: '15px' }}>Choose Stock Footages</p>
-        </div>
-        <div className='change-visual-btns'>
-            <LuUpload style={{ margin: '20px' }} color='#8EB0BC' size={70}/>
-            <p style={{ margin: '15px' }}>Upload your own Footage</p>
+            <div className='change-visual-btns'>
+                <FaPhotoFilm style={{ margin: '16px' }} color='#8EB0BC' size={80}/>
+                <p style={{ margin: '15px' }}>Choose Stock Footages</p>
+            </div>
+            <div className='change-visual-btns'>
+                <LuUpload style={{ margin: '20px' }} color='#8EB0BC' size={70}/>
+                <p style={{ margin: '15px' }}>Upload your own Footage</p>
+            </div>
         </div>
     </div>
 );
@@ -43,7 +46,7 @@ const SceneSettings = () => {
     return (
         <div className="scene-settings">
             <div className='scene-settings-header'>
-                <div> COMING SOON </div>
+                <div> Coming Soon </div>
             </div>
 
             <div className='scene-settings-tiles'>

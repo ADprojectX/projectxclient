@@ -104,6 +104,27 @@
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent gray */
     z-index: 999; /* Below the popup but above everything else */
 }
+.popup-div {
+    display: flex;
+    gap: 40px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;  /* to ensure the popup is above everything else */
+    width: 1000px;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 30px;
+    height: 350px;
+}
+
+.popup-div-title {
+    color: rgb(144, 0, 255);
+    font-size: x-large;
+    margin-left: 430px;
+}
 
 .popup {
     display: flex;
