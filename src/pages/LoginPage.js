@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PublicNavBar from '../components/PublicNavBar';
 import './css/LoginPage.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -99,36 +100,39 @@ export default function LoginPage() {
 
   };
   return (
-    <div className="login">
-      <div className='form-container'>
-        
-        <h2>Welcome Back</h2>
+    <div>
+      <PublicNavBar />
+      <div className="login">
+        <div className='form-container'>
+          
+          <h2>Welcome Back</h2>
 
-        <form className="form" onSubmit={handleLogin}>
-          <input type="email" placeholder="Email" value={email} onChange={handleUsernameChange} />
-          <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-          <button type="submit">Continue</button>
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </form>
+          <form className="form" onSubmit={handleLogin}>
+            <input type="email" placeholder="Email" value={email} onChange={handleUsernameChange} />
+            <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+            <button type="submit">Continue</button>
+            {errorMessage && <p className="error">{errorMessage}</p>}
+          </form>
 
-        <p>Do not have an account? <Link to="/signup" style={{ textDecoration: 'underline' }}>Sign Up</Link></p>
-        {location.state && location.state.from && (
-          <p>You need to login to access {location.state.from.pathname}</p>
-        )}
+          <p>Do not have an account? <Link to="/signup" style={{ textDecoration: 'underline' }}>Sign Up</Link></p>
+          {location.state && location.state.from && (
+            <p>You need to login to access {location.state.from.pathname}</p>
+          )}
 
-        <div class="divider-container">
-          <div class="line"></div>
-          <span class="or-text">OR</span>
-          <div class="line"></div>
-        </div>
-
-        <div className='other-sign-in-buttons'>
-          <div className='other-sign-in-buttons-div' onClick={handleGoogleSignIn}>
-              <img src="../google-logo.png" className='other-sign-in-buttons-icon' />
-              <div className='other-sign-in-buttons-text'>Continue with Google</div>
+          <div class="divider-container">
+            <div class="line"></div>
+            <span class="or-text">OR</span>
+            <div class="line"></div>
           </div>
-        </div>
 
+          <div className='other-sign-in-buttons'>
+            <div className='other-sign-in-buttons-div' onClick={handleGoogleSignIn}>
+                <img src="../google-logo.png" className='other-sign-in-buttons-icon' />
+                <div className='other-sign-in-buttons-text'>Continue with Google</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   )

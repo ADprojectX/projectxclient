@@ -1,7 +1,7 @@
 .login {
   text-align: center;
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   align-items: center;
   justify-content: center;
   background-image: linear-gradient(79deg, white, #D2FFF5, #C1E5DD 48%, #f1dded);
@@ -100,7 +100,7 @@
   border: 2px solid;
   border-radius: 30px;
   cursor: pointer;
-  color: rgb(6, 52, 218); 
+  color: rgb(73, 112, 255); 
   font-size: 1rem;
   width: 210%;
   height: 18px;

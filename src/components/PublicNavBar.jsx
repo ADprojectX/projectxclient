@@ -10,11 +10,17 @@ const PublicNavBar = () => {
         navigate('/login');
     }
 
+    const handleLogoClick = () => {
+        navigate('/');
+    }
+
     return (
         <div className="public-navbar">
-            <h1>magiclips.ai</h1>
+            <div className="public-navbar-div" onClick={handleLogoClick}>
+                <h1 onClick={handleLogoClick} className="clickable-logo">magiclips.ai</h1>
+            </div>
             <div className='public-navbar-items'>
-                <a><p>Home</p></a>
+                <a href='/'><p>Home</p></a>
                 <a><p>Features</p></a>
                 <a><p>Pricing</p></a>
                 <a><p>Contact</p></a>
