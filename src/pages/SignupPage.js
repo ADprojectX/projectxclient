@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import {userSignup} from '../auth/userSignUp'
+import { userSignup } from '../auth/userSignUp'
 import { sendEmailVerification } from 'firebase/auth'
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -59,7 +59,7 @@ function SignupPage() {
       const makeBackendRequest = async (attempt = 0) => {
         if (attempt >= 10) { 
           setErrorMessage('Unable to send to backend. Removing from Firebase...');
-          await userSignup().removeUser(userCredential);
+          await userCredential.user.delete();
           return;
         }
   

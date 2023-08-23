@@ -24,6 +24,7 @@ const VideoScriptCard = ({ uuid, index, scene, updateCard, onSceneClick, isActiv
       <h2>{`${index + 1}`}</h2>
       <textarea 
         ref={textareaRef}
+        readOnly
         className="editField" 
         value={scene} 
         onChange={(e) => updateCard(index, [index, uuid, e.target.value])}

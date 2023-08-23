@@ -43,7 +43,7 @@ const SceneSettings = () => {
     return (
         <div className="scene-settings">
             <div className='scene-settings-header'>
-                <div> SCENE SETTINGS </div>
+                <div> COMING SOON </div>
             </div>
 
             <div className='scene-settings-tiles'>
