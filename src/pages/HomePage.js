@@ -17,7 +17,18 @@ function HomePage() {
             <p className='hero-desc1'>Turn Your Vision into <span className='hero-top-title'>Reality</span></p>
             <h1>Craft your videos with <span className='hero-title-gen-ai'>generative AI</span></h1>
             <p className='hero-desc2'>Start with a thought, and let the AI evolve it. With scripts that engage, scenes that enthrall, voiceovers that connect, and edits that enchant. Welcome to impactful storytelling.</p>
-            <button onClick={handleGetStarted}>Try Now</button>
+            <button class="blob-btn" onClick={handleGetStarted}>
+              Try Now
+              <span class="blob-btn__inner">
+                <span class="blob-btn__blobs">
+                  <span class="blob-btn__blob"></span>
+                  <span class="blob-btn__blob"></span>
+                  <span class="blob-btn__blob"></span>
+                  <span class="blob-btn__blob"></span>
+                </span>
+              </span>
+            </button>
+            {/* <button onClick={handleGetStarted}>Try Now</button> */}
           </div>
 
           <div>

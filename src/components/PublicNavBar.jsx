@@ -19,7 +19,8 @@ const PublicNavBar = () => {
                 <a><p>Pricing</p></a>
                 <a><p>Contact</p></a>
                 <a><p>About Us</p></a>
-                <button onClick={handleGetStarted}>Get Started</button>
+                {/* <button className="pnavbar-get-started" onClick={handleGetStarted}>Get Started</button> */}
+                <button className="button_slide slide_right" onClick={handleGetStarted}>Get Started</button>
             </div>
         </div>
       );
