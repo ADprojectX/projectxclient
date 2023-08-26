@@ -5,22 +5,36 @@
     padding-right: 20px;
 }
 
-.public-navbar-div {
+.public-navbar-logo-div {
     margin-right: auto;
+    display: flex;
 }
+
+.public-navbar-logo {
+    height: 50px;
+}
+
 .clickable-logo {
     cursor: pointer;
   }
-.public-navbar-div h1 {
+.public-navbar-text {
     margin: 0;
     margin-left: 10px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       225deg,
       #19fa7e 0%,
       #10ad9e 29%,
       #13d4ff 67%,
       #fff800 100%
-    );
+    ); */
+    background-image: linear-gradient(
+        225deg,
+        #a909ff 0%,
+        #09bdff 25%,
+        #5E4CFF 49%,
+        #832cfe 77%,
+        #a909ff 100%
+      );
     background-size: auto auto;
     background-clip: border-box;
     background-size: 200% auto;

@@ -1,6 +1,7 @@
 import './css/SignUpPage.css'
 import React, { useState } from 'react';
 import axios from 'axios';
+import PublicNavBar from '../components/PublicNavBar'
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { userSignup } from '../auth/userSignUp'
 import { sendEmailVerification } from 'firebase/auth'
@@ -95,24 +96,27 @@ function SignupPage() {
   }
 
   return (
-    <div className="signup">
-      <div className='form-container'>
-        <form className="form" onSubmit={handleSignUp}>
-          <h2>Sign Up</h2>
+    <div className='signup-page' >
+      <PublicNavBar />
+      <div className="signup">
+        <div className='form-container'>
+          <form className="form" onSubmit={handleSignUp}>
+            <h2>Sign Up</h2>
 
-          <input type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameChange} />
-          <input type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameChange} />
-          <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-          <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-          <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+            <input type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameChange} />
+            <input type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameChange} />
+            <input type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+            <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+            <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
 
-          <button type="submit">Continue</button>
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </form>
-        <p>Already have an account? <Link to="/login" style={{ textDecoration: 'underline' }}>Sign In</Link></p>
-        {location.state && location.state.from && (
-          <p>You need to login to access {location.state.from.pathname}</p>
-        )}
+            <button type="submit">Continue</button>
+            {errorMessage && <p className="error">{errorMessage}</p>}
+          </form>
+          <p>Already have an account? <Link to="/login" style={{ textDecoration: 'underline' }}>Sign In</Link></p>
+          {location.state && location.state.from && (
+            <p>You need to login to access {location.state.from.pathname}</p>
+          )}
+        </div>
       </div>
     </div>
   );

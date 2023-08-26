@@ -82,8 +82,8 @@ const SideNavBar = () => {
 					<div className="nav-details">
                         <button className={isExpanded ? `logout-item` : "logout-item logout-item-NX"} onClick={handleLogout}>Log out</button>
 						<div className="nav-footer-info">
-							<p className="nav-footer-user-name">XYZ</p>
-							<p className="nav-footer-user-position">store admin</p>
+							{/* <p className="nav-footer-user-name">XYZ</p> */}
+							{/* <p className="nav-footer-user-position">store admin</p> */}
 						</div>
 					</div>
 				)}
