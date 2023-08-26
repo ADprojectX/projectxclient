@@ -8,7 +8,7 @@
 .side-nav-container {
 	background-color: var(--light);
 	width: 225px;
-	height: calc(100vh - 62px);
+	height: calc(100vh - 87px);
 	/* height: 100vh; */
 	position: relative;
 	color: var(--dark);
@@ -89,7 +89,7 @@
 /* ///////////////////// */
 /* ///////////////////// */
 .hamburger-out {
-	margin-left: 24px;
+	margin-left: 19px;
 }
 .hamburger-out:hover span:nth-child(1) {
 	width: 25px;

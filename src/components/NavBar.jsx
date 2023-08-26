@@ -25,7 +25,10 @@ const NavBar = ( { user } ) => {
   
   return (
     <div className='navbar'>
-        <h1>magiclips.ai</h1>
+        <div className="navbar-logo-div">
+            <img className="public-navbar-logo" src="../logo.png" />
+            <h1 className='public-navbar-text'>magiclips.ai</h1>
+        </div>
         <div className='nav-right'>
           <p>{user}</p>
           <div

@@ -1,8 +1,8 @@
 .dashboard {
     display: flex;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding-right: 15px;
-    height: calc(100vh - 62px);
+    height: calc(100vh - 87px);
     /* background-color: #F5F6FA; */
     background-color: transparent;
     border-radius: 20px;

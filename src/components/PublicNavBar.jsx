@@ -16,8 +16,9 @@ const PublicNavBar = () => {
 
     return (
         <div className="public-navbar">
-            <div className="public-navbar-div" onClick={handleLogoClick}>
-                <h1 onClick={handleLogoClick} className="clickable-logo">magiclips.ai</h1>
+            <div className="public-navbar-logo-div clickable-logo" onClick={handleLogoClick}>
+                <img className="public-navbar-logo" src="../logo.png" />
+                <h1 className="public-navbar-text" onClick={handleLogoClick}>magiclips.ai</h1>
             </div>
             <div className='public-navbar-items'>
                 <a href='/'><p>Home</p></a>
