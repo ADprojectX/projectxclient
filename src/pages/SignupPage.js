@@ -47,8 +47,9 @@ function SignupPage() {
       setErrorMessage('Passwords do not match');
       return;
     }
-  
+
     const userCredential = await signup(email, password);
+
     const fireid = userCredential.user.uid
   
     if (!error && userCredential) {
@@ -56,6 +57,10 @@ function SignupPage() {
         email: email,
         password: password,
         fireid: fireid
+      };
+
+      const headers = {
+        'Content-Type': 'application/json',
       };
   
       const makeBackendRequest = async (attempt = 0) => {
@@ -66,7 +71,7 @@ function SignupPage() {
         }
   
         try {
-          await axios.post(`${API_BASE_URL}/signup/`, data)
+          await axios.post(`${API_BASE_URL}/signup/`, data, { headers: headers })
           .then(response => {
             // Handle success
             try {
@@ -82,6 +87,7 @@ function SignupPage() {
           })
           .catch(error => {
             console.error('Error:', error);
+            // userCredential.user.delete();
             setTimeout(() => makeBackendRequest(attempt + 1), 1000 * (attempt + 1));
           });
         } catch (backendError) {

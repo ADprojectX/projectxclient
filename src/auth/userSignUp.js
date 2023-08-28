@@ -7,6 +7,7 @@ const signup = async (email, password) => {
     error = null
 
     try {
+
         const res = await createUserWithEmailAndPassword(auth, email, password);
 
         if (!res) {
