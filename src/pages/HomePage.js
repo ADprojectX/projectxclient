@@ -1,4 +1,5 @@
 import PublicNavBar from '../components/PublicNavBar'
+import PublicFooter from '../components/PublicFooter'
 import './css/Home.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -40,6 +41,7 @@ function HomePage() {
             </div>
           </div>
         </div>
+        <PublicFooter /> 
       </div>
     );
 }
