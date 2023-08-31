@@ -1,9 +1,10 @@
-import axios from 'axios';
-import PublicNavBar from '../components/PublicNavBar';
 import './css/LoginPage.css';
+import PublicNavBar from '../components/PublicNavBar';
+import { userLogin } from '../auth/userLogin'
+import PublicFooter from '../components/PublicFooter';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { userLogin } from '../auth/userLogin'
 import { Link } from 'react-router-dom';
 import { GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth'
 import { auth } from '../firebase/config'
@@ -134,6 +135,7 @@ export default function LoginPage() {
 
         </div>
       </div>
+      <PublicFooter />
     </div>
   )
 }

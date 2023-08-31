@@ -1,4 +1,5 @@
 import './css/SignUpPage.css'
+import PublicFooter from '../components/PublicFooter';
 import React, { useState } from 'react';
 import axios from 'axios';
 import PublicNavBar from '../components/PublicNavBar'
@@ -124,6 +125,7 @@ function SignupPage() {
           )}
         </div>
       </div>
+      <PublicFooter />
     </div>
   );
 }

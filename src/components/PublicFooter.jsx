@@ -15,8 +15,8 @@ const PublicFooter = () => {
                 <div className='public-footer-main-divs'>
                     <p>Resources</p>
                     <a href=''>Privacy Policy</a>
-                    <a href=''>Terms and Conditions</a>
-                    <a href=''>Contact Us</a>
+                    <a href=''>Terms & Conditions</a>
+                    <a href='/contact'>Contact Us</a>
                 </div>
                 <div className='public-footer-main-divs'>
                     <p>Product</p>
@@ -37,6 +37,7 @@ const PublicFooter = () => {
                 <div class="divider-container">
                     <div class="divider-line"></div>
                     <span class="divider-text">Copyright @ 2023 magiclips</span>
+                    
                     <div class="divider-line"></div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 .public-footer {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     height: 300px;
     width: 100%;
     background-color: #1D2130;
@@ -73,6 +73,7 @@
   
   .textbox-inside-button {
     background: white;
+    margin: 0px 10px;
     height: 35.5px;
     font-size: small;
     color: #1D2130;
@@ -109,3 +110,72 @@
     background-color: rgb(99, 98, 98);
     width: 31%;
 }
+
+  @media (min-width: 1180px) and (max-width: 1352px) {
+    .public-footer-main {
+        display: flex;
+        gap: 150px;
+        padding-top: 30px;
+        justify-content: center;
+    }
+
+  }
+
+  @media (min-width: 980px) and (max-width: 1179px) {
+    .public-footer-main {
+        display: flex;
+        gap: 100px;
+        padding-top: 30px;
+        justify-content: center;
+    }
+
+    .subscribe-container {
+        display: none;
+    }
+  }
+
+  @media (min-width: 680px) and (max-width: 979px) {
+    .public-footer-main {
+        display: flex;
+        gap: 100px;
+        padding-top: 30px;
+        justify-content: center;
+    }
+
+    .subscribe-container {
+        display: none;
+    }
+
+    .public-footer-main-last-col {
+        display: none;
+    }
+
+    .public-footer-main-divs {
+        align-items: center;
+    }
+  }
+
+  @media (max-width: 679px) {
+    .public-footer-main {
+        display: flex;
+        gap: 40px;
+        padding-top: 30px;
+        justify-content: center;
+    }
+
+    .subscribe-container {
+        display: none;
+    }
+
+    .public-footer-main-last-col {
+        display: none;
+    }
+
+    .public-footer-main-divs {
+        align-items: center;
+    }
+
+    .public-footer-main-divs a {
+        font-size: small;
+    }
+  }
