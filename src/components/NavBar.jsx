@@ -28,6 +28,7 @@ const NavBar = ( { user } ) => {
         <div className="navbar-logo-div">
             <img className="public-navbar-logo" src="../logo.png" />
             <h1 className='public-navbar-text'>magiclips.ai</h1>
+            <div className='public-navbar-beta'>BETA</div>
         </div>
         <div className='nav-right'>
           <p>{user}</p>

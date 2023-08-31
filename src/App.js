@@ -8,6 +8,7 @@ import TitlePage from './pages/TitlePage';
 import ScriptPage from './pages/ScriptPage';
 import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
+import ContactUs from './pages/ContactUsPage';
 import PrivateRouteLayout from './layout/PrivateRouteLayout'
 
 const router = createBrowserRouter(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<HomePage />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/signup" element={<SignupPage />} />
+    <Route path="/contact" element={<ContactUs />} />
     {/* Private Routes */}
     <Route element={<PrivateRouteLayout/>}>
       <Route path="/dashboard" element={<DashboardPage />}/>
