@@ -114,30 +114,6 @@
     width: 100%;
 }
 
-@media (max-width: 768px) {
-    .public-navbar-logo-div {
-        margin-right: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-  
-    .public-navbar-logo {
-      height: 30px; /* Reduced size */
-    }
-  
-    .public-navbar-text {
-      font-size: 20px; /* Reduced size */
-    }
-  
-    .public-navbar-beta {
-      height: 15px; /* Reduced size */
-      width: 40px; /* Reduced size */
-      font-size: 8px; /* Reduced size */
-      margin-left: 7px;
-      margin-top: 1px;
-    }
-  }
 
 .button_slide {
     background-color: white;
@@ -165,12 +141,14 @@
   }
 
   .menu-button {
+    width: 25px;
     display: none;
     font-size: 30px;
     background: none;
     border: none;
     cursor: pointer;
     margin: 0;
+    margin-top: 3px;
   }
 
   .menu-button.opened {
@@ -179,7 +157,30 @@
   
   
 /* When the screen is 768px or smaller */
-@media (max-width: 768px) {
+@media (min-width: 350px) and (max-width: 768px) {
+
+    .public-navbar-logo-div {
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .public-navbar-logo {
+      height: 45px; /* Reduced size */
+    }
+
+    .public-navbar-text {
+      font-size: 25px; /* Reduced size */
+    }
+
+    .public-navbar-beta {
+      height: 15px; /* Reduced size */
+      width: 40px; /* Reduced size */
+      font-size: 8px; /* Reduced size */
+      margin-left: 7px;
+      margin-top: 5px;
+    }
     .menu-button {
       display: block;
       z-index: 3;
@@ -235,3 +236,83 @@
         display: none;
       }
   }
+
+@media (max-width: 349px) {
+  .public-navbar-logo-div {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .public-navbar-logo {
+    height: 35px; /* Reduced size */
+  }
+
+  .public-navbar-text {
+    font-size: 20px; /* Reduced size */
+  }
+
+  .public-navbar-beta {
+    height: 13px; /* Reduced size */
+    width: 37px; /* Reduced size */
+    font-size: 7px; /* Reduced size */
+    margin-left: 7px;
+    margin-top: 2px;
+  }
+  .menu-button {
+    display: block;
+    z-index: 3;
+  }
+  
+  .menu-button.close {
+    display: none;
+  }
+
+
+  .menu-button.opened {
+      color: white; /* Change this to the color you prefer */
+  }
+
+
+  .public-navbar-items {
+    display: flex;
+    border-radius: 20px 0px 0px 20px;
+    flex-direction: column;
+    position: fixed;
+    /* background-color: rgba(210, 203, 255, 0.95); */
+    background-color: rgb(29, 33, 48, 0.95);
+    top: 0;
+    right: -300px;  /* Initially off-screen */
+    bottom: 0;
+    width: 150px;  /* Set to your preferred width */
+    transition: right 0.3s ease;
+    z-index: 1; /* To ensure the menu slides over the content */
+  }
+
+  .public-navbar-items.open {
+      display: flex;
+      padding-top: 80px;
+      padding-right: 31px;
+      align-items: flex-end;
+      right: 0;  /* Slide into view */
+      gap: 0;
+      z-index: 2;
+  }
+
+  .public-navbar-items.open .menu-button.close {
+    display: block;  /* Show close button */
+  }
+
+  .public-navbar-items.open p {
+    height: 30px;
+    margin: 0;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+  }
+
+  .button_slide {
+      display: none;
+    }
+}
+
