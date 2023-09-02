@@ -56,7 +56,7 @@ function SignupPage() {
     if (!error && userCredential) {
       const data = {
         email: email,
-        password: password,
+        // password: password,
         fireid: fireid
       };
 

@@ -55,7 +55,7 @@ export default function LoginPage() {
     if (!error && userCredential) {
       const data = {
         email: emailId,
-        password: "password",
+        // password: "password",
         fireid: fireid
       };
 
