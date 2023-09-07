@@ -77,11 +77,11 @@ function SignupPage() {
             // Handle success
             try {
               sendEmailVerification(userCredential.user);
-              console.log("Email sent")
+              // console.log("Email sent")
             } catch {
-              console.log("Email Not sent")
+              // console.log("Email Not sent")
             }
-            console.log('Sent credentials to backend : successful');
+            // console.log('Sent credentials to backend : successful');
             navigate(from, { replace: true });
             setEmail("");
             setPassword("");

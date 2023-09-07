@@ -50,7 +50,7 @@ export default function LoginPage() {
     const userCredential = await signInWithPopup(auth, provider);
     // console.log("userCredential")
     // console.log(userCredential)
-    // console.log("additionalUserInfo", getAdditionalUserInfo(userCredential).isNewUser);
+    console.log("additionalUserInfo", getAdditionalUserInfo(userCredential).isNewUser);
     const fireid = userCredential.user.uid
     const emailId = userCredential.user.email
     const token = userCredential.user.accessToken
@@ -60,6 +60,10 @@ export default function LoginPage() {
         email: emailId,
         // password: "password",
         fireid: fireid
+      };
+
+      const headers = {
+        'Content-Type': 'application/json',
       };
   
       const makeBackendRequest = async (attempt = 0) => {
@@ -71,7 +75,7 @@ export default function LoginPage() {
         }
   
         try {
-          await axios.post(`${API_BASE_URL}/signup/`, data)
+          await axios.post(`${API_BASE_URL}/signup/`, data, { headers: headers })
           .then(response => {
             // Handle success
             try {
@@ -87,6 +91,7 @@ export default function LoginPage() {
           })
           .catch(error => {
             console.error('Error:', error);
+            // userCredential.user.delete();
             setTimeout(() => makeBackendRequest(attempt + 1), 1000 * (attempt + 1));
           });
         } catch (backendError) {
