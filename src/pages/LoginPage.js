@@ -55,15 +55,12 @@ export default function LoginPage() {
     const emailId = userCredential.user.email
     const token = userCredential.user.accessToken
 
-    if (!error && userCredential && getAdditionalUserInfo(userCredential).isNewUser) {
+    if (!error && userCredential) {
       const data = {
         email: emailId,
         // password: "password",
         fireid: fireid
       };
-
-      console.log("data");
-      console.log(data);
   
       const makeBackendRequest = async (attempt = 0) => {
         if (attempt >= 3) { 
@@ -79,11 +76,11 @@ export default function LoginPage() {
             // Handle success
             try {
               sendEmailVerification(userCredential.user);
-              console.log("Email sent")
+              // console.log("Email sent")
             } catch {
-              console.log("Email Not sent")
+              // console.log("Email Not sent")
             }
-            console.log('Sent credentials to backend : successful');
+            // console.log('Sent credentials to backend : successful');
             navigate(from, { replace: true });
             setEmail("");
             setPassword("");
@@ -96,8 +93,12 @@ export default function LoginPage() {
           console.error(backendError);
         }
       }
-  
-      makeBackendRequest();
+      
+      if(getAdditionalUserInfo(userCredential).isNewUser){
+        makeBackendRequest();
+      }else{
+        navigate(from, { replace: true });
+      }
     } else {
       console.error(error);
     }
