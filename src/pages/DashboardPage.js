@@ -22,13 +22,15 @@ function DashboardPage() {
             icon3={{'icon': play, 'size': 32}}    
             text={"Title to Video"} 
             link = {"/title"}
+            buttonName = "Continue"
           />
           <DBTile 
             icon1={{'icon': ic_receipt_outline, 'size': 32}}
             icon2={{'icon': arrowRightOutline, 'size': 28}}
             icon3={{'icon': play, 'size': 32}}            
             text={"Script to Video"}
-            link = {"/script"}
+            link = {"/dashboard"}
+            buttonName = "Coming Soon"
           />
         </div>
       </div>
