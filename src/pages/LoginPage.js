@@ -6,7 +6,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, sendEmailVerification, getAdditionalUserInfo } from 'firebase/auth'
 import { auth } from '../firebase/config'
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -48,11 +48,14 @@ export default function LoginPage() {
     const provider = new GoogleAuthProvider();
 
     const userCredential = await signInWithPopup(auth, provider);
+    // console.log("userCredential")
+    // console.log(userCredential)
+    // console.log("additionalUserInfo", getAdditionalUserInfo(userCredential).isNewUser);
     const fireid = userCredential.user.uid
     const emailId = userCredential.user.email
     const token = userCredential.user.accessToken
 
-    if (!error && userCredential) {
+    if (!error && userCredential && getAdditionalUserInfo(userCredential).isNewUser) {
       const data = {
         email: emailId,
         // password: "password",
