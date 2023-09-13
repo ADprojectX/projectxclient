@@ -75,14 +75,16 @@ export default function LoginPage() {
         }
   
         try {
+          console.log("data", data);
+          console.log("headers", headers);
           await axios.post(`${API_BASE_URL}/signup/`, data, { headers: headers })
           .then(response => {
             // Handle success
             try {
               sendEmailVerification(userCredential.user);
-              // console.log("Email sent")
+              console.log("Email sent")
             } catch {
-              // console.log("Email Not sent")
+              console.log("Email Not sent")
             }
             // console.log('Sent credentials to backend : successful');
             navigate(from, { replace: true });
