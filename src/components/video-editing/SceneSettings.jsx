@@ -1,15 +1,13 @@
 import '../css/video-editing/SceneSettings.css'
-import axios from 'axios';
 import { useState } from 'react';
 import { BiCaptions, BiVideoRecording, BiHide } from "react-icons/bi";
 import { TbTransitionRight } from "react-icons/tb";
 import { IoDuplicateOutline } from "react-icons/io5";
 import { RiImageEditFill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { FaPhotoFilm } from "react-icons/fa6";
-import { LuUpload } from "react-icons/lu";
-import { BsFillArrowRightCircleFill } from 'react-icons/bs';
-const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
+import ChangeVisualPopup from './ChangeVisualPopup';
+
+
 
 
 const Overlay = ({ onClick }) => (
@@ -17,66 +15,9 @@ const Overlay = ({ onClick }) => (
 );
 
 
-const ChangeVisualPopup = () => {
-    const [title, setTitle] = useState('');
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-      };
-    
-    const handleEnterKeyPress = (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        if (title.trim() !== '') {
-        handleSubmit(e);
-        }
-    }
-    };
-    const handleSubmit = (e) => {
-        axios.get(`${REQ_BASE_URL}/generate-image/`, { withCredentials: true })
-        .then(response => {
-        })
-        .catch(error => {
-            console.error('Failed to fetch projects:', error);
-        });
-      };
-    
-    return (
-    <div className="change-visual-popup-div">
-        {/* <div className='popup-div-title'>Coming Soon</div> */}
-        <div className="change-visual-button-container">
-            <div className='change-visual-btns gradient-border-color'>
-                <img style={{ width: '110px', height: '110px' }} className="change-visual-btn-icon" src="../midjourney_logo.png"/>
-                <p>Prompt Like Midjourney</p>
-            </div>
-            <div className='change-visual-btns gradient-border-color'>
-                <img style={{ width: '70px', height: '70px', margin: '20px' }} className="change-visual-btn-icon" src="../stability-logo.png"/>
-                <p>Prompt Like Stable Diffusion</p>
-            </div>
 
-            <div className='tile-divider'></div>
 
-            <div className='change-visual-btns'>
-                <FaPhotoFilm style={{ margin: '16px' }} color='#8EB0BC' size={80}/>
-                <p style={{ margin: '15px' }}>Choose Stock Footages</p>
-            </div>
-            <div className='change-visual-btns'>
-                <LuUpload style={{ margin: '20px' }} color='#8EB0BC' size={70}/>
-                <p style={{ margin: '15px' }}>Upload your own Footage</p>
-            </div>
-        </div>
 
-        <div className='media-library-container'>
-
-            <div className='title-input-unit'>
-                <input type="text"  onKeyPress={handleEnterKeyPress} value={title} onChange={handleTitleChange} placeholder="Enter your image prompt here..." />
-                <button onClick={handleSubmit} type="submit">
-                    <BsFillArrowRightCircleFill className="title-btn" color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/>
-                </button>
-            </div>
-        </div>
-    </div>
-    );
-}
 const SceneSettings = () => {
     const [activePopup, setActivePopup] = useState(null);
 
