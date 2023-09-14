@@ -22,7 +22,7 @@
     height: 100%;
     width: 250px;
     border-radius: 30px;
-    background-color: #14FFC7;
+    background-color: #d5fef4f6;
 }
 
 .cv-popup-main {
@@ -120,7 +120,7 @@
     justify-content: flex-start;
     padding-left: 30px;
     padding-right: 30px;
-    gap: 75px;
+    gap: 58px;
 }
 
 .cv-popup-title-input-unit {
@@ -210,7 +210,7 @@
   }
   
 .cv-popup-title-input-btn:active {
-    background-color: #e0e0e0; /* Change to your preferred color */
+    background-color: rgb(29, 149, 254); 
     box-shadow: inset 0px 3px 5px rgba(0,0,0,0.2);
   }
   

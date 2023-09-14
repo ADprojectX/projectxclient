@@ -31,14 +31,14 @@ const VideoPlayer = () => {
 
         const videoData = response.data.asset_urls;
         const videosWithDuration = await Promise.all(videoData.map(async (videoArr, index) => {
+            const sceneId = videoArr[1];
             const url = videoArr[2];
-
             return new Promise((resolve) => {
                 const videoElement = document.createElement('video');
                 videoElement.src = url;
                 videoElement.addEventListener('loadedmetadata', () => {
                     const duration = videoElement.duration;
-                    resolve({ url, duration, thumbnail: thumbnails[index] });
+                    resolve({ url, duration, thumbnail: thumbnails[index], sceneId });
                 });
             });
         }));
@@ -48,8 +48,10 @@ const VideoPlayer = () => {
             video: video.url,
             thumbnail: video.thumbnail,
             audio: '',
-            duration: video.duration
+            duration: video.duration,
+            sceneId: video.sceneId
         }));
+        console.log("videoFiles", videoFiles)
 
         setVideoFiles(videoFiles);
         setIsLoading(false);

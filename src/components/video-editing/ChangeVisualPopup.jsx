@@ -69,7 +69,7 @@ const ChangeVisualPopup = () => {
                     className="cv-popup-title-input-btn" 
                     // onClick={handleSubmit} 
                     type="submit">
-                    Generate Image
+                    Generate New Image
                     {/* <BsFillArrowRightCircleFill className="title-btn" color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/> */}
                 </button>
             </div>
