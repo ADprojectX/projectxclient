@@ -7,18 +7,11 @@ import { RiImageEditFill } from "react-icons/ri";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import ChangeVisualPopup from './ChangeVisualPopup';
 
-
-
-
 const Overlay = ({ onClick }) => (
     <div className="overlay" onClick={onClick}></div>
 );
 
-
-
-
-
-const SceneSettings = () => {
+const SceneSettings = ({ scenes, currentSceneIndex }) => {
     const [activePopup, setActivePopup] = useState(null);
 
     return (
@@ -90,7 +83,11 @@ const SceneSettings = () => {
 
             </div>
             {activePopup && <Overlay onClick={() => setActivePopup(null)} />}
-            {activePopup === 'visual' && <ChangeVisualPopup />}
+            {activePopup === 'visual' && 
+            <ChangeVisualPopup 
+                scenes={scenes}
+                currentSceneIndex={currentSceneIndex}
+            />}
 
             <div className='scene-settings-delete-footer'>
                 <button className='scene-settings-delete-button'>

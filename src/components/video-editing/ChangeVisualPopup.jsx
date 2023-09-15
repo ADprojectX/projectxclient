@@ -7,9 +7,9 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 const REQ_BASE_URL = process.env.REACT_APP_REQ_BASE_URL;
 let reqid = localStorage.getItem('reqid');
 
-const ChangeVisualPopup = () => {
+const ChangeVisualPopup = ({ scenes, currentSceneIndex }) => {
     const [title, setTitle] = useState('');
-    const [selectedDiv, setSelectedDiv] = useState('StableDiffusion');
+    const [selectedDiv, setSelectedDiv] = useState('sdxl');
 
     const handleDivSelection = (selection) => {
         setSelectedDiv(selection);
@@ -32,10 +32,11 @@ const ChangeVisualPopup = () => {
     const handleSubmit = (e) => {
         const data ={
             reqid:reqid,
-            sceneid:"7bd69a5f-89cb-4b77-afab-bd1f28f164bd",
+            sceneid: scenes[currentSceneIndex].sceneId,
             prompt:title,
-            service:'sdxl'
+            service:selectedDiv
         }
+
         // Convert the data object into a query parameter string
         const queryParams = Object.keys(data)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
@@ -67,7 +68,7 @@ const ChangeVisualPopup = () => {
                 </div>
                 <button 
                     className="cv-popup-title-input-btn" 
-                    // onClick={handleSubmit} 
+                    onClick={handleSubmit} 
                     type="submit">
                     Generate New Image
                     {/* <BsFillArrowRightCircleFill className="title-btn" color={title.trim() === '' ? 'transparent' : '#10C300'} size={32}/> */}
@@ -77,16 +78,16 @@ const ChangeVisualPopup = () => {
             <div className="cv-button-container">
 
                 <div 
-                    className={`cv-btns ${selectedDiv === 'StableDiffusion' ? 'gradient-border-color' : ''}`} 
-                    onClick={() => handleDivSelection('StableDiffusion')}
+                    className={`cv-btns ${selectedDiv === 'sdxl' ? 'gradient-border-color' : ''}`} 
+                    onClick={() => handleDivSelection('sdxl')}
                 >
                     <img style={{ width: '60px', height: '60px', margin: '20px' }} className="cv-btn-icon" src="../stability-logo.png"/>
                     <p style={{ margin: '5px' }}>Prompt Like Stable Diffusion</p>
                 </div>
 
                 <div 
-                    className={`cv-btns ${selectedDiv === 'Midjourney' ? 'gradient-border-color' : ''}`} 
-                    onClick={() => handleDivSelection('Midjourney')}
+                    className={`cv-btns ${selectedDiv === 'mjx' ? 'gradient-border-color' : ''}`} 
+                    onClick={() => handleDivSelection('mjx')}
                 >
                     <img style={{ width: '100px', height: '100px' }} className="cv-btn-icon" src="../midjourney_logo.png"/>
                     <p style={{ margin: '5px' }}>Prompt Like Midjourney</p>

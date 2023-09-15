@@ -51,7 +51,6 @@ const VideoPlayer = () => {
             duration: video.duration,
             sceneId: video.sceneId
         }));
-        console.log("videoFiles", videoFiles)
 
         setVideoFiles(videoFiles);
         setIsLoading(false);

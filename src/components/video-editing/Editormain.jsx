@@ -102,11 +102,11 @@ const Editormain = ({ scenes, checkURLExpired }) => {
 
     return (
         <div className='editor-main'>
-                <video
-        ref={videoRef}
-        onLoadedMetadata={handleMetadataLoaded}
-        style={{ display: 'none' }}
-      />
+        <video
+          ref={videoRef}
+          onLoadedMetadata={handleMetadataLoaded}
+          style={{ display: 'none' }}
+        />
                 <div className='grid-col-span-4'>
                   <EditorMenuBar handleFullScreen={handleFullScreen}/>
                 </div>
@@ -134,7 +134,10 @@ const Editormain = ({ scenes, checkURLExpired }) => {
                 </div> 
 
                 <div className='grid-scene-settings'>
-                  <SceneSettings />
+                  <SceneSettings 
+                    scenes={scenes}
+                    currentSceneIndex={currentSceneIndex}
+                  />
                 </div>
 
                 <div className='timeline-unit grid-col-span-3'>
