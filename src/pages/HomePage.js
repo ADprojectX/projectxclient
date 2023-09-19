@@ -2,6 +2,8 @@ import PublicNavBar from '../components/PublicNavBar'
 import PublicFooter from '../components/PublicFooter'
 import './css/Home.css'
 import { useNavigate } from 'react-router-dom'
+import PricingPage from './PricingPage';
+
 
 function HomePage() {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ function HomePage() {
     return (
       <div className="home">
         <PublicNavBar />
+        <PricingPage/>
         <div className='home-main'>
           <div className='hero'>
             <p className='hero-desc1'>Turn Your Vision into <span className='hero-top-title'>Reality</span></p>
@@ -31,7 +34,6 @@ function HomePage() {
             </button>
             {/* <button onClick={handleGetStarted}>Try Now</button> */}
           </div>
-
           <div>
             <div className="video-container">
               <video width="100%" height="auto" autoPlay muted loop>
