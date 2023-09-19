@@ -29,6 +29,20 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+    <stripe-pricing-table pricing-table-id="prctbl_1NratbEwW2RGlLm4AS2XzvXz"
+    publishable-key="pk_test_51NrHcGEwW2RGlLm4RWydKVzLHophe1VZ1F57LF2uCRajzhXnK2JJFD0NUQrwNvfq5AS9Bcfq20laJg01lJINxD4V00fJ0kK9t3">
+    </stripe-pricing-table>
+
+    <script async
+      src="https://js.stripe.com/v3/buy-button.js">
+    </script>
+
+    <stripe-buy-button
+      buy-button-id="buy_btn_1NrbPTEwW2RGlLm4fEZh5ZDA"
+      publishable-key="pk_test_51NrHcGEwW2RGlLm4RWydKVzLHophe1VZ1F57LF2uCRajzhXnK2JJFD0NUQrwNvfq5AS9Bcfq20laJg01lJINxD4V00fJ0kK9t3"
+    >
+    </stripe-buy-button>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
