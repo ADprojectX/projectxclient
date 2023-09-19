@@ -29,7 +29,7 @@ const PricingPage = () => {
 			<div className='product'>
 				<div className='description'>
 					<h3>Basic Plan</h3>
-					<h5>$20.00</h5>
+					<h5>$15.00</h5>
 				</div>
 			</div>
 			<form
