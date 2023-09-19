@@ -15,7 +15,7 @@ const VideoPlayer = () => {
   const fetchThumbnails = async (reqId) => {
     try {
         const res = await axios.get(`${REQ_BASE_URL}/get-thumbnails/?reqid=${reqId}`);
-        return res.data.asset_urls.map(thumbnailArr => thumbnailArr[2]); // assuming the URL structure is the same
+        return res.data.asset_urls.map(thumbnailArr => thumbnailArr[2]); 
     } catch (error) {
         console.error('Failed to retrieve thumbnails:', error);
         return [];

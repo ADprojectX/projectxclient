@@ -1,6 +1,6 @@
 import '../css/video-editing/ChangeVisualPopup.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LuUpload } from "react-icons/lu";
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 
@@ -44,6 +44,7 @@ const ChangeVisualPopup = ({ scenes, currentSceneIndex }) => {
 
         axios.get(`${REQ_BASE_URL}/generate-image/?${queryParams}`, { withCredentials: true })
         .then(response => {
+            
         })
         .catch(error => {
             console.error('Failed to fetch projects:', error);
