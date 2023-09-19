@@ -10,6 +10,7 @@ import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
 import ContactUs from './pages/ContactUsPage';
 import PrivateRouteLayout from './layout/PrivateRouteLayout'
+import PricingPage from './pages/PricingPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
     <Route path="/login" element={<LoginPage />} />
     <Route path="/signup" element={<SignupPage />} />
     <Route path="/contact" element={<ContactUs />} />
+    <Route path="/pricing" element={<PricingPage />} />
     {/* Private Routes */}
     <Route element={<PrivateRouteLayout/>}>
       <Route path="/dashboard" element={<DashboardPage />}/>
